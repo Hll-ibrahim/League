@@ -12,4 +12,8 @@ class TeamRepository{
     public function getTeamById($id){
         return Team::findOrFail($id);
     }
+
+    public function queryTeams(){
+        return Team::query();
+    }
 }

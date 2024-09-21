@@ -3,17 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\League;
+use App\Services\LeagueService;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class LeagueController extends Controller
 {
+    protected $leagueService;
+    public function __construct(LeagueService $leagueService){
+        $this->leagueService = $leagueService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('league.index');
     }
+
+    public function fetch(){
+        $leagues = League::all();
+        return DataTables::of($leagues)
+            ->addColumn('detail',function($league){
+                return '<a href="'.route('league.detail',$league->id).'" class="btn btn-info btn-xs">Detail</a>';
+            })
+            ->editColumn('season_id',function($league){
+                return $league->season->name;
+            })
+            ->addIndexColumn()
+            ->rawColumns(['detail'])
+            ->make();
+    }
+
+
+    public function detail($id){
+        $league = $this->leagueService->get($id);
+        return view('league.detail',compact('league'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

@@ -80,4 +80,8 @@ class TeamService implements ServiceInterface{
         }
         return $count;
     }
+
+    public function get_teams_from_leagues($league_id){
+        return $this->teamRepository->queryTeams()->where('league_id', $league_id)->get();
+    }
 }

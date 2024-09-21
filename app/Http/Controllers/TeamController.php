@@ -17,8 +17,13 @@ class TeamController extends Controller
         return view('team.index');
     }
 
-    public function fetch(){
+    public function fetch(Request $request){
         $teams = $this->teamService->all();
+
+        if(isset($request->league_id)){
+            $teams = $this->teamService->get_teams_from_leagues($request->league_id);
+        }
+
         return DataTables::of($teams)
             ->addColumn('win',function($team){
                 return $this->teamService->win_count($team->id);

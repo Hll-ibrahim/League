@@ -1,11 +1,21 @@
 <?php
 
+use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('leagues.index');
+
+Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/fetch', 'fetch')->name('fetch');
+    Route::get('/detail/{id}', 'detail')->name('detail');
+
+    Route::prefix('team')->controller(TeamController::class)->name('team.')->group(function () {
+        Route::get('/fetch', 'fetch')->name('fetch');
+        Route::get('/', 'index')->name('index');
+    });
+
 });
 
 Route::get('/soccer', function () {
@@ -14,10 +24,6 @@ Route::get('/soccer', function () {
 
 Route::get('fetch',[TeamController::class,'fetch'])->name('fetch');
 Route::get('detail/{id}',[TeamController::class,'detail'])->name('detail');
-
-Route::get('/myLogin', function () {
-    return view('auth._soccer_shop-login');
-});
 
 Route::post('register',[UserController::class,'register'])->name('register');
 
