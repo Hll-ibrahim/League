@@ -20,4 +20,8 @@ class LeagueService implements ServiceInterface {
         return $this->leagueRepository->getLeagues();
     }
     public function delete($id){}
+
+    public function get_leagues_from_sport($sport_id){
+        return $this->leagueRepository->queryLeagues()->where('sport_id', $sport_id)->get();
+    }
 }

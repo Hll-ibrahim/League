@@ -1,22 +1,33 @@
 <?php
 
 use App\Http\Controllers\LeagueController;
+use App\Http\Controllers\SportController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-
-Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
+Route::prefix('sport')->name('sport.')->controller(SportController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/fetch', 'fetch')->name('fetch');
     Route::get('/detail/{id}', 'detail')->name('detail');
+    Route::post('/create', 'create')->name('create');
+    Route::delete('/delete', 'delete')->name('delete');
+    Route::get('/get', 'get')->name('get');
+    Route::post('/update', 'update')->name('update');
 
-    Route::prefix('team')->controller(TeamController::class)->name('team.')->group(function () {
+    Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
         Route::get('/fetch', 'fetch')->name('fetch');
-        Route::get('/', 'index')->name('index');
-    });
+        Route::get('/detail/{id}', 'detail')->name('detail');
 
+        Route::prefix('team')->controller(TeamController::class)->name('team.')->group(function () {
+            Route::get('/fetch', 'fetch')->name('fetch');
+            Route::get('/', 'index')->name('index');
+        });
+
+    });
 });
+
+
 
 Route::get('/soccer', function () {
     return view('team.index');

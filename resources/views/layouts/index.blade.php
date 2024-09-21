@@ -825,4 +825,20 @@
         <!-- Footer Secondary / End -->
     </footer>
 
+    <script>
+        function errorMap(errors){
+            errors = Object.values(errors)
+
+            string = '<p>'
+            result = errors.map((error)=>{
+                error.map((errorMessage)=>{
+                    string += errorMessage
+                    string += '<br>'
+                })
+            })
+            string += '</p>'
+            return string
+        }
+
+    </script>
 @endsection
