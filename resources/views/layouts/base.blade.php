@@ -39,6 +39,7 @@
     <link href="{{ asset('football/css/custom.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @yield('links')
 
 </head>
 <body data-template="template-football">
@@ -169,6 +170,8 @@
 <!-- Template JS -->
 <script src="{{ asset('football/js/init.js') }}"></script>
 <script src="{{ asset('football/js/custom.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
     function errorMap(errors){
         errors = Object.values(errors)
@@ -185,5 +188,6 @@
     }
 
 </script>
+@yield('script')
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,8 +9,11 @@ Route::get('/', function () {
 });
 
 Route::get('/soccer', function () {
-    return view('soccer.team.detail');
+    return view('team.index');
 });
+
+Route::get('fetch',[TeamController::class,'fetch'])->name('fetch');
+Route::get('detail/{id}',[TeamController::class,'detail'])->name('detail');
 
 Route::get('/myLogin', function () {
     return view('auth._soccer_shop-login');

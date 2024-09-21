@@ -1,4 +1,10 @@
 @extends('layouts.base')
+@section('links')
+
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <!-- Styles -->
+@endsection
 
 @section('base')
     <header class="header header--layout-1">
