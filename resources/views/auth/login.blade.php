@@ -1,9 +1,7 @@
-@extends('layouts.base')
+@extends('layouts.auth')
 @section('content')
     <!-- Content
 		================================================== -->
-    <div class="site-content">
-        <div class="container">
 
             <div class="row">
 
@@ -35,8 +33,6 @@
                 </div>
 
             </div>
-        </div>
-    </div>
 
     <!-- Content / End -->
 

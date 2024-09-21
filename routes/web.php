@@ -4,13 +4,19 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('_football_blog-1');
+    return view('leagues.index');
 });
+
+Route::get('/soccer', function () {
+    return view('soccer.team.detail');
+});
+
 Route::get('/myLogin', function () {
     return view('auth._soccer_shop-login');
 });
 
 Route::post('register',[UserController::class,'register'])->name('register');
+
 
 Route::middleware([
     'auth:sanctum',

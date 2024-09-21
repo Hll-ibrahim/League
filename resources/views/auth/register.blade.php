@@ -1,10 +1,8 @@
-@extends('layouts.base')
+@extends('layouts.auth')
 @section('content')
 
     <!-- Content
 		================================================== -->
-    <div class="site-content">
-        <div class="container">
             <div class="row">
                 <div class="col-12">
                     <!-- Register -->
@@ -41,9 +39,6 @@
                     <!-- Register / End -->
                 </div>
             </div>
-
-        </div>
-    </div>
 
     <!-- Content / End -->
 

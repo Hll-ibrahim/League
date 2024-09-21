@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('season_id')->constrained();
             $table->foreignId('sport_id')->constrained('sports');
             $table->foreignId('league_type_id')->constrained('league_types');
-            //$table->foreignId('champion_team')->nullable()->constrained('teams');
             $table->timestamps();
         });
     }
