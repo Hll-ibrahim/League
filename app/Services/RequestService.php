@@ -13,7 +13,7 @@ class RequestService implements RequestServiceInterface
     protected $leagueService;
     protected $sportService;
 
-    public function __construct(SportServiceInterface $teamService, LeagueServiceInterface $leagueService, TeamServiceInterface $sportService) {
+    public function __construct(SportServiceInterface $sportService, LeagueServiceInterface $leagueService, TeamServiceInterface $teamService) {
         $this->teamService = $teamService;
         $this->leagueService = $leagueService;
         $this->sportService = $sportService;
@@ -21,5 +21,15 @@ class RequestService implements RequestServiceInterface
 
     public function handleRequest($request) {
 
+        switch ($request->input('type')) {
+            case 'team':
+                return $this->teamService->handleRequest($request);
+            case 'league':
+                return $this->leagueService->handleRequest($request);
+            case 'sport':
+                return $this->sportService->handleRequest($request);
+            default:
+                throw new \Exception("Invalid request type");
+        }
     }
 }

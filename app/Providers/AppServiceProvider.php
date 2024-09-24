@@ -5,17 +5,21 @@ namespace App\Providers;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 use App\Repositories\Contracts\SportRepositoryInterface;
 use App\Repositories\Contracts\TeamRepositoryInterface;
+use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\LeagueRepository;
 use App\Repositories\SportRepository;
 use App\Repositories\TeamRepository;
+use App\Repositories\UserRepository;
 use App\Services\Contracts\LeagueServiceInterface;
 use App\Services\Contracts\RequestServiceInterface;
 use App\Services\Contracts\SportServiceInterface;
 use App\Services\Contracts\TeamServiceInterface;
+use App\Services\Contracts\UserServiceInterface;
 use App\Services\LeagueService;
 use App\Services\RequestService;
 use App\Services\SportService;
 use App\Services\TeamService;
+use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,14 +39,17 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Servis ve interface bağlamaları
+        $this->app->bind(RequestServiceInterface::class, RequestService::class);
         $this->app->bind(TeamServiceInterface::class, TeamService::class);
         $this->app->bind(LeagueServiceInterface::class, LeagueService::class);
         $this->app->bind(SportServiceInterface::class, SportService::class);
+        $this->app->bind(UserServiceInterface::class, UserService::class);
 
         // Repository ve interface bağlamaları
         $this->app->bind(TeamRepositoryInterface::class, TeamRepository::class);
         $this->app->bind(LeagueRepositoryInterface::class, LeagueRepository::class);
         $this->app->bind(SportRepositoryInterface::class, SportRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**
