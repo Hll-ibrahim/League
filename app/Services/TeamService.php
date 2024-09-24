@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\TeamRepository;
+use App\Services\Contracts\ServiceInterface;
 
 class TeamService implements ServiceInterface{
 

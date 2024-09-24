@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\League;
+use App\Repositories\Contracts\LeagueRepositoryInterface;
 
-class LeagueRepository{
+class LeagueRepository implements LeagueRepositoryInterface {
     public function getLeagues(){
         return League::all();
     }

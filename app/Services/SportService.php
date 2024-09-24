@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\LeagueRepository;
 use App\Repositories\SportRepository;
+use App\Services\Contracts\ServiceInterface;
 
 class SportService implements ServiceInterface{
 

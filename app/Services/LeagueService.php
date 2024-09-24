@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\LeagueRepository;
+use App\Services\Contracts\ServiceInterface;
 
 class LeagueService implements ServiceInterface {
 

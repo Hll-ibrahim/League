@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
+use App\Services\Contracts\ServiceInterface;
 
 class UserService implements ServiceInterface{
 
