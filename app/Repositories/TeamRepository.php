@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Team;
+use App\Repositories\Contracts\TeamRepositoryInterface;
 
-class TeamRepository{
+class TeamRepository implements TeamRepositoryInterface{
     public function getTeams(){
         return Team::all();
     }

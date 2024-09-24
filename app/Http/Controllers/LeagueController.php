@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SportRequest;
 use App\Models\League;
 use App\Services\LeagueService;
 use Illuminate\Http\Request;
@@ -50,9 +51,9 @@ class LeagueController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function create(SportRequest $request){
+        $this->leagueService->add($request->all());
+        return response()->json(['success'=>'Data added successfully.']);
     }
 
     /**

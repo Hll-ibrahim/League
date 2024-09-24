@@ -16,6 +16,7 @@ Route::prefix('sport')->name('sport.')->controller(SportController::class)->grou
     Route::post('/update', 'update')->name('update');
 
     Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
+        Route::post('/create', 'create')->name('create');
         Route::get('/fetch', 'fetch')->name('fetch');
         Route::get('/detail/{id}', 'detail')->name('detail');
 
@@ -37,7 +38,6 @@ Route::get('fetch',[TeamController::class,'fetch'])->name('fetch');
 Route::get('detail/{id}',[TeamController::class,'detail'])->name('detail');
 
 Route::post('register',[UserController::class,'register'])->name('register');
-
 
 Route::middleware([
     'auth:sanctum',

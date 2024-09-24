@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Sport;
+use App\Repositories\Contracts\SportRepositoryInterface;
 
-class SportRepository{
+class SportRepository implements SportRepositoryInterface {
 
     public function getSports(){
         return Sport::all();

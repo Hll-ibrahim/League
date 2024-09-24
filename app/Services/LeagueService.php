@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\LeagueRepositoryInterface;
 use App\Repositories\LeagueRepository;
-use App\Services\Contracts\ServiceInterface;
+use App\Services\Contracts\LeagueServiceInterface;
 
-class LeagueService implements ServiceInterface {
+class LeagueService implements LeagueServiceInterface {
 
     protected $leagueRepository;
 
-    function __construct(LeagueRepository $leagueRepository) {
+    function __construct(LeagueRepositoryInterface $leagueRepository) {
         $this->leagueRepository = $leagueRepository;
     }
 
