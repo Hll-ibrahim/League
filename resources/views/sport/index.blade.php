@@ -84,23 +84,33 @@
             order: [
                 [0, 'ASC']
             ],
-
             processing: true,
             serverSide: true,
             scrollX: true,
             scrollY: true,
             ajax: {
-                url:'{!! route('sport.fetch') !!}',
+                url: '{{ route('sport.fetch') }}',
+                type: 'GET', // İsteği GET olarak belirtin
+                dataType: 'json', // JSON verisi bekliyoruz
+                data: function(d) {
+                    // Burada doğrudan d nesnesine ekleme yapalım
+                    d.type = 3; // Örnek tip
+                    d.process = 2; // Örnek işlem
+                },
+                error: function(xhr, error, thrown) {
+                    console.error('Ajax error:', error);
+                }
             },
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'name'},
-                {data: 'description',orderable: false},
-                {data: 'detail',orderable: false,searchable: false},
-                {data: 'update',orderable: false,searchable: false},
-                {data: 'delete',orderable: false,searchable: false},
+                {data: 'description', orderable: false},
+                {data: 'detail', orderable: false, searchable: false},
+                {data: 'update', orderable: false, searchable: false},
+                {data: 'delete', orderable: false, searchable: false},
             ],
-            success: function () {
+            success: function() {
+                // Başarı durumu için bir işlem yapılabilir
             }
         });
 
