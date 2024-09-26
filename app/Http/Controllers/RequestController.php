@@ -19,36 +19,32 @@ class RequestController extends Controller
         return view('sport.index');
     }
 
-    public function fetch($request){
-        if (!$request->has('type') || !$request->has('process')) {
-            return response()->json(['error' => 'Missing parameters'], 400);
-        }
+    public function fetch(){
+        $request = new Request();
 
-        $sports = $this->requestService->handleRequest($request);
+        $request->merge([
+            'type' => 3, // Örnek type değeri
+            'process' => 3 // Örnek process değeri
+        ]);
 
+        $sports = $this->handleRequest($request);
         return DataTables::of($sports)
-            ->addColumn('detail', function ($sport) {
-                return '<a href="'.route('sport.detail', $sport->id).'" class="btn btn-info btn-xs">Detail</a>';
+            ->addColumn('detail',function($sport){
+                return '<a href="'.route('sport.detail',$sport->id).'" class="btn btn-info btn-xs">Detail</a>';
             })
-            ->addColumn('delete', function ($sport) {
+            ->addColumn('delete',function($sport){
                 return '<button onclick="deleteSport('.$sport->id.')" class="btn btn-danger btn-xs">Delete</button>';
             })
-            ->addColumn('update', function ($sport) {
+            ->addColumn('update',function($sport){
                 return '<button onclick="updateSport('.$sport->id.')" class="btn btn-warning btn-xs">Update</button>';
             })
             ->addIndexColumn()
-            ->rawColumns(['detail', 'delete', 'update'])
-            ->make(true); // true ile JSON formatında yanıt döner
+            ->rawColumns(['detail','delete','update'])
+            ->make();
     }
 
-    public function handleRequest(Request $request)
+    public function handleRequest($request)
     {
-        try {
-            //gönderim işlemi burada başlatılıyor
-            $response = $this->requestService->handleRequest($request);
-            return response()->json($response);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
-        }
+        return $this->requestService->handleRequest($request);
     }
 }

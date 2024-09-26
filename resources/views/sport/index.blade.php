@@ -90,15 +90,12 @@
             scrollY: true,
             ajax: {
                 url: '{{ route('sport.fetch') }}',
-                type: 'GET', // İsteği GET olarak belirtin
-                dataType: 'json', // JSON verisi bekliyoruz
-                data: function(d) {
-                    // Burada doğrudan d nesnesine ekleme yapalım
-                    d.type = 3; // Örnek tip
-                    d.process = 2; // Örnek işlem
-                },
+                type: 'GET',
+                dataType: 'json',
                 error: function(xhr, error, thrown) {
                     console.error('Ajax error:', error);
+                    console.error('XHR Response:', xhr.responseText);
+                    alert('An error occurred: ' + xhr.responseText); // Hata mesajını uyarı olarak göster
                 }
             },
             columns: [
@@ -109,8 +106,8 @@
                 {data: 'update', orderable: false, searchable: false},
                 {data: 'delete', orderable: false, searchable: false},
             ],
-            success: function() {
-                // Başarı durumu için bir işlem yapılabilir
+            success: function(data) {
+                console.log('Data fetched successfully:', data); // Başarılı yanıt kontrolü
             }
         });
 

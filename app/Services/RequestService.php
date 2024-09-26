@@ -20,7 +20,6 @@ class RequestService implements RequestServiceInterface
     }
 
     public function handleRequest($request) {
-
         switch ($request->input('type')) {
             case '1'://team
                 return $this->teamService->processControl($request);
