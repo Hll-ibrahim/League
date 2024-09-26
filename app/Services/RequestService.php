@@ -22,12 +22,12 @@ class RequestService implements RequestServiceInterface
     public function handleRequest($request) {
 
         switch ($request->input('type')) {
-            case 'team':
-                return $this->teamService->handleRequest($request);
-            case 'league':
-                return $this->leagueService->handleRequest($request);
-            case 'sport':
-                return $this->sportService->handleRequest($request);
+            case '1'://team
+                return $this->teamService->processControl($request);
+            case '2'://league
+                return $this->leagueService->processControl($request);
+            case '3'://sport
+                return $this->sportService->processControl($request);
             default:
                 throw new \Exception("Invalid request type");
         }

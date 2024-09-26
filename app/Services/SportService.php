@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\SportRepositoryInterface;
 use App\Repositories\SportRepository;
 use App\Services\Contracts\SportServiceInterface;
 
@@ -9,8 +10,24 @@ class SportService implements SportServiceInterface {
 
     protected $sportRepository;
 
-    function __construct(SportRepository $sportRepository) {
+    function __construct(SportRepositoryInterface $sportRepository) {
         $this->sportRepository = $sportRepository;
+    }
+
+    public function processControl($request)
+    {
+        switch ($request->input('process')) {
+            case '1'://C
+                return $this->add($request);
+            case '2'://R
+                return $this->get($request->id());
+            case '3'://U
+                return $this->all();
+            case '4'://D
+                return $this->delete($request->id());
+            default:
+                throw new \Exception("Invalid request type");
+        }
     }
 
     public function add($data){

@@ -7,6 +7,9 @@ use App\Repositories\Contracts\SportRepositoryInterface;
 
 class SportRepository implements SportRepositoryInterface {
 
+    public function createSport($data){
+        return Sport::create($data);
+    }
     public function getSports(){
         return Sport::all();
     }
@@ -15,15 +18,12 @@ class SportRepository implements SportRepositoryInterface {
         return Sport::findOrFail($id);
     }
 
-    public function createSport($data){
-        return Sport::create($data);
+    public function update(Sport $sport,$data){
+        return $sport->update($data);
     }
 
     public function delete($id){
         return Sport::destroy($id);
     }
 
-    public function update(Sport $sport,$data){
-        return $sport->update($data);
-    }
 }
