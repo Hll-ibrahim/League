@@ -218,35 +218,27 @@
             });
         }
 
-        function updateSport(id){
+        function detailGet(sportId) {
             $.ajax({
-                url: '{{route('sport.get')}}',
+                url: '{{ route('sport.detail', '') }}/' + sportId, // ID ile backend'e istek yap
                 type: 'GET',
-                processData: true,
-                data: {'sport_id':id,},
-                success: (response) => {
-                    $('#name').val(response.name)
-                    $('#description').val(response.description)
-                    createUpdateButton('update')
-                    $('#update_id').val(id)
-                    openModal()
+                success: function(response) {
+                    // Eğer detay başarılı şekilde alındıysa yönlendir
+                    window.location.href = '{{ route('sport.detail', '') }}/' + sportId;
                 },
-                error: (xhr, status, error) => {
-                    console.error(xhr,status,error);
-
+                error: function(xhr, status, error) {
+                    // Hata durumunda yapılacak işlemler
+                    console.error('An error occurred:', status, error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        html: errorMap(xhr.responseJSON.errors),  // Hatanın detaylarını gösterir
-                        footer: `An error occured: ${xhr.status} - ${xhr.statusText}`,
-                        showConfirmButton: true,
+                        text: 'Could not fetch details!',
                     });
                 }
-            })
-
+            });
         }
 
-        function updatePost(){
+        function updatePost(id){
             const type = 1; // Sport
             const process = 3; // Update
             const formData = new FormData(document.getElementById('sport_form'));
