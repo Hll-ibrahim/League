@@ -8,11 +8,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\AddTypeAndProcess;
 use Illuminate\Support\Facades\Route;
 
+Route::prefix('sport')->controller(SportController::class)->name('sport.')->group(function () {
+        Route::get('/fetch', 'fetch')->name('fetch');
+});
 Route::prefix('sport')->middleware('typeAndProcess')->name('sport.')->controller(RequestController::class)->group(function () {
 
     Route::get('/', 'index')->name('index')->withoutMiddleware('typeAndProcess');
     //CRUD Request's
-    Route::get('/fetch', 'fetch')->name('fetch');
     Route::get('/detail/{id}', 'detail')->name('detail');
     Route::post('/create', 'create')->name('create');
     Route::delete('/delete', 'delete')->name('delete');
