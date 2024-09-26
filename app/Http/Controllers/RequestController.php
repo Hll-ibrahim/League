@@ -24,7 +24,7 @@ class RequestController extends Controller
 
         $request->merge([
             'type' => 3, // Örnek type değeri
-            'process' => 3 // Örnek process değeri
+            'process' => 2 // Örnek process değeri
         ]);
 
         $sports = $this->handleRequest($request);

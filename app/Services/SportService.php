@@ -20,9 +20,9 @@ class SportService implements SportServiceInterface {
             case '1'://C
                 return $this->add($request);
             case '2'://R
-                return $this->get($request->id());
-            case '3'://U
                 return $this->all();
+            case '3'://U
+                return $this->update($request);
             case '4'://D
                 return $this->delete($request->id());
             default:
