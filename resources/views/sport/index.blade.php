@@ -120,49 +120,93 @@
         }
 
         function createPost(){
-            post('{{route('sport.create')}}')
+            const type = 3; // Sport
+            const process = 1; // Create
+            const formData = new FormData(document.getElementById('sport_form'));
+
+            formData.append('type', type);
+            formData.append('process', process);
+
+            $.ajax({
+                url: '{{route('sport.create')}}',
+                type: 'POST',
+                headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: (response) => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully',
+                        text: response.success,
+                        showConfirmButton: true,
+                    });
+                    clearForm();
+                    closeModal();
+                    dataTable.ajax.reload();
+                },
+                error: (xhr, status, error) => {
+                    console.error(xhr, status, error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        html: errorMap(xhr.responseJSON.errors),
+                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
+                        showConfirmButton: true,
+                    });
+                }
+            });
         }
 
-        function deleteSport(id){
+        function deleteSport(id) {
+            const type = 3; // Sport
+            const process = 4; // Delete
 
             Swal.fire({
                 title: 'Are you sure?',
                 text: "This is the last step!",
-                type: 'warning',
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes Delete!',
             }).then((result) => {
-                if (result.value) {
+                if (result.isConfirmed) { // 'result.value' yerine 'result.isConfirmed' kullanılıyor
+
+                    const formData = new FormData();
+                    formData.append('sport_id', id);
+                    formData.append('type', type);
+                    formData.append('process', process);
+
                     $.ajax({
-                        url: '{{route('sport.delete')}}',
+                        url: '{{ route('sport.delete') }}',
                         type: 'DELETE',
-                        headers: {'X-CSRF-TOKEN': "{{csrf_token()}} "},
-                        processData: true,
-                        data: {'sport_id':id},
+                        headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                        processData: false, // FormData kullanıldığında bu ayar false olmalıdır
+                        contentType: false,  // FormData kullanıldığında bu ayar false olmalıdır
+                        data: formData,
                         success: () => {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Successfully',
                                 text: 'Sport Deleted Successfully',
                                 showConfirmButton: true,
-                            })
+                            });
 
-                            dataTable.ajax.reload()
+                            dataTable.ajax.reload();
                         },
                         error: (xhr, status, error) => {
-                            console.error(xhr,status,error);
+                            console.error(xhr, status, error);
 
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
-                                html: errorMap(xhr.responseJSON.errors),  // Hatanın detaylarını gösterir
-                                footer: `An error occured : ${xhr.status} - ${xhr.statusText}`,
+                                html: errorMap(xhr.responseJSON.errors), // Hatanın detaylarını gösterir
+                                footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                                 showConfirmButton: true,
                             });
                         }
-                    })
+                    });
                 }
             });
         }
@@ -196,16 +240,19 @@
         }
 
         function updatePost(){
-            post('{{route('sport.update')}}')
-        }
+            const type = 1; // Sport
+            const process = 3; // Update
+            const formData = new FormData(document.getElementById('sport_form'));
 
-        function post(route){
+            // Type ve process değerlerini formData'ya ekle
+            formData.append('type', type);
+            formData.append('process', process);
+            formData.append('update_id', $('#update_id').val()); // Güncellenen öğenin ID'sini ekleyin
 
-            var formData =  new FormData(document.getElementById('sport_form'))
             $.ajax({
-                url: route,
+                url: '{{route('sport.update')}}',
                 type: 'POST',
-                headers: {'X-CSRF-TOKEN': "{{csrf_token()}} "},
+                headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 processData: false,
                 contentType: false,
                 data: formData,
@@ -215,23 +262,22 @@
                         title: 'Successfully',
                         text: response.success,
                         showConfirmButton: true,
-                    })
-                    clearForm()
-                    closeModal()
-                    dataTable.ajax.reload()
+                    });
+                    clearForm();
+                    closeModal();
+                    dataTable.ajax.reload();
                 },
                 error: (xhr, status, error) => {
-                    console.error(xhr,status,error);
-
+                    console.error(xhr, status, error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         html: errorMap(xhr.responseJSON.errors),
-                        footer: `An error occured: ${xhr.status} - ${xhr.statusText}`,
+                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                         showConfirmButton: true,
                     });
                 }
-            })
+            });
         }
 
         function clearForm(){
