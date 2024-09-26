@@ -14,6 +14,10 @@ class RequestController extends Controller
         $this->requestService = $requestService;
     }
 
+    public function index(){
+        return view('sport.index');
+    }
+
     public function handleRequest(Request $request)
     {
         try {

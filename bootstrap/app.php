@@ -13,7 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(AddTypeAndProcess::class);
+        $middleware->alias([
+            'typeAndProcess' => AddTypeAndProcess::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

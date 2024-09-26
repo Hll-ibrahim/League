@@ -1,17 +1,16 @@
 <?php
 
 use App\Http\Controllers\LeagueController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AddTypeAndProcess;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('sport')->middleware('AddTypeAndProcess')->name('sport.')->controller(SportController::class)->group(function () {
+Route::prefix('sport')->middleware('typeAndProcess')->name('sport.')->controller(RequestController::class)->group(function () {
 
-    Route::get('/', function () {
-        Route::get('/', 'index')->name('index');
-    })->withoutMiddleware([AddTypeAndProcess::class]);
+    Route::get('/', 'index')->name('index')->withoutMiddleware('typeAndProcess');
     //CRUD Request's
     Route::get('/fetch', 'fetch')->name('fetch');
     Route::get('/detail/{id}', 'detail')->name('detail');

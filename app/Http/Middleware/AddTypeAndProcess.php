@@ -15,7 +15,7 @@ class AddTypeAndProcess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // İsteğe 'type' ve 'process' parametrelerini ekleyelim.
+
         $request->merge([
             'type' => $request->input('type', 'default-type'), // 'type' default olarak atanabilir
             'process' => $request->input('process', 'default-process') // 'process' default olarak atanabilir
