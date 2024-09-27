@@ -279,14 +279,14 @@
 
         function updatePost() {
             const type = 3; // Sport
-            const process = 1; // Create
+            const process = 3; // update
             const formData = new FormData(document.getElementById('update_sport_form'));
 
             formData.append('type', type);
             formData.append('process', process);
 
             $.ajax({
-                url: '{{route('sport.create')}}',
+                url: '{{route('sport.update')}}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 processData: false,

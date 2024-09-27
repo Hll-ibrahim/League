@@ -46,7 +46,7 @@ class SportService implements SportServiceInterface {
     }
 
     public function update($data){
-        $sport = $this->sportRepository->getSportById($data['id']);
+        $sport = $this->sportRepository->getSportById($data->input('id'));
         return $this->sportRepository->update($sport, $data);
     }
 }
