@@ -38,7 +38,7 @@ class SportController extends Controller
                 return '<button onclick="deleteSport('.$sport->id.')" class="btn btn-danger btn-xs">Delete</button>';
             })
             ->addColumn('update',function($sport){
-                return '<button onclick="updateSport('.$sport->id.')" class="btn btn-warning btn-xs">Update</button>';
+                return '<button onclick="openUpdateModal('.$sport->id.', \''.$sport->name.'\', \''.$sport->description.'\')" class="btn btn-warning btn-xs">Update</button>';
             })
             ->addIndexColumn()
             ->rawColumns(['detail','delete','update'])

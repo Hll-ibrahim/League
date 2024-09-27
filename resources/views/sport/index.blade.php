@@ -46,6 +46,33 @@
         </div>
     </div>
 
+    <div id="updateSportModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Sport</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="update_sport_form">
+                        <input type="hidden" id="update_id">
+                        <div class="form-group">
+                            <label for="sport_name">Sport Name</label>
+                            <input type="text" id="update_name" class="form-control" name="sport_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="sport_description">Sport Description</label>
+                            <textarea id="update_description" class="form-control" name="sport_description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="updatePost()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <button class="btn btn-primary mb-4" onclick="create()">Add</button>
     <table id="sport_table" class="display nowrap dataTable cell-border"
@@ -118,6 +145,18 @@
 
         function openModal(){
             $('#add_sport_modal').modal('show')
+        }
+
+        function openUpdateModal(id, name, description){
+            $('#update_id').val(id);
+            $('#update_name').val(name);
+            $('#update_description').val(description);
+
+            $('#updateSportModal').modal('show');
+        }
+
+        function closeUpdateModal(){
+            $('#update_sport_modal').modal('hide')
         }
 
         function create(){
@@ -238,18 +277,16 @@
             });
         }
 
-        function updatePost(id){
-            const type = 1; // Sport
-            const process = 3; // Update
-            const formData = new FormData(document.getElementById('sport_form'));
+        function updatePost() {
+            const type = 3; // Sport
+            const process = 1; // Create
+            const formData = new FormData(document.getElementById('update_sport_form'));
 
-            // Type ve process değerlerini formData'ya ekle
             formData.append('type', type);
             formData.append('process', process);
-            formData.append('update_id', $('#update_id').val()); // Güncellenen öğenin ID'sini ekleyin
 
             $.ajax({
-                url: '{{route('sport.update')}}',
+                url: '{{route('sport.create')}}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 processData: false,
