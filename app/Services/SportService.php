@@ -16,7 +16,7 @@ class SportService implements SportServiceInterface {
 
     public function processControl($request)
     {
-        switch ($request->input('process')) {
+        switch ($request['process']) {
             case '1'://C
                 return $this->add($request);
             case '2'://R
@@ -46,7 +46,7 @@ class SportService implements SportServiceInterface {
     }
 
     public function update($data){
-        $sport = $this->sportRepository->getSportById($data->input('id'));
-        return $this->sportRepository->update($sport, $data);
+        $sport = $this->sportRepository->getSportById($data['id']);
+        return $this->sportRepository->update($sport, $data->toArray());
     }
 }

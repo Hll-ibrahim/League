@@ -78,8 +78,8 @@ class SportController extends Controller
         return response()->json($sport);
     }
 
-    public function update(Request $request){
-        $this->requestService->handleRequest($request->all());
+    public function update(SportRequest $request){
+        $this->requestService->handleRequest($request);
         return response()->json(['success'=>'Data updated successfully.']);
     }
 }

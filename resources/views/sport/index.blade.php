@@ -57,12 +57,12 @@
                     <form id="update_sport_form">
                         <input type="hidden" id="update_id">
                         <div class="form-group">
-                            <label for="sport_name">Sport Name</label>
-                            <input type="text" id="update_name" class="form-control" name="sport_name">
+                            <label for="name">Sport Name</label>
+                            <input type="text" id="update_name" class="form-control" name="name">
                         </div>
                         <div class="form-group">
                             <label for="sport_description">Sport Description</label>
-                            <textarea id="update_description" class="form-control" name="sport_description"></textarea>
+                            <textarea id="update_description" class="form-control" name="description"></textarea>
                         </div>
                     </form>
                 </div>
@@ -281,12 +281,14 @@
             const type = 3; // Sport
             const process = 3; // update
             const formData = new FormData(document.getElementById('update_sport_form'));
+            const id = $('#update_id').val();
 
+            formData.append('id', id);
             formData.append('type', type);
             formData.append('process', process);
 
             $.ajax({
-                url: '{{route('sport.update')}}',
+                url: '{{ route('sport.update') }}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 processData: false,
