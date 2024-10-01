@@ -48,7 +48,6 @@ class SportController extends Controller
     public function detail($id){
         $request = new Request();
 
-        // Gelen ID'yi ve diğer parametreleri request'e ekle
         $request->merge([
             'id' => $id, // Aldığınız ID değeri
             'type' => 3, // Örnek type değeri
@@ -63,12 +62,7 @@ class SportController extends Controller
         return response()->json(['success'=>'Data added successfully.']);
     }
 
-    public function delete(Request $request){
-        $request->merge([
-            'type' => 3, // Örnek type değeri
-            'process' => 2 // Örnek process değeri
-        ]);
-
+    public function delete(SportRequest $request){
         $this->requestService->handleRequest($request);
         return response()->json(['success'=>'Data deleted successfully.']);
     }

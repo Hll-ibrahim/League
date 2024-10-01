@@ -217,19 +217,20 @@
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes Delete!',
             }).then((result) => {
-                if (result.isConfirmed) { // 'result.value' yerine 'result.isConfirmed' kullanılıyor
+                if (result.isConfirmed) {
 
                     const formData = new FormData();
-                    formData.append('sport_id', id);
+                    formData.append('id', id);
                     formData.append('type', type);
                     formData.append('process', process);
+                    formData.append('_method', 'DELETE');  // Laravel'e DELETE isteği gibi işlem yapması için ekleniyor
 
                     $.ajax({
                         url: '{{ route('sport.delete') }}',
-                        type: 'DELETE',
+                        type: 'POST',  // DELETE yerine POST kullanıyoruz
                         headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
-                        processData: false, // FormData kullanıldığında bu ayar false olmalıdır
-                        contentType: false,  // FormData kullanıldığında bu ayar false olmalıdır
+                        processData: false,
+                        contentType: false,
                         data: formData,
                         success: () => {
                             Swal.fire({
@@ -238,7 +239,6 @@
                                 text: 'Sport Deleted Successfully',
                                 showConfirmButton: true,
                             });
-
                             dataTable.ajax.reload();
                         },
                         error: (xhr, status, error) => {
@@ -247,7 +247,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
-                                html: errorMap(xhr.responseJSON.errors), // Hatanın detaylarını gösterir
+                                html: errorMap(xhr.responseJSON.errors),
                                 footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                                 showConfirmButton: true,
                             });

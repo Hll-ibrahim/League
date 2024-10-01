@@ -26,7 +26,7 @@ class SportService implements SportServiceInterface {
             case '3'://U
                 return $this->update($request);
             case '4'://D
-                return $this->delete($request->id());
+                return $this->delete($request['id']);
             default:
                 throw new \Exception("Invalid request type");
         }
