@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LeagueRequest;
 use App\Http\Requests\SportRequest;
 use App\Models\League;
+use App\Services\Contracts\LeagueServiceInterface;
+use App\Services\Contracts\RequestServiceInterface;
+use App\Services\Contracts\SportServiceInterface;
 use App\Services\LeagueService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -11,8 +15,10 @@ use Yajra\DataTables\DataTables;
 class LeagueController extends Controller
 {
     protected $leagueService;
-    public function __construct(LeagueService $leagueService){
+    protected $requestService;
+    public function __construct(LeagueServiceInterface $leagueService , RequestServiceInterface $requestService) {
         $this->leagueService = $leagueService;
+        $this->requestService = $requestService;
     }
 
     /**
@@ -24,75 +30,57 @@ class LeagueController extends Controller
     }
 
     public function fetch(Request $request){
-        $leagues = $this->leagueService->all();
+        $request->merge([
+            'type' => 2, // Örnek type değeri
+            'process' => 2 // Örnek process değeri
+        ]);
 
-        if(isset($request->sport_id)){
-            $leagues = $this->leagueService->get_leagues_from_sport($request->sport_id);
-        }
+        $leagues = $this->requestService->handleRequest($request);
         return DataTables::of($leagues)
-            ->addColumn('detail',function($league){
-                return '<a href="'.route('sport.league.detail',$league->id).'" class="btn btn-info btn-xs">Detail</a>';
+            ->addColumn('detail',function($leagues){
+                return '<a href="'.route('sport.league.detail',$leagues->id).'" class="btn btn-info btn-xs">Detail</a>';
             })
-            ->editColumn('season_id',function($league){
-                return $league->season->name;
+            ->addColumn('delete',function($leagues){
+                return '<button onclick="deleteSport('.$leagues->id.')" class="btn btn-danger btn-xs">Delete</button>';
+            })
+            ->addColumn('update',function($leagues){
+                return '<button onclick="openUpdateModal('.$leagues->id.', \''.$leagues->name.'\', \''.$leagues->description.'\')" class="btn btn-warning btn-xs">Update</button>';
             })
             ->addIndexColumn()
-            ->rawColumns(['detail'])
+            ->rawColumns(['detail','delete','update'])
             ->make();
     }
 
 
     public function detail($id){
-        $league = $this->leagueService->get($id);
+        $request = new Request();
+
+        $request->merge([
+            'id' => $id, // Aldığınız ID değeri
+            'type' => 3, // Örnek type değeri
+            'process' => 2.01 // Örnek process değeri
+        ]);
+        $league = $this->requestService->handleRequest($request);
         return view('league.detail',compact('league'));
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(SportRequest $request){
+    public function create(LeagueRequest $request){
         $this->leagueService->add($request->all());
         return response()->json(['success'=>'Data added successfully.']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function delete(LeagueRequest $request){
+        $this->requestService->handleRequest($request);
+        return response()->json(['success'=>'Data deleted successfully.']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(League $league)
-    {
-        //
+    public function get(Request $request){
+        $league = $this->leagueService->get($request->sport_id);
+        return response()->json($league);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(League $league)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, League $league)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(League $league)
-    {
-        //
+    public function update(LeagueRequest $request){
+        $this->requestService->handleRequest($request);
+        return response()->json(['success'=>'Data updated successfully.']);
     }
 }

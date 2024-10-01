@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('sport')->name('sport.')->controller(SportController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/fetch', 'fetch')->name('fetch');
-    //CRUD Request's
-    Route::get('/detail/{id}', 'detail')->name('detail');
-
     Route::post('/create', 'create')->name('create');
     Route::delete('/delete', 'delete')->name('delete');
     Route::get('/get', 'get')->name('get');
-
     Route::post('/update', 'update')->name('update');
+
+    Route::get('/league/{id}', 'detail')->name('detail');
 
     Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
         Route::post('/create', 'create')->name('create');

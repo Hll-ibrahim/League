@@ -79,33 +79,52 @@
             order: [
                 [0, 'ASC']
             ],
-
             processing: true,
             serverSide: true,
             scrollX: true,
             scrollY: true,
             ajax: {
-                url:'{!! route('sport.league.fetch') !!}',
-                data: {
-                    'sport_id':'{{$sport->id}}',
+                url: '{{ route('sport.league.fetch') }}',
+                type: 'GET',
+                dataType: 'json',
+                error: function(xhr, error, thrown) {
+                    console.error('Ajax error:', error);
+                    console.error('XHR Response:', xhr.responseText);
+                    alert('An error occurred: ' + xhr.responseText); // Hata mesajını uyarı olarak göster
                 }
             },
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'name'},
-                {data: 'season_id',orderable: false},
-                {data: 'detail',orderable: false,searchable: false},
+                {data: 'description', orderable: false},
+                {data: 'detail', orderable: false, searchable: false},
+                {data: 'update', orderable: false, searchable: false},
+                {data: 'delete', orderable: false, searchable: false},
             ],
-            success: function () {
+            success: function(data) {
+                console.log('Data fetched successfully:', data); // Başarılı yanıt kontrolü
             }
         });
 
+
         function closeModal(){
-            $('#add_league_modal').modal('hide')
+            $('#add_sport_modal').modal('hide')
         }
 
         function openModal(){
-            $('#add_league_modal').modal('show')
+            $('#add_sport_modal').modal('show')
+        }
+
+        function openUpdateModal(id, name, description){
+            $('#update_id').val(id);
+            $('#update_name').val(name);
+            $('#update_description').val(description);
+
+            $('#updateSportModal').modal('show');
+        }
+
+        function closeUpdateModal(){
+            $('#update_sport_modal').modal('hide')
         }
 
         function create(){
@@ -115,92 +134,17 @@
         }
 
         function createPost(){
-            post('{{route('sport.league.create')}}')
-        }
+            const type = 3; // Sport
+            const process = 1; // Create
+            const formData = new FormData(document.getElementById('sport_form'));
 
-        function deleteSport(id){
+            formData.append('type', type);
+            formData.append('process', process);
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "This is the last step!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes Delete!',
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: '{{route('sport.delete')}}',
-                        type: 'DELETE',
-                        headers: {'X-CSRF-TOKEN': "{{csrf_token()}} "},
-                        processData: true,
-                        data: {'sport_id':id},
-                        success: () => {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Successfully',
-                                text: 'Sport Deleted Successfully',
-                                showConfirmButton: true,
-                            })
-
-                            dataTable.ajax.reload()
-                        },
-                        error: (xhr, status, error) => {
-                            console.error(xhr,status,error);
-
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                html: errorMap(xhr.responseJSON.errors),  // Hatanın detaylarını gösterir
-                                footer: `An error occured : ${xhr.status} - ${xhr.statusText}`,
-                                showConfirmButton: true,
-                            });
-                        }
-                    })
-                }
-            });
-        }
-
-        function updateSport(id){
             $.ajax({
-                url: '{{route('sport.get')}}',
-                type: 'GET',
-                processData: true,
-                data: {'sport_id':id,},
-                success: (response) => {
-                    $('#name').val(response.name)
-                    $('#description').val(response.description)
-                    createUpdateButton('update')
-                    $('#update_id').val(id)
-                    openModal()
-                },
-                error: (xhr, status, error) => {
-                    console.error(xhr,status,error);
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        html: errorMap(xhr.responseJSON.errors),  // Hatanın detaylarını gösterir
-                        footer: `An error occured: ${xhr.status} - ${xhr.statusText}`,
-                        showConfirmButton: true,
-                    });
-                }
-            })
-
-        }
-
-        function updatePost(){
-            post('{{route('sport.update')}}')
-        }
-
-        function post(route){
-
-            var formData =  new FormData(document.getElementById('sport_form'))
-            $.ajax({
-                url: route,
+                url: '{{route('sport.create')}}',
                 type: 'POST',
-                headers: {'X-CSRF-TOKEN': "{{csrf_token()}} "},
+                headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 processData: false,
                 contentType: false,
                 data: formData,
@@ -210,23 +154,136 @@
                         title: 'Successfully',
                         text: response.success,
                         showConfirmButton: true,
-                    })
-                    clearForm()
-                    closeModal()
-                    dataTable.ajax.reload()
+                    });
+                    clearForm();
+                    closeModal();
+                    dataTable.ajax.reload();
                 },
                 error: (xhr, status, error) => {
-                    console.error(xhr,status,error);
-
+                    console.error(xhr, status, error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
                         html: errorMap(xhr.responseJSON.errors),
-                        footer: `An error occured: ${xhr.status} - ${xhr.statusText}`,
+                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                         showConfirmButton: true,
                     });
                 }
-            })
+            });
+        }
+
+        function deleteSport(id) {
+            const type = 3; // Sport
+            const process = 4; // Delete
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This is the last step!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes Delete!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    const formData = new FormData();
+                    formData.append('id', id);
+                    formData.append('type', type);
+                    formData.append('process', process);
+                    formData.append('_method', 'DELETE');  // Laravel'e DELETE isteği gibi işlem yapması için ekleniyor
+
+                    $.ajax({
+                        url: '{{ route('sport.delete') }}',
+                        type: 'POST',  // DELETE yerine POST kullanıyoruz
+                        headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: () => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully',
+                                text: 'Sport Deleted Successfully',
+                                showConfirmButton: true,
+                            });
+                            dataTable.ajax.reload();
+                        },
+                        error: (xhr, status, error) => {
+                            console.error(xhr, status, error);
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                html: errorMap(xhr.responseJSON.errors),
+                                footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
+                                showConfirmButton: true,
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        function detailGet(sportId) {
+            $.ajax({
+                url: '{{ route('sport.detail', '') }}/' + sportId, // ID ile backend'e istek yap
+                type: 'GET',
+                success: function(response) {
+                    // Eğer detay başarılı şekilde alındıysa yönlendir
+                    window.location.href = '{{ route('sport.detail', '') }}/' + sportId;
+                },
+                error: function(xhr, status, error) {
+                    // Hata durumunda yapılacak işlemler
+                    console.error('An error occurred:', status, error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Could not fetch details!',
+                    });
+                }
+            });
+        }
+
+        function updatePost() {
+            const type = 3; // Sport
+            const process = 3; // update
+            const formData = new FormData(document.getElementById('update_sport_form'));
+            const id = $('#update_id').val();
+
+            formData.append('id', id);
+            formData.append('type', type);
+            formData.append('process', process);
+
+            $.ajax({
+                url: '{{ route('sport.update') }}',
+                type: 'POST',
+                headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: (response) => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully',
+                        text: response.success,
+                        showConfirmButton: true,
+                    });
+                    clearForm();
+                    closeModal();
+                    dataTable.ajax.reload();
+                },
+                error: (xhr, status, error) => {
+                    console.error(xhr, status, error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        html: errorMap(xhr.responseJSON.errors),
+                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
+                        showConfirmButton: true,
+                    });
+                }
+            });
         }
 
         function clearForm(){
@@ -243,7 +300,6 @@
                 $('#updateButton').addClass('d-none')
             }
         }
-
     </script>
 @endsection
 
