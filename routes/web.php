@@ -16,7 +16,7 @@ Route::prefix('sport')->name('sport.')->controller(SportController::class)->grou
     Route::get('/get', 'get')->name('get');
     Route::post('/update', 'update')->name('update');
 
-    Route::get('/league/{id}', 'detail')->name('detail');
+    Route::get('/league/{id}', 'detail')->name('detail');//sport/league/{id}
 
     Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
         Route::post('/create', 'create')->name('create');

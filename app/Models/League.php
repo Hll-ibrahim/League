@@ -9,7 +9,10 @@ class League extends Model
 {
     use HasFactory;
 
-    public function season(){
+    protected $fillable = ['name', 'description', 'season_id']; // Add the fields you want to be mass-assignable
+
+    public function season()
+    {
         return $this->belongsTo(Season::class);
     }
 }

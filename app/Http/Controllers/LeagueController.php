@@ -30,24 +30,26 @@ class LeagueController extends Controller
     }
 
     public function fetch(Request $request){
-        $request->merge([
-            'type' => 2, // Örnek type değeri
-            'process' => 2 // Örnek process değeri
-        ]);
-
+        dd(1);
+        // Validate and check required parameters
         $leagues = $this->requestService->handleRequest($request);
+
+        if ($leagues->isEmpty()) {
+            return response()->json(['error' => 'No leagues found'], 404);
+        }
+
         return DataTables::of($leagues)
-            ->addColumn('detail',function($leagues){
-                return '<a href="'.route('sport.league.detail',$leagues->id).'" class="btn btn-info btn-xs">Detail</a>';
+            ->addColumn('detail', function ($leagues) {
+                return '<a href="' . route('sport.league.detail', $leagues->id) . '" class="btn btn-info btn-xs">Detail</a>';
             })
-            ->addColumn('delete',function($leagues){
-                return '<button onclick="deleteSport('.$leagues->id.')" class="btn btn-danger btn-xs">Delete</button>';
+            ->addColumn('delete', function ($leagues) {
+                return '<button onclick="deleteSport(' . $leagues->id . ')" class="btn btn-danger btn-xs">Delete</button>';
             })
-            ->addColumn('update',function($leagues){
-                return '<button onclick="openUpdateModal('.$leagues->id.', \''.$leagues->name.'\', \''.$leagues->description.'\')" class="btn btn-warning btn-xs">Update</button>';
+            ->addColumn('update', function ($leagues) {
+                return '<button onclick="openUpdateModal(' . $leagues->id . ', \'' . $leagues->name . '\', \'' . $leagues->description . '\')" class="btn btn-warning btn-xs">Update</button>';
             })
             ->addIndexColumn()
-            ->rawColumns(['detail','delete','update'])
+            ->rawColumns(['detail', 'delete', 'update'])
             ->make();
     }
 
