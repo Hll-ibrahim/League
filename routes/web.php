@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\AddTypeAndProcess;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::prefix('sport')->name('sport.')->controller(SportController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/fetch', 'fetch')->name('fetch');
@@ -15,8 +17,6 @@ Route::prefix('sport')->name('sport.')->controller(SportController::class)->grou
     Route::delete('/delete', 'delete')->name('delete');
     Route::get('/get', 'get')->name('get');
     Route::post('/update', 'update')->name('update');
-
-    Route::get('/league/{id}', 'detail')->name('detail');//sport/league/{id}
 
     Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
         Route::post('/create', 'create')->name('create');
@@ -29,6 +29,9 @@ Route::prefix('sport')->name('sport.')->controller(SportController::class)->grou
         });
 
     });
+    Route::get('/league/{id}', 'detail')->name('detail');//sport/league/{id}
+
+
 });
 
 

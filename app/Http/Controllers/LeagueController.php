@@ -30,7 +30,6 @@ class LeagueController extends Controller
     }
 
     public function fetch(Request $request){
-        dd(1);
         // Validate and check required parameters
         $leagues = $this->requestService->handleRequest($request);
 
