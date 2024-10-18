@@ -22,6 +22,19 @@ class RegisterRequest extends UserRequest
     {
         return array_merge(parent::rules(), [
             'password_confirmation' => 'required|same:password',
+            'name'=>'required|min:5|string|max:30|unique:users,name',
+        ]);
+    }
+
+    public function messages(): array{
+        return array_merge(parent::messages(), [
+            'password_confirmation.required' => 'The password confirmation is required.',
+            'password_confirmation.same' => 'The passwords do not match.',
+            'name.required'=>'Name is required.',
+            'name.min'=>'Name must be at least 5 characters.',
+            'name.max'=>'Name must be less than 30 characters.',
+            'name.unique'=>'Name must be unique.',
+
         ]);
     }
 }
