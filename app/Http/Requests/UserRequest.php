@@ -24,8 +24,8 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'=>'required|email|unique:users,email',
-            'password'=>'required|min:5|confirmed|max:30',
+            'email'=>'required|email',
+            'password'=>'required|min:5|max:30',
         ];
     }
 
@@ -47,8 +47,6 @@ class UserRequest extends FormRequest
             'password.max' => 'Şifre alanı en fazla 30 karakterden oluşmalıdır.',
 
             'email.email' => 'Email alanı geçerli değil.',
-
-            'password.confirmed' => 'Şifreler eşleşmiyor!',
         ];
     }
 

@@ -30,11 +30,11 @@ class UserController extends Controller
     public function login(LoginRequest $request){
         $credentials = $request->only('email', 'password');
 
+
         if (auth()->attempt($credentials)) {
 
             $user = auth()->user();
 
-            // İsterseniz bir API token veya JWT döndürebilirsiniz
             return response()->json([
                 'success' => true,
                 'message' => 'Login successful',
@@ -42,7 +42,6 @@ class UserController extends Controller
                 'token' => $user->createToken('YourApp')->accessToken, // API token kullanıyorsanız
             ]);
         }
-        // Login başarısızsa hata döndür
         return response()->json([
             'success' => false,
             'message' => 'Invalid credentials',

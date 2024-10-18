@@ -21,8 +21,10 @@ class RegisterRequest extends UserRequest
     public function rules(): array
     {
         return array_merge(parent::rules(), [
+            'password' => 'confirmed',
             'password_confirmation' => 'required|same:password',
             'name'=>'required|min:5|string|max:30|unique:users,name',
+            'email' => 'unique:users,email',
         ]);
     }
 
@@ -34,6 +36,7 @@ class RegisterRequest extends UserRequest
             'name.min'=>'Name must be at least 5 characters.',
             'name.max'=>'Name must be less than 30 characters.',
             'name.unique'=>'Name must be unique.',
+            'password.confirmed' => 'Şifreler eşleşmiyor!',
 
         ]);
     }
