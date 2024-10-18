@@ -24,7 +24,6 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|min:5|string|max:30|unique:users,name',
             'email'=>'required|email|unique:users,email',
             'password'=>'required|min:5|confirmed|max:30',
         ];
@@ -34,17 +33,14 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'İsim alanı gereklidir.',
             'email.required' => 'Email alanı gereklidir.',
             'password.required' => 'Şifre alanı gereklidir.',
 
             'email.unique' => 'Girilen Email ile daha önce kayıt oluşturulmuş. Giriş yapmayı deneyebilirsiniz.',
             'name.unique' => 'Girilen isim ile daha önce kayıt oluşturulmuş.',
 
-            'name.min' => 'İsim alanı en az 5 karakterden oluşmalıdır.',
             'password.min' => 'Şifre alanı en az 5 karakterden oluşmalıdır.',
 
-            'name.max' => 'Başlık alanı en fazla 30 karakterden oluşmalıdır.',
             'password.max' => 'Şifre alanı en fazla 30 karakterden oluşmalıdır.',
 
             'email.email' => 'Email alanı geçerli değil.',

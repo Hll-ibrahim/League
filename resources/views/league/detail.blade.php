@@ -1,8 +1,6 @@
+
 @extends('layouts.index')
-
 @section('content')
-
-
         <table id="team_table" class="display nowrap dataTable cell-border"
                style="width:100%">
             <thead>
@@ -30,9 +28,7 @@
             </tr>
             </tfoot>
         </table>
-
 @endsection
-
 @section('script')
     <script>
         dataTable = $('#team_table').DataTable({
@@ -69,3 +65,7 @@
 
     </script>
 @endsection
+
+
+
+
