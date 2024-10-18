@@ -17,7 +17,7 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function register(Request $request){
+    public function register(RegisterRequest $request){
         $user = $this->userService->add($request->all());
 
         // Başarılı kayıt sonrası cevap dön
@@ -27,14 +27,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function login(Request $request){
+    public function login(LoginRequest $request){
         $credentials = $request->only('email', 'password');
 
         if (auth()->attempt($credentials)) {
 
             $user = auth()->user();
 
-            return response()->json(['email'=>'12']);
             // İsterseniz bir API token veya JWT döndürebilirsiniz
             return response()->json([
                 'success' => true,
@@ -43,8 +42,6 @@ class UserController extends Controller
                 'token' => $user->createToken('YourApp')->accessToken, // API token kullanıyorsanız
             ]);
         }
-        return response()->json($credentials);
-
         // Login başarısızsa hata döndür
         return response()->json([
             'success' => false,
