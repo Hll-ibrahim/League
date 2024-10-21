@@ -12,4 +12,12 @@ class Game extends Model
     public function events(){
         return $this->hasMany(Event::class);
     }
+
+    public function home_team(){
+        return $this->belongsTo(Team::class, 'home_team_id','id');
+    }
+
+    public function away_team(){
+        return $this->belongsTo(Team::class, 'away_team_id','id');
+    }
 }

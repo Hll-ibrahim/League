@@ -45,6 +45,8 @@ Route::get('detail/{id}',[TeamController::class,'detail'])->name('detail');
 
 Route::post('register',[UserController::class,'register'])->name('register');
 
+Route::get('hail',[\App\Http\Controllers\GameController::class,'getMatches'])->name('hail');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
