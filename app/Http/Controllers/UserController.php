@@ -39,7 +39,7 @@ class UserController extends Controller
                 'success' => true,
                 'message' => 'Login successful',
                 'user' => $user,
-                'token' => $user->createToken('YourApp')->accessToken, // API token kullanıyorsanız
+                'token' => $user->createToken('YourApp')->plainTextToken, // API token kullanıyorsanız
             ]);
         }
         return response()->json([
