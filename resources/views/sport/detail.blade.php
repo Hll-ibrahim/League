@@ -40,9 +40,6 @@
                                     <div class="inp-group">
                                         <select name="sport_id" id="sport_id" class="form-control">
                                             <option value="">Select Sport</option>
-                                            @foreach($sports as $sport)
-                                                <option value="{{ $sport->id }}">{{ $sport->name }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -57,9 +54,6 @@
                                     <div class="inp-group">
                                         <select name="season_id" id="season_id" class="form-control">
                                             <option value="">Select Season</option>
-                                            @foreach($seasons as $season)
-                                                <option value="{{ $season->id }}">{{ $season->name }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -95,37 +89,44 @@
     <script>
         $(document).ready(function () {
             fetchSeasons();
-        });
-        dataTable = $('#league_table').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
-            },
-            order: [
-                [0, 'ASC']
-            ],
-            processing: true,
-            serverSide: true,
-            scrollX: true,
-            scrollY: true,
-            ajax: {
-                url: '{{ route('sport.league.fetch') }}',
-                type: 'GET',
-                dataType: 'json',
-                error: function(xhr, error, thrown) {
-                    console.error('Ajax error:', error);
-                    console.error('XHR Response:', xhr.responseText);
-                    alert('An error occurred: ' + xhr.responseText); // Hata mesajını uyarı olarak göster
+            const sportId = '{{ $sport_id }}';
+
+            // DataTable'ı başlat
+            dataTable = $('#league_table').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
+                },
+                order: [
+                    [0, 'ASC']
+                ],
+                processing: true,
+                serverSide: true,
+                scrollX: true,
+                scrollY: true,
+                ajax: {
+                    url: '{{ route('sport.league.fetch') }}',
+                    type: 'GET',
+                    data: function(d) {
+                        d.sport_id = sportId; // Sport ID'yi gönder
+                    },
+                    dataType: 'json',
+                    error: function(xhr, error, thrown) {
+                        console.error('Ajax error:', error);
+                        console.error('XHR Response:', xhr.responseText);
+                        alert('An error occurred: ' + xhr.responseText); // Hata mesajını uyarı olarak göster
+                    }
+                },
+                columns: [
+                    {data: 'DT_RowIndex', orderable: false, searchable: false},
+                    {data: 'name'},
+                    {data: 'description', orderable: false , searchable: false},
+                    {data: 'season_id', orderable: false},
+                    {data: 'league_type_id', orderable: false, searchable: false},
+                ],
+                success: function(data) {
+                    console.log('Data fetched successfully:', data); // Başarılı yanıt kontrolü
                 }
-            },
-            columns: [
-                {data: 'DT_RowIndex', orderable: false, searchable: false},
-                {data: 'name'},
-                {data: 'season_id', orderable: false},
-                {data: 'league_type_id', orderable: false, searchable: false},
-            ],
-            success: function(data) {
-                console.log('Data fetched successfully:', data); // Başarılı yanıt kontrolü
-            }
+            });
         });
 
         function closeModal() {

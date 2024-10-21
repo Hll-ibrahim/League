@@ -47,14 +47,14 @@ class SportController extends Controller
 
     public function detail($id){
         $request = new Request();
-
         $request->merge([
             'id' => $id, // Aldığınız ID değeri
-            'type' => 3, // Örnek type değeri
+            'type' => 2, // Örnek type değeri
             'process' => 2.01 // Örnek process değeri
         ]);
-        $sport = $this->requestService->handleRequest($request);
-        return view('sport.detail',compact('sport'));
+        $leagues = $this->requestService->handleRequest($request);
+        $sport_id=$id;
+        return view('sport.detail',compact('sport_id'));
     }
 
     public function create(SportRequest $request){

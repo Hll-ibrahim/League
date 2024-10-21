@@ -34,7 +34,7 @@ class LeagueController extends Controller
             'type' => 2, // Örnek type değeri
             'process' => 2 // Örnek process değeri
         ]);
-        // Validate and check required parameters
+
         $leagues = $this->requestService->handleRequest($request);
         if ($leagues->isEmpty()) {
             return response()->json(['error' => 'No leagues found'], 404);

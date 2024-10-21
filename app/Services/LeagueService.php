@@ -39,7 +39,7 @@ class LeagueService implements LeagueServiceInterface {
         return $this->leagueRepository->createLeague($data);
     }
     public function get($id){
-        return $this->leagueRepository->getSportById($id);
+        return $this->leagueRepository->getLeagueBySportId($id);
     }
     public function all(){
         return $this->leagueRepository->getLeagues();

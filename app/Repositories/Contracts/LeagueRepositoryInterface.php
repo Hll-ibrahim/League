@@ -9,7 +9,7 @@ interface LeagueRepositoryInterface
 {
     public function createLeague($data);
     public function getLeagues();
-    public function getLeagueById($id);
+    public function getLeagueBySportId($id);
     public function getSeasons();
     public function update(League $league, $data);
     public function delete($id);
