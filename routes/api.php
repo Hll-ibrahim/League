@@ -13,6 +13,6 @@ Route::group([], function () {
     Route::post('register',[UserController::class,'register']);
 });
 
-Route::get('getMatches',[\App\Http\Controllers\GameController::class,'getMatches'])->name('referee');
-
-
+Route::group([], function () {
+    Route::get('getMatches',[\App\Http\Controllers\GameController::class,'getMatches'])->name('referee')->middleware('auth:sanctum');
+});

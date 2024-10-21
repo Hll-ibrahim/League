@@ -2,19 +2,23 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\GameRepositoryInterface;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 use App\Repositories\Contracts\SportRepositoryInterface;
 use App\Repositories\Contracts\TeamRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\GameRepositoryMySql;
 use App\Repositories\LeagueRepository;
 use App\Repositories\SportRepository;
 use App\Repositories\TeamRepository;
 use App\Repositories\UserRepository;
+use App\Services\Contracts\GameServiceInterface;
 use App\Services\Contracts\LeagueServiceInterface;
 use App\Services\Contracts\RequestServiceInterface;
 use App\Services\Contracts\SportServiceInterface;
 use App\Services\Contracts\TeamServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
+use App\Services\GameService;
 use App\Services\LeagueService;
 use App\Services\RequestService;
 use App\Services\SportService;
@@ -34,7 +38,8 @@ class AppServiceProvider extends ServiceProvider
             return new RequestService(
                 $app->make(TeamServiceInterface::class),
                 $app->make(LeagueServiceInterface::class),
-                $app->make(SportServiceInterface::class)
+                $app->make(SportServiceInterface::class),
+                $app->make(GameServiceInterface::class)
             );
         });
 
@@ -44,12 +49,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(LeagueServiceInterface::class, LeagueService::class);
         $this->app->bind(SportServiceInterface::class, SportService::class);
         $this->app->bind(UserServiceInterface::class, UserService::class);
+        $this->app->bind(GameServiceInterface::class, GameService::class);
 
         // Repository ve interface bağlamaları
         $this->app->bind(TeamRepositoryInterface::class, TeamRepository::class);
         $this->app->bind(LeagueRepositoryInterface::class, LeagueRepository::class);
         $this->app->bind(SportRepositoryInterface::class, SportRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(GameRepositoryInterface::class, GameRepositoryMySql::class);
     }
 
     /**
