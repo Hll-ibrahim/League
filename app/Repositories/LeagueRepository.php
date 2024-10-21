@@ -10,8 +10,8 @@ class LeagueRepository implements LeagueRepositoryInterface {
     public function createSport($data){
         return Sport::create($data);
     }
-    public function getSports(){
-        return Sport::all();
+    public function getLeagues(){
+        return League::all();
     }
     public function getLeagueById($id){
         return Sport::findOrFail($id);

@@ -122,7 +122,7 @@
             const formData = new FormData($('#league_form')[0]);
 
             $.ajax({
-                url: '{{ route('sport.create') }}',
+                url: '{{ route('league.create') }}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 processData: false,
