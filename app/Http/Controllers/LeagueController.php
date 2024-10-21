@@ -87,4 +87,12 @@ class LeagueController extends Controller
         $this->requestService->handleRequest($request);
         return response()->json(['success'=>'Data updated successfully.']);
     }
+
+    public function getSeasons(Request $request){
+        $seasons = $this->requestService->handleRequest($request);
+
+        if ($seasons) {
+            view('sport.detail', compact('seasons'));
+        }
+    }
 }

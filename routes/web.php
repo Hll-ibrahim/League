@@ -21,6 +21,7 @@ Route::prefix('sport')->name('sport.')->controller(SportController::class)->grou
     Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
         Route::post('/create', 'create')->name('create');
         Route::get('/fetch', 'fetch')->name('fetch');
+        Route::get('/season/fetch', 'getSeasons')->name('season.fetch');
         Route::get('/detail/{id}', 'detail')->name('detail');
 
         Route::prefix('team')->controller(TeamController::class)->name('team.')->group(function () {

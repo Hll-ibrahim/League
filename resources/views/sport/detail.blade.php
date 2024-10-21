@@ -31,6 +31,39 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Sport Name -->
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">Sport Name</h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <select name="sport_id" id="sport_id" class="form-control">
+                                            <option value="">Select Sport</option>
+                                            @foreach($sports as $sport)
+                                                <option value="{{ $sport->id }}">{{ $sport->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Season Name -->
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">Season Name</h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <select name="season_id" id="season_id" class="form-control">
+                                            <option value="">Select Season</option>
+                                            @foreach($seasons as $season)
+                                                <option value="{{ $season->id }}">{{ $season->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <input type="hidden" id="update_id" name="id">
                         </form>
                     </div>
@@ -60,6 +93,9 @@
 
 @section('script')
     <script>
+        $(document).ready(function () {
+            fetchSeasons();
+        });
         dataTable = $('#league_table').DataTable({
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
@@ -117,12 +153,44 @@
                 openModal();
             });
         }
+        function fetchSeasons() {
+            $.ajax({
+                url: '{{ route('sport.league.season.fetch') }}',
+                type: 'GET',
+                data: {
+                    type: '2',
+                    process: '2.02'
+                },
+                success: function (response) {
+                    populateSeasonsDropdown(response);
+                },
+                error: function (xhr) {
+                    console.error('Error fetching seasons:', xhr.responseText);
+                }
+            });
+        }
+
+        // Populate the seasons dropdown
+        function populateSeasonsDropdown(seasons) {
+            let seasonSelect = $('#season_id');
+            seasonSelect.empty();
+            seasonSelect.append('<option value="">Select Season</option>');
+
+            $.each(seasons, function (index, season) {
+                seasonSelect.append(`<option value="${season.id}">${season.name}</option>`);
+            });
+        }
 
         function createPost() {
+            const type = 2; // League
+            const process = 1; // Create
             const formData = new FormData($('#league_form')[0]);
 
+            formData.append('type', type);
+            formData.append('process', process);
+
             $.ajax({
-                url: '{{ route('league.create') }}',
+                url: '{{ route('sport.league.create') }}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 processData: false,

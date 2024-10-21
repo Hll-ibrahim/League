@@ -7,9 +7,10 @@ use App\Models\Sport;
 
 interface LeagueRepositoryInterface
 {
-    public function createSport($data);
+    public function createLeague($data);
     public function getLeagues();
     public function getLeagueById($id);
+    public function getSeasons();
     public function update(League $league, $data);
     public function delete($id);
 }
