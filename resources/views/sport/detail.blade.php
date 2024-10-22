@@ -80,8 +80,12 @@
         <tr>
             <th>#</th>
             <th>League Name</th>
+            <th>Description</th>
             <th>Season</th>
             <th>League Type</th>
+            <th>Detail</th>
+            <th>Update</th>
+            <th>Delete</th>
         </tr>
         </thead>
     </table>
@@ -91,7 +95,6 @@
     <script>
         $(document).ready(function () {
             fetchSeasons();
-            fetchSportName();
             const sportId = '{{ $sport_id }}';
             dataTable = $('#league_table').DataTable({
                 language: {

@@ -26,7 +26,7 @@ class SportController extends Controller
     public function fetch(Request $request){
         $request->merge([
             'type' => 3, // Örnek type değeri
-            'process' => 2.01 // Örnek process değeri
+            'process' => 2 // Örnek process değeri
         ]);
 
         $sports = $this->requestService->handleRequest($request);
