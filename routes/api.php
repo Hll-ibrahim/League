@@ -15,4 +15,6 @@ Route::group([], function () {
 
 Route::group([], function () {
     Route::get('getMatches',[\App\Http\Controllers\GameController::class,'getMatches'])->name('referee')->middleware('auth:sanctum');
+    Route::post('setScore',[\App\Http\Controllers\GameController::class,'setScore'])->name('setScore');
+
 });

@@ -44,4 +44,16 @@ class GameService implements GameServiceInterface {
             'matches' => $matches,
         ]);
     }
+
+    public function getGame($id){
+        return $this->gameRepository->getGame($id);
+    }
+
+    public function addHomeScore($game,$goal){
+        return $this->gameRepository->setScore($game,$goal,'home');
+    }
+
+    public function addAwayScore($game,$goal){
+        return $this->gameRepository->setScore($game,$goal,'away');
+    }
 }

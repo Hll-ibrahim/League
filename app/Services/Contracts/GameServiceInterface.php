@@ -9,4 +9,6 @@ use Illuminate\Http\Request;
 interface GameServiceInterface{
     function getGames(User $user);
     function processControl(Request $request);
+
+    function getGame(int $id);
 }

@@ -13,10 +13,15 @@ class GameRepositoryMySql implements GameRepositoryInterface {
         return $referee->refereeGames;
     }
 
+    public function getGame($id){
+        return Game::findOrFail($id);
+    }
+
     public function getGamesWithNames($game)
     {
         $match = [];
         array_push($match, [
+            'id' => $game->id,
             'home_team' => $game->home_team->name,
             'away_team' => $game->away_team->name,
             'home_score' => $game->home_score,
@@ -25,5 +30,20 @@ class GameRepositoryMySql implements GameRepositoryInterface {
             'league' => $game->league->name
         ]);
         return $match;
+    }
+
+    public function setScore($game, $score, $team){
+
+        switch ($team) {
+            case 'home':
+                $game->home_score += $score;
+                $game->save();
+                break;
+            case 'away':
+                $game->away_score += $score;
+                $game->save();
+                break;
+        }
+        return $game;
     }
 }

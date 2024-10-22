@@ -27,4 +27,23 @@ class GameController extends Controller
             ], 401);  // Unauthorized
         }
     }
+
+    public function setScore(Request $request){
+
+        $match = $this->gameService->getGame($request->match_id);
+        if(!$match){
+            return response()->json(['success' => false,'error'=>'Match not found'],404);
+        }
+        $scoring_team = $request->scoring_team;
+        $goal = $request->goals;
+        switch ($scoring_team) {
+            case 'home_team':
+                $this->gameService->addHomeScore($match,$goal);
+                break;
+            case 'away_team':
+                $this->gameService->addAwayScore($match,$goal);
+                break;
+        }
+        return response()->json(['success' => true,'match' => $match,'scoring_team' => $scoring_team]);
+    }
 }
