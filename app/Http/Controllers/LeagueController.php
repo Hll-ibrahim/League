@@ -32,7 +32,7 @@ class LeagueController extends Controller
     public function fetch(Request $request){
         $request->merge([
             'type' => 2, // Örnek type değeri
-            'process' => 2 // Örnek process değeri
+            'process' => 2.01 // Örnek process değeri
         ]);
 
         $leagues = $this->requestService->handleRequest($request);

@@ -6,7 +6,7 @@ interface LeagueServiceInterface
 {
     public function processControl($request);
     public function add($data);
-    public function get($id);
+    public function getLeagueBySportId($id);
     public function getSeasons();
     public function all();
     public function delete($id);

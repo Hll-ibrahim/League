@@ -23,7 +23,7 @@ class LeagueService implements LeagueServiceInterface {
             case '2'://R
                 return $this->all();// get all
             case '2.01'://R
-                return $this->get($request->id);// get by Id
+                return $this->getLeagueBySportId($request['id']);// get leagues by sport id
             case '2.02'://R
                 return $this->getSeasons();
             case '3'://U
@@ -38,7 +38,7 @@ class LeagueService implements LeagueServiceInterface {
     public function add($data){
         return $this->leagueRepository->createLeague($data);
     }
-    public function get($id){
+    public function getLeagueBySportId($id){
         return $this->leagueRepository->getLeagueBySportId($id);
     }
     public function all(){

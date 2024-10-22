@@ -73,7 +73,7 @@
 
     <button class="btn btn-primary mb-4" onclick="create()">Add</button>
 
-    <table id="league_table" class="display nowrap dataTable cell-border" style="width:100%">
+    <table id="league_table" class="display nowrap cell-border" style="width:100%">
         <thead>
         <tr>
             <th>#</th>
@@ -93,16 +93,6 @@
 
             // DataTable'ı başlat
             dataTable = $('#league_table').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
-                },
-                order: [
-                    [0, 'ASC']
-                ],
-                processing: true,
-                serverSide: true,
-                scrollX: true,
-                scrollY: true,
                 ajax: {
                     url: '{{ route('sport.league.fetch') }}',
                     type: 'GET',
@@ -110,11 +100,6 @@
                         d.sport_id = sportId; // Sport ID'yi gönder
                     },
                     dataType: 'json',
-                    error: function(xhr, error, thrown) {
-                        console.error('Ajax error:', error);
-                        console.error('XHR Response:', xhr.responseText);
-                        alert('An error occurred: ' + xhr.responseText); // Hata mesajını uyarı olarak göster
-                    }
                 },
                 columns: [
                     {data: 'DT_RowIndex', orderable: false, searchable: false},
@@ -123,10 +108,9 @@
                     {data: 'season_id', orderable: false},
                     {data: 'league_type_id', orderable: false, searchable: false},
                 ],
-                success: function(data) {
-                    console.log('Data fetched successfully:', data); // Başarılı yanıt kontrolü
-                }
+
             });
+
         });
 
         function closeModal() {

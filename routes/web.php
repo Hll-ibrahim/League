@@ -9,7 +9,6 @@ use App\Http\Middleware\AddTypeAndProcess;
 use Illuminate\Support\Facades\Route;
 
 
-
 Route::prefix('sport')->name('sport.')->controller(SportController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/fetch', 'fetch')->name('fetch');
@@ -24,17 +23,16 @@ Route::prefix('sport')->name('sport.')->controller(SportController::class)->grou
         Route::get('/season/fetch', 'getSeasons')->name('season.fetch');
         Route::get('/detail/{id}', 'detail')->name('detail');
 
-        Route::prefix('team')->controller(TeamController::class)->name('team.')->group(function () {
-            Route::get('/fetch', 'fetch')->name('fetch');
-            Route::get('/', 'index')->name('index');
-        });
-
+            Route::prefix('team')->controller(TeamController::class)->name('team.')->group(function () {
+                Route::get('/fetch', 'fetch')->name('fetch');
+                Route::get('/', 'index')->name('index');
+            });
     });
+
     Route::get('/league/{id}', 'detail')->name('detail');//sport/league/{id}
 
 
 });
-
 
 
 Route::get('/soccer', function () {
