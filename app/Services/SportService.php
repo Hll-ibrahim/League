@@ -23,6 +23,8 @@ class SportService implements SportServiceInterface {
                 return $this->all();// get all
             case '2.01'://R
                 return $this->get($request->id);// get by Id
+            case '2.02':
+                return $this->getSportName($request['id']);
             case '3'://U
                 return $this->update($request);
             case '4'://D
@@ -48,5 +50,9 @@ class SportService implements SportServiceInterface {
     public function update($data){
         $sport = $this->sportRepository->getSportById($data['id']);
         return $this->sportRepository->update($sport, $data->toArray());
+    }
+
+    public function getSportName($id){
+        return $this->sportRepository->getSportName($id);
     }
 }

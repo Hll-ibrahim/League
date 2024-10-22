@@ -26,4 +26,14 @@ class SportRepository implements SportRepositoryInterface {
         return Sport::destroy($id);
     }
 
+    public function getSportName($id){
+        $sportName = Sport::findOrFail($id)->name;;
+
+        if ($sportName) {
+            return $sportName;
+        }
+
+        return response()->json(['error' => 'Sport not found'], 404);
+    }
+
 }

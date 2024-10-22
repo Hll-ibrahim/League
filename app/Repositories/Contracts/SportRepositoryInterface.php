@@ -14,4 +14,6 @@ interface SportRepositoryInterface
     public function update(Sport $sport, $data);
 
     public function delete($id);
+
+    public function getSportName($id);
 }

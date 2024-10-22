@@ -16,6 +16,7 @@ Route::prefix('sport')->name('sport.')->controller(SportController::class)->grou
     Route::delete('/delete', 'delete')->name('delete');
     Route::get('/get', 'get')->name('get');
     Route::post('/update', 'update')->name('update');
+    Route::get('/name/fetch', 'getSportName')->name('name.fetch');
 
     Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
         Route::post('/create', 'create')->name('create');

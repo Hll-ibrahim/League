@@ -26,7 +26,7 @@ class SportController extends Controller
     public function fetch(Request $request){
         $request->merge([
             'type' => 3, // Örnek type değeri
-            'process' => 2 // Örnek process değeri
+            'process' => 2.01 // Örnek process değeri
         ]);
 
         $sports = $this->requestService->handleRequest($request);
@@ -47,7 +47,14 @@ class SportController extends Controller
 
     public function detail($id){
         $sport_id=$id;
-        return view('sport.detail',compact('sport_id'));
+        $request=new Request();
+        $request->merge([
+            'id'=>$id,
+            'type' => 3,
+            'process' => 2.02 // Örnek process değeri
+        ]);
+        $sport_name = $this->requestService->handleRequest($request);
+        return view('sport.detail',compact('sport_id','sport_name'));
     }
 
     public function create(SportRequest $request){

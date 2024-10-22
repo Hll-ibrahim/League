@@ -92,7 +92,9 @@ class LeagueController extends Controller
         $seasons = $this->requestService->handleRequest($request);
 
         if ($seasons) {
-            view('sport.detail', compact('seasons'));
+            return response()->json($seasons); // JSON formatında döndür
         }
+
+        return response()->json(['error' => 'No seasons found'], 404);
     }
 }

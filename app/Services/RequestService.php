@@ -30,7 +30,7 @@ class RequestService implements RequestServiceInterface
                 return $this->leagueService->processControl($request);
             case '3'://sport
                 return $this->sportService->processControl($request);
-            case '4'://sport
+            case '4'://game
                 return $this->gameService->processControl($request);
             default:
                 throw new \Exception("Invalid request type");

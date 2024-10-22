@@ -10,5 +10,6 @@ interface SportServiceInterface
     public function all();
     public function delete($id);
     public function update($data);
+    public function getSportName($id);
 
 }
