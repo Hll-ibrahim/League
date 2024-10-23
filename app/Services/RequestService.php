@@ -21,7 +21,7 @@ class RequestService implements RequestServiceInterface
         $this->leagueService = $leagueService;
         $this->sportService = $sportService;
         $this->gameService = $gameService;
-        $this->seasonService = $gameService;
+        $this->seasonService = $seasonService;
     }
 
     public function handleRequest($request) {

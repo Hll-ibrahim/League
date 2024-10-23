@@ -40,16 +40,6 @@ class LeagueController extends Controller
         }
 
         return DataTables::of($leagues)
-            ->editColumn('season_id', function ($league) {
-                // Fetch the season name based on the season ID
-                $season = Season::find($league->season_id);
-                return $season ? $season->name : 'Unknown';
-            })
-            ->editColumn('league_type_id', function ($league) {
-                // Fetch the league type name based on the league type ID
-                $leagueType = LeagueType::find($league->league_type_id);
-                return $leagueType ? $leagueType->name : 'Unknown';
-            })
             ->addColumn('detail', function ($leagues) {
                 return '<a href="' . route('sport.league.detail', $leagues->id) . '" class="btn btn-info btn-xs">Detail</a>';
             })
