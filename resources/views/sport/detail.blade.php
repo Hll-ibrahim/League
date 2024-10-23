@@ -60,6 +60,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- League Type -->
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">
+                                        League Type
+                                    </h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <select name="league_type_id" id="type_id" class="form-control">
+                                            <option value="">Select League Type</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <input type="hidden" id="update_id" name="id">
                         </form>
                     </div>
@@ -95,6 +110,7 @@
     <script>
         $(document).ready(function () {
             fetchSeasons();
+            fetchLeagueTypes();
             const sportId = '{{ $sport_id }}';
             dataTable = $('#league_table').DataTable({
                 language: {
@@ -188,6 +204,33 @@
 
             $.each(seasons, function (index, season) {
                 seasonSelect.append(`<option value="${season.id}">${season.name}</option>`);
+            });
+        }
+
+        function fetchLeagueTypes() {
+            $.ajax({
+                url: '{{ route('sport.league.type.fetch') }}', // AJAX çağrısı yapılacak URL
+                type: 'GET',
+                dataType: 'json',
+                data: {
+                    type: '2',
+                    process: '2.03'
+                },
+                success: function(response) {
+                    populateLeagueTypesDropdown(response); // Başarılı yanıt geldiğinde dropdown'u doldur
+                },
+                error: function(xhr) {
+                    console.error('Error fetching league types:', xhr.responseText); // Hata durumunu yönet
+                }
+            });
+        }
+        function populateLeagueTypesDropdown(leagueTypes) {
+            let leagueTypeSelect = $('#type_id');
+            leagueTypeSelect.empty();
+            leagueTypeSelect.append('<option value="">Select League Type</option>');
+
+            $.each(leagueTypes, function (index, leagueType) {
+                leagueTypeSelect.append(`<option value="${leagueType.id}">${leagueType.name}</option>`);
             });
         }
 

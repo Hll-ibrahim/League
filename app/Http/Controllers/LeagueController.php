@@ -96,4 +96,14 @@ class LeagueController extends Controller
 
         return response()->json(['error' => 'No seasons found'], 404);
     }
+
+    public function getLeagueTypes(Request $request){
+        $leagueTypes = $this->requestService->handleRequest($request);
+
+        if ($leagueTypes) {
+            return response()->json($leagueTypes); // JSON formatında döndür
+        }
+
+        return response()->json(['error' => 'No seasons found'], 404);
+    }
 }

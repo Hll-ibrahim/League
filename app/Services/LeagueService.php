@@ -26,6 +26,8 @@ class LeagueService implements LeagueServiceInterface {
                 return $this->getLeagueBySportId($request['id']);// get leagues by sport id
             case '2.02'://R
                 return $this->getSeasons();
+            case '2.03'://R
+                return $this->getLeagueTypes();
             case '3'://U
                 return $this->update($request);
             case '4'://D
@@ -55,5 +57,9 @@ class LeagueService implements LeagueServiceInterface {
     public function getSeasons(){
         return $this->leagueRepository->getSeasons();
     }
+    public function getLeagueTypes(){
+        return $this->leagueRepository->getLeagueTypes();
+    }
+
 
 }
