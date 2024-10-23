@@ -40,7 +40,7 @@
                                         <select name="sport_id" id="sport_id" class="form-control">
                                             <option value="">Select Sport</option>
                                             @if(isset($sport_name))
-                                                <option selected>{{ $sport_name }}</option>
+                                                <option value="{{ $sport_id }}" selected>{{ $sport_name }}</option>
                                             @endif
                                         </select>
                                     </div>
