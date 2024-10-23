@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Services\Contracts\GameServiceInterface;
 use App\Services\Contracts\LeagueServiceInterface;
 use App\Services\Contracts\RequestServiceInterface;
+use App\Services\Contracts\SeasonServiceInterface;
 use App\Services\Contracts\SportServiceInterface;
 use App\Services\Contracts\TeamServiceInterface;
 
@@ -14,12 +15,13 @@ class RequestService implements RequestServiceInterface
     protected $leagueService;
     protected $sportService;
     protected $gameService;
-
-    public function __construct(SportServiceInterface $sportService, LeagueServiceInterface $leagueService, TeamServiceInterface $teamService, GameServiceInterface $gameService) {
+    protected $seasonService;
+    public function __construct(SportServiceInterface $sportService, LeagueServiceInterface $leagueService, TeamServiceInterface $teamService, GameServiceInterface $gameService,SeasonServiceInterface $seasonService) {
         $this->teamService = $teamService;
         $this->leagueService = $leagueService;
         $this->sportService = $sportService;
         $this->gameService = $gameService;
+        $this->seasonService = $gameService;
     }
 
     public function handleRequest($request) {
@@ -32,6 +34,8 @@ class RequestService implements RequestServiceInterface
                 return $this->sportService->processControl($request);
             case '4'://game
                 return $this->gameService->processControl($request);
+            case '5'://season
+                return $this->seasonService->processControl($request);
             default:
                 throw new \Exception("Invalid request type");
         }

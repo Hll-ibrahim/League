@@ -151,28 +151,6 @@
                 }
             });
 
-            // Fetch names for the season and league type IDs
-            dataTable.on('init.dt', function () {
-                dataTable.on('xhr.dt', function (e, settings, json) {
-                    let seasonIds = json.data.map(league => league.season_id);
-                    let leagueTypeIds = json.data.map(league => league.league_type_id);
-
-                    // Fetch names using the IDs
-                    fetchSeasonNames(seasonIds, function(seasonNames) {
-                        fetchLeagueTypeNames(leagueTypeIds, function(leagueTypeNames) {
-                            // Populate the DataTable with names instead of IDs
-                            json.data.forEach(league => {
-                                league.season_name = seasonNames[league.season_id] || 'Unknown';
-                                league.league_type_name = leagueTypeNames[league.league_type_id] || 'Unknown';
-                            });
-
-                            // Clear and redraw the DataTable with new names
-                            dataTable.clear().rows.add(json.data).draw();
-                        });
-                    });
-                });
-            });
-
         });
 
         function closeModal() {
@@ -253,46 +231,6 @@
 
             $.each(leagueTypes, function (index, leagueType) {
                 leagueTypeSelect.append(`<option value="${leagueType.id}">${leagueType.name}</option>`);
-            });
-        }
-        function fetchSeasonNames(seasonIds, callback) {
-            $.ajax({
-                url: '{{ route('sport.league.season.names.fetch') }}', // Replace with the actual route
-                type: 'GET',
-                dataType: 'json',
-                data: { ids: seasonIds }, // Send season IDs to get names
-                success: function(response) {
-                    const seasonNames = {};
-                    response.forEach(season => {
-                        seasonNames[season.id] = season.name; // Map ID to name
-                    });
-                    callback(seasonNames); // Return names through callback
-                },
-                error: function(xhr) {
-                    console.error('Error fetching season names:', xhr.responseText); // Handle error
-                    callback({}); // Return an empty object in case of error
-                }
-            });
-        }
-
-        // Function to fetch league type names based on IDs
-        function fetchLeagueTypeNames(leagueTypeIds, callback) {
-            $.ajax({
-                url: '{{ route('sport.league.type.names.fetch') }}', // Replace with the actual route
-                type: 'GET',
-                dataType: 'json',
-                data: { ids: leagueTypeIds }, // Send league type IDs to get names
-                success: function(response) {
-                    const leagueTypeNames = {};
-                    response.forEach(leagueType => {
-                        leagueTypeNames[leagueType.id] = leagueType.name; // Map ID to name
-                    });
-                    callback(leagueTypeNames); // Return names through callback
-                },
-                error: function(xhr) {
-                    console.error('Error fetching league type names:', xhr.responseText); // Handle error
-                    callback({}); // Return an empty object in case of error
-                }
             });
         }
 
