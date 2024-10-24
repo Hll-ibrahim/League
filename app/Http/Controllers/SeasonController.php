@@ -25,4 +25,8 @@ class SeasonController extends Controller
 
         return response()->json(['error' => 'No seasons found'], 404);
     }
+
+    public function getSeasonNameById(Request $request){
+        $season = $this->requestService->handleRequest($request);
+    }
 }

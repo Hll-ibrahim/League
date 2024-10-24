@@ -6,4 +6,5 @@ interface SeasonServiceInterface
 {
     public function processControl($request);
     public function all();
+    public function getSeasonNameById(int $seasonId);
 }
