@@ -8,6 +8,7 @@ interface LeagueServiceInterface
     public function add($data);
     public function getLeagueBySportId($id);
     public function getLeagueTypes();
+    public function getLeagueNameById($id);
     public function getSeasons();
     public function all();
     public function delete($id);

@@ -57,12 +57,16 @@ class LeagueController extends Controller
             ->editColumn('league_type_id', function ($league) {
                 $request=new Request();
                 $request->merge([
-                    'id' => $league->season_id,
-                    'type' => 5,
-                    'process' => 2.01
+                    'id' => $league->league_type_id,
+                    'type' => 2,
+                    'process' => 2.04
                 ]);
-                $leagueType = LeagueType::find($league->league_type_id);
-                return $leagueType ? $leagueType->name : 'Unknown';
+                $leagueTypeName = $this->requestService->handleRequest($request);
+                if ($leagueTypeName) {
+                    return $leagueTypeName; // Return the season name if found
+                } else {
+                    return 'Season not found'; // Return a default message if no season is found
+                }
             })
             ->addColumn('detail', function ($leagues) {
                 return '<a href="' . route('sport.league.detail', $leagues->id) . '" class="btn btn-info btn-xs">Detail</a>';

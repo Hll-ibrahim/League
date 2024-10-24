@@ -29,7 +29,7 @@ class LeagueService implements LeagueServiceInterface {
             case '2.03'://R
                 return $this->getLeagueTypes();
             case '2.04'://R
-                return $this->getLeagueNameById();
+                return $this->getLeagueNameById($request->get('id'));
             case '3'://U
                 return $this->update($request);
             case '4'://D
