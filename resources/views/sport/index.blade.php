@@ -140,10 +140,12 @@
 
 
         function closeModal(){
+            $('body').removeClass('modal-open');
             $('#add_sport_modal').modal('hide')
         }
 
         function openModal(){
+            $('body').addClass('modal-open');
             $('#add_sport_modal').modal('show')
         }
 

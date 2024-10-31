@@ -105,7 +105,10 @@ Description:  General styling for template (including Header, Footer, Sidebar)
 body {
   display: none;
 }
-
+.modal-open {
+    padding-right: 0 !important;
+    overflow: hidden;
+}
 #jpreOverlay {
   background-color: #282840;
 }
