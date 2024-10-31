@@ -152,7 +152,18 @@
             }
         });
 
-
+        // Add this section to handle Enter key press
+        $(document).keydown(function(e) {
+            if (e.key === "Enter") {
+                if ($('#add_sport_modal').is(':visible')) {
+                    e.preventDefault(); // Prevent the default form submission
+                    createPost(); // Call the create function
+                } else if ($('#updateSportModal').is(':visible')) {
+                    e.preventDefault(); // Prevent the default form submission
+                    updatePost(); // Call the update function
+                }
+            }
+        });
         function closeModal(){
 
             $('#add_sport_modal').modal('hide');
@@ -181,7 +192,7 @@
         }
 
         function closeUpdateModal(){
-            $('#update_sport_modal').modal('hide')
+            $('#updateSportModal').modal('hide')
         }
 
         function create(){
