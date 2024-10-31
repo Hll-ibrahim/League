@@ -155,11 +155,16 @@
 
         function closeModal() {
             $('#add_league_modal').modal('hide');
+            $('body').css('padding-right', '');
             clearForm();
         }
 
         function openModal() {
             $('#add_league_modal').modal('show');
+            $('body').css('padding-right', '15px');
+            $('#add_league_modal').one('shown.bs.modal', function () {
+                $('#name').focus(); // 'name' alanına odaklan
+            });
         }
 
         function create() {

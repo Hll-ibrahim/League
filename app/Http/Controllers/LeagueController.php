@@ -35,10 +35,11 @@ class LeagueController extends Controller
             'process' => 2.01 // Örnek process değeri
         ]);
         $leagues = $this->requestService->handleRequest($request);
+        /*
         if ($leagues->isEmpty()) {
             return response()->json(['error' => 'No leagues found'], 404);
         }
-
+        */
         return DataTables::of($leagues)
             ->editColumn('season_id', function ($league) {
                 $request=new Request();
