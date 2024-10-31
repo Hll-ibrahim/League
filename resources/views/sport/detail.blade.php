@@ -173,11 +173,25 @@
                 $('#update_id').val(data.id);
                 $('#name').val(data.name);
                 $('#description').val(data.description);
+                $('#season_id').val(data.season_id);
+                $('#type_id').val(data.league_type_id);
 
                 createUpdateButton('update');
                 openModal();
             });
         }
+        function openUpdateModal(id, name, description, sportId, seasonId, leagueTypeId) {
+            $('#update_id').val(id);
+            $('#name').val(name);
+            $('#description').val(description);
+            $('#sport_id').val(sportId || '');
+            $('#season_id').val(seasonId || '');
+            $('#type_id').val(leagueTypeId || '');
+
+            createUpdateButton('update');
+            openModal();
+        }
+
         function fetchSeasons() {
             $.ajax({
                 url: '{{ route('sport.season.fetch') }}', // AJAX çağrısı yapılacak URL
@@ -261,23 +275,42 @@
         }
 
         function updatePost() {
+            const type = 2; // league
+            const process = 3; // update
+            const formData = new FormData(document.getElementById('league_form'));
             const id = $('#update_id').val();
-            const formData = new FormData($('#league_form')[0]);
+
+            formData.append('id', id);
+            formData.append('type', type);
+            formData.append('process', process);
 
             $.ajax({
-                url: '{{ url("sport/league") }}/' + id,
+                url: '{{ route('sport.league.update') }}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 processData: false,
                 contentType: false,
                 data: formData,
-                success: () => {
-                    Swal.fire('Success', 'League updated successfully!', 'success');
+                success: (response) => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully',
+                        text: response.success,
+                        showConfirmButton: true,
+                    });
+                    clearForm();
                     closeModal();
                     dataTable.ajax.reload();
                 },
-                error: (xhr) => {
-                    Swal.fire('Error', xhr.responseText, 'error');
+                error: (xhr, status, error) => {
+                    console.error(xhr, status, error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        html: errorMap(xhr.responseJSON.errors),
+                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
+                        showConfirmButton: true,
+                    });
                 }
             });
         }

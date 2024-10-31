@@ -22,6 +22,9 @@ class LeagueRepository implements LeagueRepositoryInterface {
     public function getLeagueTypes(){
         return LeagueType::all();
     }
+    public function getLeagueById($id){
+        return League::findOrFail($id);
+    }
 
     public function getLeagueNameById($id) {
         $season = LeagueType::find($id);
