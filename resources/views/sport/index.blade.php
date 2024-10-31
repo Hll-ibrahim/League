@@ -140,13 +140,15 @@
 
 
         function closeModal(){
-            $('body').removeClass('modal-open');
-            $('#add_sport_modal').modal('hide')
+
+            $('#add_sport_modal').modal('hide');
+            $('body').css('padding-right', '');
         }
 
         function openModal(){
-            $('body').addClass('modal-open');
-            $('#add_sport_modal').modal('show')
+
+            $('#add_sport_modal').modal('show');
+            $('body').css('padding-right', '15px');
         }
 
         function openUpdateModal(id, name, description){
