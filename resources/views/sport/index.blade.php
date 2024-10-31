@@ -41,33 +41,47 @@
                         <button type="button" class="btn btn-secondary" onclick="closeModal()">Kapat</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
     <div id="updateSportModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Update Sport</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <form id="update_sport_form">
-                        <input type="hidden" id="update_id">
-                        <div class="form-group">
-                            <label for="name">Sport Name</label>
-                            <input type="text" id="update_name" class="form-control" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="sport_description">Sport Description</label>
-                            <textarea id="update_description" class="form-control" name="description"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="updatePost()">Save</button>
+                <div class="myModal">
+                    <div class="modal-header">
+                        <h4 style="color:#3F3F3F">Update Sport</h4>
+                        <i class="fas fa-times modal-close" onclick="closeUpdateModal()"></i>
+                    </div>
+                    <div class="modal-body form-modal">
+                        <form id="update_sport_form">
+                            <input type="hidden" id="update_id" name="id">
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">Name</h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <input type="text" id="update_name" class="form-control" name="name" placeholder="Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">Description</h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <input type="text" id="update_description" class="form-control" name="description" placeholder="Description">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="updateButton" class="btn btn-success" onclick="updatePost()">Update</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeUpdateModal()">Kapat</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,6 +163,9 @@
 
             $('#add_sport_modal').modal('show');
             $('body').css('padding-right', '15px');
+            $('#add_sport_modal').one('shown.bs.modal', function () {
+                $('#name').focus(); // 'name' alanına odaklan
+            });
         }
 
         function openUpdateModal(id, name, description){
@@ -157,6 +174,10 @@
             $('#update_description').val(description);
 
             $('#updateSportModal').modal('show');
+
+            $('#updateSportModal').one('shown.bs.modal', function () {
+                $('#update_name').focus(); // 'update_name' alanına odaklan
+            });
         }
 
         function closeUpdateModal(){
@@ -305,9 +326,9 @@
                         text: response.success,
                         showConfirmButton: true,
                     });
-                    clearForm();
-                    closeModal();
-                    dataTable.ajax.reload();
+                    closeUpdateModal();
+                    dataTable.ajax.reload(); // Tabloyu yeniden yükle
+
                 },
                 error: (xhr, status, error) => {
                     console.error(xhr, status, error);
