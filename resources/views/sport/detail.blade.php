@@ -316,26 +316,52 @@
         }
 
         function deleteLeague(id) {
+            const type = 2; // Sport
+            const process = 4; // Delete
+
             Swal.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                text: "This is the last step!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Yes Delete!',
             }).then((result) => {
                 if (result.isConfirmed) {
+
+                    const formData = new FormData();
+                    formData.append('id', id);
+                    formData.append('type', type);
+                    formData.append('process', process);
+                    formData.append('_method', 'DELETE');  // Laravel'e DELETE isteği gibi işlem yapması için ekleniyor
+
                     $.ajax({
-                        url: '{{ url("sport/league") }}/' + id,
-                        type: 'DELETE',
+                        url: '{{ route('sport.league.delete') }}',
+                        type: 'POST',  // DELETE yerine POST kullanıyoruz
                         headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                        processData: false,
+                        contentType: false,
+                        data: formData,
                         success: () => {
-                            Swal.fire('Deleted!', 'League has been deleted.', 'success');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successfully',
+                                text: 'Sport Deleted Successfully',
+                                showConfirmButton: true,
+                            });
                             dataTable.ajax.reload();
                         },
-                        error: (xhr) => {
-                            Swal.fire('Error', xhr.responseText, 'error');
+                        error: (xhr, status, error) => {
+                            console.error(xhr, status, error);
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                html: errorMap(xhr.responseJSON.errors),
+                                footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
+                                showConfirmButton: true,
+                            });
                         }
                     });
                 }

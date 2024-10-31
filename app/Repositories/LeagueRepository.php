@@ -37,6 +37,6 @@ class LeagueRepository implements LeagueRepositoryInterface {
         return $league->update($data);
     }
     public function delete($id){
-        return Sport::destroy($id);
+        return League::destroy($id);
     }
 }

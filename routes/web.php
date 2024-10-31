@@ -23,6 +23,7 @@ Route::prefix('sport')->name('sport.')->controller(SportController::class)->grou
         Route::post('/create', 'create')->name('create');
         Route::get('/fetch', 'fetch')->name('fetch');
         Route::post('/update', 'update')->name('update');
+        Route::delete('/delete', 'delete')->name('delete');
         Route::get('/type/fetch', 'getLeagueTypes')->name('type.fetch');
         Route::get('/detail/{id}', 'detail')->name('detail');
 
