@@ -104,6 +104,7 @@ Description:  General styling for template (including Header, Footer, Sidebar)
 */
 body {
   display: none;
+    padding-right: 0 !important;
 }
 .modal-open {
     padding-right: 0 !important;
