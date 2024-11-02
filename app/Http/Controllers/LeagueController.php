@@ -76,7 +76,14 @@ class LeagueController extends Controller
                 return '<button onclick="deleteLeague(' . $leagues->id . ')" class="btn btn-danger btn-xs">Delete</button>';
             })
             ->addColumn('update', function ($leagues) {
-                return '<button onclick="openUpdateModal(' . $leagues->id . ', \'' . $leagues->name . '\', \'' . $leagues->description . '\')" class="btn btn-warning btn-xs">Update</button>';
+                return '<button onclick="openUpdateModal('
+                    . $leagues->id . ', \''
+                    . $leagues->name . '\', \''
+                    . $leagues->description . '\', '
+                    . $leagues->sport_id . ', '
+                    . $leagues->season_id . ', '
+                    . $leagues->league_type_id
+                    . ')" class="btn btn-warning btn-xs">Update</button>';
             })
             ->addIndexColumn()
             ->rawColumns(['detail', 'delete', 'update'])
