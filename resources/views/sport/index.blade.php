@@ -164,6 +164,14 @@
                 }
             }
         });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                if (Swal.isVisible()) { // SweetAlert modali açıksa
+                    Swal.close(); // Modali kapat
+                }
+            }
+        });
         function closeModal(){
 
             $('#add_sport_modal').modal('hide');
@@ -222,6 +230,7 @@
                         title: 'Successfully',
                         text: response.success,
                         showConfirmButton: true,
+                        allowEscapeKey: true,
                     });
                     clearForm();
                     closeModal();
@@ -235,6 +244,7 @@
                         html: errorMap(xhr.responseJSON.errors),
                         footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                         showConfirmButton: true,
+                        allowEscapeKey: true,
                     });
                 }
             });
@@ -252,6 +262,7 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes Delete!',
+                allowEscapeKey: true,
             }).then((result) => {
                 if (result.isConfirmed) {
 
@@ -286,6 +297,7 @@
                                 html: errorMap(xhr.responseJSON.errors),
                                 footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                                 showConfirmButton: true,
+                                allowEscapeKey: true,
                             });
                         }
                     });
@@ -308,6 +320,7 @@
                         icon: 'error',
                         title: 'Error',
                         text: 'Could not fetch details!',
+                        allowEscapeKey: true,
                     });
                 }
             });
@@ -349,6 +362,7 @@
                         html: errorMap(xhr.responseJSON.errors),
                         footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                         showConfirmButton: true,
+                        allowEscapeKey: true
                     });
                 }
             });

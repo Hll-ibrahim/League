@@ -153,6 +153,13 @@
 
         });
 
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                if (Swal.isVisible()) { // SweetAlert modali açıksa
+                    Swal.close(); // Modali kapat
+                }
+            }
+        });
         function closeModal() {
             $('#add_league_modal').modal('hide');
             $('body').css('padding-right', '');
