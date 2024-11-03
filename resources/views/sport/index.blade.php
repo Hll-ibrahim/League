@@ -164,28 +164,38 @@
             }
         });
 
-        function reenableKeydown() {
-            $(document).keydown(function(e) {
-                if (e.key === "Escape") {
-                    const topSwal = Swal.getPopup();
+        $(document).on('keydown', (e) => {
+            if (e.key === "Escape") {
+                // En üstteki açık modalı bul
+                let topModal = $('.modal-dialog:visible').length ? $('.modal-dialog:visible') : null;
+                const topSwal = $('.swal2-popup:visible');
 
-                    // Eğer Swal modalı görünüyorsa sadece onu kapat ve diğer modalları etkileme
-                    if (topSwal && Swal.isVisible()) {
-                        Swal.close();
-                        e.stopImmediatePropagation(); // Diğer modalların bu olaydan etkilenmesini önler
-                        return; // Kodun geri kalanını çalıştırmayı durdurur
-                    }
+                // Eğer hem modal hem de swal modalı açıksa, hangisinin daha üstte olduğunu kontrol et
+                if (topModal && topSwal.length) {
+                    // Modalın üstte olup olmadığını kontrol et
+                    const modalZIndex = parseInt(topModal.css('z-index'), 10);
+                    const swalZIndex = parseInt(topSwal.css('z-index'), 10);
 
-                    // Eğer Swal kapalıysa, diğer modallara devam et
-                    if ($('#add_sport_modal').is(':visible')) {
-                        closeModal();
+                    if (swalZIndex > modalZIndex) {
+                        topModal = null; // Swal modalı daha üstteyse, modalı null yap
                     }
-                    if ($('#updateSportModal').is(':visible')) {
-                        closeUpdateModal();
+                } else if (topSwal.length) {
+                    topModal = topSwal; // Sadece swal modalı varsa, onu al
+                }
+
+                let title = '';
+
+                if (topModal) {
+                    if (topModal.hasClass('swal2-popup')) {
+                        title = topModal.find('.swal2-title').text() || 'Error Modal'; // Hata modalının başlığı
+                    } else {
+                        title = topModal.find('.modal-header h4').text(); // Güncelleme modalının başlığı
                     }
                 }
-            });
-        }
+
+                alert(`Current Modal Title: ${title}`);
+            }
+        });
 
         function closeModal() {
             $('#add_sport_modal').modal('hide');
@@ -202,19 +212,37 @@
         }
 
         function openUpdateModal(id, name, description) {
+            // Güncelleme için gerekli değerleri modalın içindeki form alanlarına yerleştir
             $('#update_id').val(id);
             $('#update_name').val(name);
             $('#update_description').val(description);
+
+            // Modalı aç
             $('#updateSportModal').modal('show');
+
+            // Modal açıldığında odaklanma
             $('#updateSportModal').one('shown.bs.modal', function () {
                 $('#update_name').focus();
             });
+
+            // Modal açıldığında arka planın aria-hidden özelliğini güncelle
+            $('.modal-backdrop').attr('aria-hidden', 'false');
         }
 
+
         function closeUpdateModal() {
+            // Güncelleme modalını kapat
             $('#updateSportModal').modal('hide');
-            $('body').removeClass('modal-open'); // modal-open sınıfını kaldır
-            $('body').css('padding-right', ''); // padding-right ayarını kaldır
+
+            // Arka planda başka modal açık mı kontrol et
+            setTimeout(() => {
+                if (!$('.modal-dialog:visible').length) {
+                    // Eğer görünür modal yoksa, arka planın aria-hidden değerini true yap
+                    $('.modal-backdrop').attr('aria-hidden', 'true');
+                    $('body').removeClass('modal-open'); // modal-open sınıfını kaldır
+                    $('body').css('padding-right', ''); // padding-right ayarını kaldır
+                }
+            }, 200); // Modal kapatma animasyonunun tamamlanması için biraz bekleyin
         }
 
         function create() {
@@ -357,13 +385,6 @@
                         title: 'Successfully',
                         text: response.success,
                         showConfirmButton: true,
-                        allowEscapeKey: true, // Escape tuşunu Swall modalı için etkinleştiriyoruz
-                        didOpen: () => {
-                            $(document).off("keydown"); // Diğer keydown olaylarını devre dışı bırak
-                        },
-                        willClose: () => {
-                            reenableKeydown(); // Swal kapandıktan sonra tekrar etkinleştir
-                        }
                     });
                     closeUpdateModal();
                     dataTable.ajax.reload();
@@ -376,12 +397,11 @@
                         html: errorMap(xhr.responseJSON.errors),
                         footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                         showConfirmButton: true,
-                        allowEscapeKey: true, // Escape tuşunu Swall modalı için etkinleştiriyoruz
-                        didOpen: () => {
-                            $(document).off("keydown"); // Diğer keydown olaylarını devre dışı bırak
-                        },
                         willClose: () => {
-                            reenableKeydown(); // Swal kapandıktan sonra tekrar etkinleştir
+                            // Hata modalı kapandığında aria-hidden değerini kontrol et
+                            if (!$('.modal-dialog:visible').length) {
+                                $('.modal-backdrop').attr('aria-hidden', 'true');
+                            }
                         }
                     });
                 }
