@@ -136,7 +136,7 @@
                 error: function(xhr, error, thrown) {
                     console.error('Ajax error:', error);
                     console.error('XHR Response:', xhr.responseText);
-                    alert('An error occurred: ' + xhr.responseText); // Hata mesajını uyarı olarak göster
+                    alert('An error occurred: ' + xhr.responseText);
                 }
             },
             columns: [
@@ -148,72 +148,76 @@
                 {data: 'delete', orderable: false, searchable: false},
             ],
             success: function(data) {
-                console.log('Data fetched successfully:', data); // Başarılı yanıt kontrolü
+                console.log('Data fetched successfully:', data);
             }
         });
 
-        // Add this section to handle Enter key press
         $(document).keydown(function(e) {
             if (e.key === "Enter") {
                 if ($('#add_sport_modal').is(':visible')) {
-                    e.preventDefault(); // Prevent the default form submission
-                    createPost(); // Call the create function
+                    e.preventDefault();
+                    createPost();
                 } else if ($('#updateSportModal').is(':visible')) {
-                    e.preventDefault(); // Prevent the default form submission
-                    updatePost(); // Call the update function
+                    e.preventDefault();
+                    updatePost();
+                }
+            } else if (e.key === "Escape") {
+                const topSwal = Swal.getPopup();
+
+                if (topSwal && Swal.isVisible()) {
+                    Swal.close();
+                    e.stopImmediatePropagation();
+                } else {
+                    if ($('#add_sport_modal').is(':visible')) {
+                        closeModal();
+                    }
+                    if ($('#updateSportModal').is(':visible')) {
+                        closeUpdateModal();
+                    }
                 }
             }
         });
 
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') {
-                if (Swal.isVisible()) { // SweetAlert modali açıksa
-                    Swal.close(); // Modali kapat
-                }
-            }
-        });
-        function closeModal(){
-
+        function closeModal() {
             $('#add_sport_modal').modal('hide');
-            $('body').css('padding-right', '');
+            $('body').removeClass('modal-open'); // modal-open sınıfını kaldır
+            $('body').css('padding-right', ''); // padding-right ayarını kaldır
         }
 
-        function openModal(){
-
+        function openModal() {
             $('#add_sport_modal').modal('show');
-            $('body').css('padding-right', '15px');
+            $('body').addClass('modal-open'); // modal-open sınıfını ekle
             $('#add_sport_modal').one('shown.bs.modal', function () {
-                $('#name').focus(); // 'name' alanına odaklan
+                $('#name').focus();
             });
         }
 
-        function openUpdateModal(id, name, description){
+        function openUpdateModal(id, name, description) {
             $('#update_id').val(id);
             $('#update_name').val(name);
             $('#update_description').val(description);
-
             $('#updateSportModal').modal('show');
-
             $('#updateSportModal').one('shown.bs.modal', function () {
-                $('#update_name').focus(); // 'update_name' alanına odaklan
+                $('#update_name').focus();
             });
         }
 
-        function closeUpdateModal(){
-            $('#updateSportModal').modal('hide')
+        function closeUpdateModal() {
+            $('#updateSportModal').modal('hide');
+            $('body').removeClass('modal-open'); // modal-open sınıfını kaldır
+            $('body').css('padding-right', ''); // padding-right ayarını kaldır
         }
 
-        function create(){
-            openModal()
-            createUpdateButton('create')
-            clearForm()
+        function create() {
+            openModal();
+            createUpdateButton('create');
+            clearForm();
         }
 
-        function createPost(){
+        function createPost() {
             const type = 3; // Sport
             const process = 1; // Create
             const formData = new FormData(document.getElementById('sport_form'));
-
             formData.append('type', type);
             formData.append('process', process);
 
@@ -262,19 +266,17 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes Delete!',
-                allowEscapeKey: true,
             }).then((result) => {
                 if (result.isConfirmed) {
-
                     const formData = new FormData();
                     formData.append('id', id);
                     formData.append('type', type);
                     formData.append('process', process);
-                    formData.append('_method', 'DELETE');  // Laravel'e DELETE isteği gibi işlem yapması için ekleniyor
+                    formData.append('_method', 'DELETE');
 
                     $.ajax({
                         url: '{{ route('sport.delete') }}',
-                        type: 'POST',  // DELETE yerine POST kullanıyoruz
+                        type: 'POST',
                         headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                         processData: false,
                         contentType: false,
@@ -290,7 +292,6 @@
                         },
                         error: (xhr, status, error) => {
                             console.error(xhr, status, error);
-
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
@@ -307,14 +308,12 @@
 
         function detailGet(sportId) {
             $.ajax({
-                url: '{{ route('sport.detail', '') }}/' + sportId, // ID ile backend'e istek yap
+                url: '{{ route('sport.detail', '') }}/' + sportId,
                 type: 'GET',
                 success: function(response) {
-                    // Eğer detay başarılı şekilde alındıysa yönlendir
                     window.location.href = '{{ route('sport.detail', '') }}/' + sportId;
                 },
                 error: function(xhr, status, error) {
-                    // Hata durumunda yapılacak işlemler
                     console.error('An error occurred:', status, error);
                     Swal.fire({
                         icon: 'error',
@@ -351,8 +350,7 @@
                         showConfirmButton: true,
                     });
                     closeUpdateModal();
-                    dataTable.ajax.reload(); // Tabloyu yeniden yükle
-
+                    dataTable.ajax.reload();
                 },
                 error: (xhr, status, error) => {
                     console.error(xhr, status, error);
@@ -362,26 +360,25 @@
                         html: errorMap(xhr.responseJSON.errors),
                         footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                         showConfirmButton: true,
-                        allowEscapeKey: true
                     });
                 }
             });
         }
 
-        function clearForm(){
-            $('#sport_form')[0].reset()
+        function clearForm() {
+            $('#sport_form')[0].reset();
         }
 
-        function createUpdateButton(type){
-            if(type === 'update'){
-                $('#createButton').addClass('d-none')
-                $('#updateButton').removeClass('d-none')
-            }
-            else if(type === 'create'){
-                $('#createButton').removeClass('d-none')
-                $('#updateButton').addClass('d-none')
+        function createUpdateButton(type) {
+            if (type === 'update') {
+                $('#createButton').addClass('d-none');
+                $('#updateButton').removeClass('d-none');
+            } else if (type === 'create') {
+                $('#createButton').removeClass('d-none');
+                $('#updateButton').addClass('d-none');
             }
         }
     </script>
+
 @endsection
 

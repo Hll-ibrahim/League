@@ -155,8 +155,10 @@
 
         document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
-                if (Swal.isVisible()) { // SweetAlert modali açıksa
-                    Swal.close(); // Modali kapat
+                const topSwal = Swal.getPopup(); // SweetAlert modali varsa bunu alır
+                if (topSwal && Swal.isVisible()) { // SweetAlert modali açıkken
+                    Swal.close(); // Sadece SweetAlert error modalını kapat
+                    event.stopPropagation(); // Diğer modalın kapanmasını engelle
                 }
             }
         });
@@ -309,13 +311,15 @@
                         title: 'Successfully',
                         text: response.success,
                         showConfirmButton: true,
+                    }).then(() => {
+                        clearForm();
+                        closeModal();
+                        dataTable.ajax.reload();
                     });
-                    clearForm();
-                    closeModal();
-                    dataTable.ajax.reload();
                 },
                 error: (xhr, status, error) => {
                     console.error(xhr, status, error);
+                    // Hata durumunda SweetAlert hata mesajını göster ve modal kapanmasın
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
