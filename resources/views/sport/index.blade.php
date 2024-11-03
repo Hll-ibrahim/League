@@ -161,13 +161,22 @@
                     e.preventDefault();
                     updatePost();
                 }
-            } else if (e.key === "Escape") {
-                const topSwal = Swal.getPopup();
+            }
+        });
 
-                if (topSwal && Swal.isVisible()) {
-                    Swal.close();
-                    e.stopImmediatePropagation();
-                } else {
+        function reenableKeydown() {
+            $(document).keydown(function(e) {
+                if (e.key === "Escape") {
+                    const topSwal = Swal.getPopup();
+
+                    // Eğer Swal modalı görünüyorsa sadece onu kapat ve diğer modalları etkileme
+                    if (topSwal && Swal.isVisible()) {
+                        Swal.close();
+                        e.stopImmediatePropagation(); // Diğer modalların bu olaydan etkilenmesini önler
+                        return; // Kodun geri kalanını çalıştırmayı durdurur
+                    }
+
+                    // Eğer Swal kapalıysa, diğer modallara devam et
                     if ($('#add_sport_modal').is(':visible')) {
                         closeModal();
                     }
@@ -175,8 +184,8 @@
                         closeUpdateModal();
                     }
                 }
-            }
-        });
+            });
+        }
 
         function closeModal() {
             $('#add_sport_modal').modal('hide');
@@ -348,6 +357,13 @@
                         title: 'Successfully',
                         text: response.success,
                         showConfirmButton: true,
+                        allowEscapeKey: true, // Escape tuşunu Swall modalı için etkinleştiriyoruz
+                        didOpen: () => {
+                            $(document).off("keydown"); // Diğer keydown olaylarını devre dışı bırak
+                        },
+                        willClose: () => {
+                            reenableKeydown(); // Swal kapandıktan sonra tekrar etkinleştir
+                        }
                     });
                     closeUpdateModal();
                     dataTable.ajax.reload();
@@ -360,10 +376,20 @@
                         html: errorMap(xhr.responseJSON.errors),
                         footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
                         showConfirmButton: true,
+                        allowEscapeKey: true, // Escape tuşunu Swall modalı için etkinleştiriyoruz
+                        didOpen: () => {
+                            $(document).off("keydown"); // Diğer keydown olaylarını devre dışı bırak
+                        },
+                        willClose: () => {
+                            reenableKeydown(); // Swal kapandıktan sonra tekrar etkinleştir
+                        }
                     });
                 }
             });
         }
+
+
+
 
         function clearForm() {
             $('#sport_form')[0].reset();
