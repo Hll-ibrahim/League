@@ -36328,7 +36328,6 @@ table.alc-event-result-labels > tbody > tr > td.alc-results .label--basic {
 // --------------------------------------------------
 */
 .modal--login .modal-header {
-  background-image: url("../images/login_register_bg.jpg");
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
@@ -36401,7 +36400,6 @@ table.alc-event-result-labels > tbody > tr > td.alc-results .label--basic {
   }
 }
 .modal--login .modal-account__item--logo {
-  background-image: url("../images/soccer/samples/login_register_bg.jpg");
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;

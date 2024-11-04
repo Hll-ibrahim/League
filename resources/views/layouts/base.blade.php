@@ -165,7 +165,6 @@
 <script src="{{ asset('football/js/core.js') }}"></script>
 
 <!-- Vendor JS -->
-<script src="{{ asset('football/vendor/twitter/jquery.twitter.js') }}"></script>
 
 <!-- Template JS -->
 <script src="{{ asset('football/js/init.js') }}"></script>

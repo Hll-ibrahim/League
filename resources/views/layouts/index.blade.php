@@ -53,28 +53,19 @@
                 <!-- Header Search Form / End -->
                 <ul class="info-block info-block--header">
                     <li class="info-block__item info-block__item--contact-primary">
-                        <svg role="img" class="df-icon df-icon--whistle">
-                            <use xlink:href="assets/images/icons-soccer.svg#whistle"/>
-                        </svg>
+
                         <h6 class="info-block__heading">Join Our Team!</h6>
                         <a class="info-block__link" href="mailto:tryouts@alchemists.com">tryouts@alchemists.com</a>
                     </li>
                     <li class="info-block__item info-block__item--contact-secondary">
-                        <svg role="img" class="df-icon df-icon--soccer-ball">
-                            <use xlink:href="assets/images/icons-soccer.svg#soccer-ball"/>
-                        </svg>
+
                         <h6 class="info-block__heading">Contact Us</h6>
                         <a class="info-block__link" href="mailto:info@alchemists.com">info@alchemists.com</a>
                     </li>
                     <li class="info-block__item info-block__item--shopping-cart js-info-block__item--onhover">
                         <a href="#" class="info-block__link-wrapper">
                             <div class="df-icon-stack df-icon-stack--bag">
-                                <svg role="img" class="df-icon df-icon--bag">
-                                    <use xlink:href="assets/images/icons-basket.svg#bag"/>
-                                </svg>
-                                <svg role="img" class="df-icon df-icon--bag-handle">
-                                    <use xlink:href="assets/images/icons-basket.svg#bag-handle"/>
-                                </svg>
+
                             </div>
                             <h6 class="info-block__heading">Your Bag (8 items)</h6>
                             <span class="info-block__cart-sum">$256,30</span>
@@ -86,7 +77,6 @@
                             <li class="header-cart__item">
                                 <figure class="header-cart__product-thumb">
                                     <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">
-                                        <img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/soccer/samples/_soccer_cart-sm-1.jpg" alt="">
                                     </a>
                                 </figure>
                                 <div class="header-cart__inner">
@@ -108,7 +98,6 @@
                             <li class="header-cart__item">
                                 <figure class="header-cart__product-thumb">
                                     <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">
-                                        <img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/soccer/samples/_soccer_cart-sm-4.jpg" alt="">
                                     </a>
                                 </figure>
                                 <div class="header-cart__inner">
@@ -130,7 +119,6 @@
                             <li class="header-cart__item">
                                 <figure class="header-cart__product-thumb">
                                     <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">
-                                        <img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/soccer/samples/_soccer_cart-sm-2.jpg" alt="">
                                     </a>
                                 </figure>
                                 <div class="header-cart__inner">
@@ -173,9 +161,7 @@
                 <div class="header__primary-inner">
 
                     <!-- Header Logo -->
-                    <div class="header-logo">
-                        <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/soccer/logo.png" srcset="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/soccer/logo@2x.png 2x" alt="Alchemists" class="header-logo__img"></a>
-                    </div>
+
                     <!-- Header Logo / End -->
 
                     <!-- Main Navigation -->
@@ -223,7 +209,6 @@
                                                 <div class="posts__footer card__footer">
                                                     <div class="post-author">
                                                         <figure class="post-author__avatar">
-                                                            <img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/avatar-1.jpg" alt="Post Author Avatar">
                                                         </figure>
                                                         <div class="post-author__info">
                                                             <h4 class="post-author__name">James Spiegel</h4>
@@ -242,7 +227,7 @@
                                         <ul class="posts posts--simple-list">
                                             <li class="posts__item posts__item--category-1">
                                                 <figure class="posts__thumb">
-                                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/post-img3-xs.jpg" alt=""></a>
+                                                    <a href="#"></a>
                                                 </figure>
                                                 <div class="posts__inner">
                                                     <div class="posts__cat">
@@ -254,7 +239,6 @@
                                             </li>
                                             <li class="posts__item posts__item--category-2">
                                                 <figure class="posts__thumb">
-                                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/post-img1-xs.jpg" alt=""></a>
                                                 </figure>
                                                 <div class="posts__inner">
                                                     <div class="posts__cat">
@@ -266,7 +250,6 @@
                                             </li>
                                             <li class="posts__item posts__item--category-1">
                                                 <figure class="posts__thumb">
-                                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/post-img4-xs.jpg" alt=""></a>
                                                 </figure>
                                                 <div class="posts__inner">
                                                     <div class="posts__cat">
@@ -385,7 +368,6 @@
         <div class="pushy-panel__inner">
             <header class="pushy-panel__header">
                 <div class="pushy-panel__logo">
-                    <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/soccer/logo.png" srcset="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/soccer/logo@2x.png 2x" alt="Alchemists"></a>
                 </div>
             </header>
             <div class="pushy-panel__content">
@@ -398,7 +380,6 @@
 
                             <li class="posts__item posts__item--category-1">
                                 <figure class="posts__thumb">
-                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/post-img19-xs.jpg" alt=""></a>
                                 </figure>
                                 <div class="posts__inner">
                                     <div class="posts__cat">
@@ -413,7 +394,6 @@
                             </li>
                             <li class="posts__item posts__item--category-2">
                                 <figure class="posts__thumb">
-                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/post-img18-xs.jpg" alt=""></a>
                                 </figure>
                                 <div class="posts__inner">
                                     <div class="posts__cat">
@@ -428,7 +408,6 @@
                             </li>
                             <li class="posts__item posts__item--category-1">
                                 <figure class="posts__thumb">
-                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/post-img8-xs.jpg" alt=""></a>
                                 </figure>
                                 <div class="posts__inner">
                                     <div class="posts__cat">
@@ -443,7 +422,6 @@
                             </li>
                             <li class="posts__item posts__item--category-3">
                                 <figure class="posts__thumb">
-                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/post-img20-xs.jpg" alt=""></a>
                                 </figure>
                                 <div class="posts__inner">
                                     <div class="posts__cat">
@@ -493,7 +471,6 @@
                 <aside class="widget widget--side-panel widget-banner">
                     <div class="widget__content">
                         <figure class="widget-banner__img">
-                            <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/assets/images/samples/banner.jpg" alt="Banner"></a>
                         </figure>
                     </div>
                 </aside>
@@ -587,7 +564,6 @@
                     <!-- Footer Logo -->
                     <div class="footer-logo footer-logo--has-txt">
                         <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/_football_index.html">
-                            <img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/assets/images/football/logo-footer.png" srcset="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/assets/images/football/logo-footer@2x.png 2x" alt="The Alchemists" class="footer-logo__img">
                             <div class="footer-logo__heading">
                                 <h5 class="footer-logo__txt">The Alchemists</h5>
                                 <span class="footer-logo__tagline">Elric Bros School</span>
@@ -599,16 +575,12 @@
                     <!-- Info Block -->
                     <div class="info-block info-block--horizontal">
                         <div class="info-block__item info-block__item--helmet">
-                            <svg role="img" class="df-icon df-icon--football-helmet">
-                                <use xlink:href="assets/images/football/icons-football.svg#football-helmet"/>
-                            </svg>
+
                             <h6 class="info-block__heading">Join Our Team!</h6>
                             <a class="info-block__link" href="mailto:tryouts@alchemists.com">tryouts@alchemists.com</a>
                         </div>
                         <div class="info-block__item">
-                            <svg role="img" class="df-icon df-icon--football-ball">
-                                <use xlink:href="assets/images/football/icons-football.svg#football-ball"/>
-                            </svg>
+
                             <h6 class="info-block__heading">Contact Us</h6>
                             <a class="info-block__link" href="mailto:info@alchemists.com">info@alchemists.com</a>
                         </div>
@@ -696,7 +668,6 @@
 
                                             <li class="posts__item posts__item--category-1">
                                                 <figure class="posts__thumb posts__thumb--hover">
-                                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/assets/images/samples/post-img8-xxs.jpg" alt=""></a>
                                                 </figure>
                                                 <div class="posts__inner">
                                                     <div class="posts__cat">
@@ -708,7 +679,6 @@
                                             </li>
                                             <li class="posts__item posts__item--category-2">
                                                 <figure class="posts__thumb posts__thumb--hover">
-                                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/assets/images/football/samples/post-img25-xxs.jpg" alt=""></a>
                                                 </figure>
                                                 <div class="posts__inner">
                                                     <div class="posts__cat">
@@ -720,7 +690,6 @@
                                             </li>
                                             <li class="posts__item posts__item--category-1">
                                                 <figure class="posts__thumb posts__thumb--hover">
-                                                    <a href="#"><img src="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/assets/images/samples/post-img10-xxs.jpg" alt=""></a>
                                                 </figure>
                                                 <div class="posts__inner">
                                                     <div class="posts__cat">
