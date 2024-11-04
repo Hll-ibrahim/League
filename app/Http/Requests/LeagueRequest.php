@@ -24,6 +24,9 @@ class LeagueRequest extends FormRequest
         return [
             'name' => 'string|unique:sports,name|max:30',
             'description' => 'max:200',
+            'sport_id' => 'integer|exists:sports,id',
+            'season_id' => 'integer|exists:seasons,id',
+            'league_type_id' => 'integer|exists:league_types,id',
         ];
     }
 }

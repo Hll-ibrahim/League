@@ -282,8 +282,15 @@
                     closeModal();
                     dataTable.ajax.reload();
                 },
-                error: (xhr) => {
-                    Swal.fire('Error', xhr.responseText, 'error');
+                error: (xhr,status,error) => {
+                    console.log(xhr,status,error)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        html: errorMap(xhr.responseJSON.errors),
+                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
+                        showConfirmButton: true,
+                    });
                 }
             });
         }
