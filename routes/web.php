@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SeasonController;
@@ -9,56 +10,61 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\AddTypeAndProcess;
 use Illuminate\Support\Facades\Route;
 
+Route::prefix('/')->group(function () {
 
-Route::prefix('sport')->name('sport.')->controller(SportController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/fetch', 'fetch')->name('fetch');
-    Route::post('/create', 'create')->name('create');
-    Route::delete('/delete', 'delete')->name('delete');
-    Route::get('/get', 'get')->name('get');
-    Route::post('/update', 'update')->name('update');
-    Route::get('/name/fetch', 'getSportName')->name('name.fetch');
+    Route::get('/', [HomepageController::class, 'index'])->name('league.index');
 
-    Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
-        Route::post('/create', 'create')->name('create');
+    Route::prefix('sport')->name('sport.')->controller(SportController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
         Route::get('/fetch', 'fetch')->name('fetch');
-        Route::post('/update', 'update')->name('update');
+        Route::post('/create', 'create')->name('create');
         Route::delete('/delete', 'delete')->name('delete');
-        Route::get('/type/fetch', 'getLeagueTypes')->name('type.fetch');
-        Route::get('/detail/{id}', 'detail')->name('detail');
+        Route::get('/get', 'get')->name('get');
+        Route::post('/update', 'update')->name('update');
+        Route::get('/name/fetch', 'getSportName')->name('name.fetch');
+
+        Route::prefix('league')->name('league.')->controller(LeagueController::class)->group(function () {
+            Route::post('/create', 'create')->name('create');
+            Route::get('/fetch', 'fetch')->name('fetch');
+            Route::post('/update', 'update')->name('update');
+            Route::delete('/delete', 'delete')->name('delete');
+            Route::get('/type/fetch', 'getLeagueTypes')->name('type.fetch');
+            Route::get('/detail/{id}', 'detail')->name('detail');
 
             Route::prefix('team')->controller(TeamController::class)->name('team.')->group(function () {
                 Route::get('/fetch', 'fetch')->name('fetch');
                 Route::get('/', 'index')->name('index');
             });
+        });
+
+        Route::get('/league/{id}', 'detail')->name('detail');//sport/league/{id}
+
+        Route::prefix('seasons')->name('season.')->controller(SeasonController::class)->group(function () {
+            Route::get('/fetch', 'getSeasons')->name('fetch');
+        });
+
     });
 
-    Route::get('/league/{id}', 'detail')->name('detail');//sport/league/{id}
 
-    Route::prefix('seasons')->name('season.')->controller(SeasonController::class)->group(function () {
-        Route::get('/fetch', 'getSeasons')->name('fetch');
+    Route::get('/soccer', function () {
+        return view('team.index');
     });
 
+    Route::get('fetch',[TeamController::class,'fetch'])->name('fetch');
+    Route::get('detail/{id}',[TeamController::class,'detail'])->name('detail');
+
+    Route::post('register',[UserController::class,'register'])->name('register');
+
+    Route::get('hail',[\App\Http\Controllers\GameController::class,'getMatches'])->name('hail');
+
+    Route::middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ])->group(function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+    });
 });
 
-
-Route::get('/soccer', function () {
-    return view('team.index');
-});
-
-Route::get('fetch',[TeamController::class,'fetch'])->name('fetch');
-Route::get('detail/{id}',[TeamController::class,'detail'])->name('detail');
-
-Route::post('register',[UserController::class,'register'])->name('register');
-
-Route::get('hail',[\App\Http\Controllers\GameController::class,'getMatches'])->name('hail');
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
