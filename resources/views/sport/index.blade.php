@@ -171,20 +171,13 @@
                 const topSwal = $('.swal2-popup:visible');
 
                 // Eğer hem modal hem de swal modalı açıksa, hangisinin daha üstte olduğunu kontrol et
-                if (topModal && topSwal.length) {
-                    // Modalın üstte olup olmadığını kontrol et
-                    const modalZIndex = parseInt(topModal.css('z-index'), 10);
-                    const swalZIndex = parseInt(topSwal.css('z-index'), 10);
-
-                    if (swalZIndex > modalZIndex) {
-                        topModal = null; // Swal modalı daha üstteyse, modalı null yap
-                    }
-                } else if (topSwal.length) {
-                    topModal = topSwal; // Sadece swal modalı varsa, onu al
+                if (topSwal.length) {
+                    topModal = topSwal;
                 }
 
                 let title = '';
 
+                console.log(topModal)
                 if (topModal) {
                     if (topModal.hasClass('swal2-popup')) {
                         title = topModal.find('.swal2-title').text() || 'Error Modal'; // Hata modalının başlığı
@@ -192,8 +185,13 @@
                         title = topModal.find('.modal-header h4').text(); // Güncelleme modalının başlığı
                     }
                 }
-
-                alert(`Current Modal Title: ${title}`);
+                Swal.close();
+                var update_id = $('#update_id').val();
+                var update_name = $('#update_name').val();
+                var update_description = $('#update_description').val();
+                setTimeout(()=>{
+                    openUpdateModal(update_id,update_name,update_description)
+                },300)
             }
         });
 
