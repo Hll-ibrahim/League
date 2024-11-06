@@ -170,28 +170,11 @@
                 let topModal = $('.modal-dialog:visible').length ? $('.modal-dialog:visible') : null;
                 const topSwal = $('.swal2-popup:visible');
 
-                // Eğer hem modal hem de swal modalı açıksa, hangisinin daha üstte olduğunu kontrol et
                 if (topSwal.length) {
-                    topModal = topSwal;
+                    topSwal.hide();  // Close the topSwal popup
+                    Swal.close();
                 }
 
-                let title = '';
-
-                console.log(topModal)
-                if (topModal) {
-                    if (topModal.hasClass('swal2-popup')) {
-                        title = topModal.find('.swal2-title').text() || 'Error Modal'; // Hata modalının başlığı
-                    } else {
-                        title = topModal.find('.modal-header h4').text(); // Güncelleme modalının başlığı
-                    }
-                }
-                Swal.close();
-                var update_id = $('#update_id').val();
-                var update_name = $('#update_name').val();
-                var update_description = $('#update_description').val();
-                setTimeout(()=>{
-                    openUpdateModal(update_id,update_name,update_description)
-                },300)
             }
         });
 
