@@ -171,10 +171,27 @@
                 const topSwal = $('.swal2-popup:visible');
 
                 if (topSwal.length) {
-                    topSwal.hide();  // Close the topSwal popup
+                    // Eğer bir error modali (Swal) açık ise, kapat
+                    topSwal.hide(); // Error modali görünümden kaldır
                     Swal.close();
-                }
 
+                    // Error modali kapatıldıktan sonra update modalı tekrar aç
+                    setTimeout(() => {
+                        let update_id = $('#update_id').val();
+                        let update_name = $('#update_name').val();
+                        let update_description = $('#update_description').val();
+
+                        // Modalı açma fonksiyonunu doğrudan `modal('show')` ile çağırın
+                        $('#updateSportModal').modal('show');
+                        $('#update_id').val(update_id);
+                        $('#update_name').val(update_name);
+                        $('#update_description').val(update_description);
+                    }, 500); // Modal animasyon süresine bağlı olarak ayarlayın
+                }
+                else if (topModal) {
+                    // En üstteki modalı kapat
+                    $(topModal).modal('hide');
+                }
             }
         });
 
@@ -205,9 +222,6 @@
             $('#updateSportModal').one('shown.bs.modal', function () {
                 $('#update_name').focus();
             });
-
-            // Modal açıldığında arka planın aria-hidden özelliğini güncelle
-            $('.modal-backdrop').attr('aria-hidden', 'false');
         }
 
 
