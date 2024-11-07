@@ -173,7 +173,6 @@
                 if (topSwal.length) {
                     // Eğer bir error modali (Swal) açık ise, kapat
                     topSwal.hide(); // Error modali görünümden kaldır
-                    Swal.close();
 
                     // Error modali kapatıldıktan sonra update modalı tekrar aç
                     setTimeout(() => {
@@ -186,6 +185,8 @@
                         $('#update_id').val(update_id);
                         $('#update_name').val(update_name);
                         $('#update_description').val(update_description);
+                        document.documentElement.classList.remove('swal2-backdrop-hide', 'swal2-shown')
+                        document.querySelector('.swal2-container').remove()
                     }, 500); // Modal animasyon süresine bağlı olarak ayarlayın
                 }
                 else if (topModal) {
