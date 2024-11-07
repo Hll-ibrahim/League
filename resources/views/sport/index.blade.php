@@ -181,12 +181,13 @@
                         let update_description = $('#update_description').val();
 
                         // Modalı açma fonksiyonunu doğrudan `modal('show')` ile çağırın
+                        document.querySelector('.swal2-container').remove()
+
                         $('#updateSportModal').modal('show');
                         $('#update_id').val(update_id);
                         $('#update_name').val(update_name);
                         $('#update_description').val(update_description);
-                        document.documentElement.classList.remove('swal2-backdrop-hide', 'swal2-shown')
-                        document.querySelector('.swal2-container').remove()
+
                     }, 500); // Modal animasyon süresine bağlı olarak ayarlayın
                 }
                 else if (topModal) {

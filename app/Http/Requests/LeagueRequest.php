@@ -22,7 +22,7 @@ class LeagueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|unique:sports,name|max:30',
+            'name' => 'string|unique:leagues,name|max:30',
             'description' => 'max:200',
             'sport_id' => 'integer|exists:sports,id',
             'season_id' => 'integer|exists:seasons,id',

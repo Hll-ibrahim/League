@@ -202,6 +202,7 @@
             $('#season_id').val(seasonId || '');
             $('#type_id').val(leagueTypeId || '');
 
+
             createUpdateButton('update');
             openModal();
         }
@@ -318,15 +319,13 @@
                         title: 'Successfully',
                         text: response.success,
                         showConfirmButton: true,
-                    }).then(() => {
-                        clearForm();
-                        closeModal();
-                        dataTable.ajax.reload();
-                    });
+                    })
+                    clearForm();
+                    closeModal();
+                    dataTable.ajax.reload();
                 },
                 error: (xhr, status, error) => {
                     console.error(xhr, status, error);
-                    // Hata durumunda SweetAlert hata mesajını göster ve modal kapanmasın
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -400,6 +399,8 @@
             if (type === 'update') {
                 $('#createButton').addClass('d-none');
                 $('#updateButton').removeClass('d-none');
+                $('#updateButton').addClass('disabled');//remove disabled class when data changed
+                $('#updateButton').attr('onclick','');
             } else {
                 $('#createButton').removeClass('d-none');
                 $('#updateButton').addClass('d-none');
