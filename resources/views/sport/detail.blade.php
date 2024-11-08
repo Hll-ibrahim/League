@@ -162,6 +162,80 @@
                 }
             }
         });
+        $(document).ready(function () {
+            // Select elements
+            var updateButton = $('#updateButton');
+            var nameField = $('#name');  // Name field (do not consider for enabling update button)
+            var descriptionField = $('#description');
+            var sportSelect = $('#sport_id');
+            var seasonSelect = $('#season_id');
+            var typeSelect = $('#type_id');
+
+            // Disable the update button by default
+            updateButton.addClass('disabled');  // Disable the button
+            updateButton.attr('onclick', '');  // Remove onclick functionality
+
+            // Function to detect changes and enable/disable the update button
+            function checkForChanges() {
+                // Check if any of the fields other than name have been modified
+                if (descriptionField.val() || sportSelect.val() || seasonSelect.val() || typeSelect.val()) {
+                    // Enable the update button and set the onclick function
+                    updateButton.removeClass('disabled');  // Remove 'disabled' class
+                    updateButton.attr('onclick', 'updatePost()');  // Set onclick function
+                } else {
+                    // If no changes, keep the update button disabled
+                    updateButton.addClass('disabled');  // Add 'disabled' class
+                    updateButton.attr('onclick', '');  // Remove onclick function
+                }
+            }
+
+            // Bind change event to fields (excluding the name field)
+            descriptionField.on('input', checkForChanges);
+            sportSelect.on('change', checkForChanges);
+            seasonSelect.on('change', checkForChanges);
+            typeSelect.on('change', checkForChanges);
+
+            // You may want to run the checkForChanges function to initialize the state
+            checkForChanges();
+
+            // Initialize the form with the current data when updating (e.g., if you're editing a league)
+            function populateForm(data) {
+                nameField.val(data.name);
+                descriptionField.val(data.description);
+                sportSelect.val(data.sport_id);
+                seasonSelect.val(data.season_id);
+                typeSelect.val(data.league_type_id);
+
+                // Show the update button and hide the add button
+                $('#createButton').addClass('d-none');
+                updateButton.removeClass('d-none');  // Show the update button
+
+                // Disable the update button initially
+                updateButton.addClass('disabled');
+                updateButton.attr('onclick', '');  // Remove onclick function for now
+
+                // Run the change check to enable the button if there are any changes
+                checkForChanges();
+            }
+
+            // Example of function to populate the form when updating
+            function populateFormForUpdate(data) {
+                populateForm(data);
+            }
+
+            // Optional: Reset the form for a fresh "create" mode
+            function resetForm() {
+                $('#league_form')[0].reset();  // Reset all fields
+                updateButton.addClass('disabled');  // Disable the update button
+                updateButton.attr('onclick', '');  // Remove onclick functionality
+                $('#createButton').removeClass('d-none');  // Show the create button
+                updateButton.addClass('d-none');  // Hide the update button
+            }
+
+            // Call this when you open the modal for a new item (for creating)
+            resetForm();  // Reset the form on modal open
+        });
+
         function closeModal() {
             $('#add_league_modal').modal('hide');
             $('body').css('padding-right', '');
