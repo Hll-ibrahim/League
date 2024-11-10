@@ -179,7 +179,7 @@
             // Function to detect changes and enable/disable the update button
             function checkForChanges() {
                 // Check if any of the fields other than name have been modified
-                if (descriptionField.val() || sportSelect.val() || seasonSelect.val() || typeSelect.val()) {
+                if (descriptionField.val() || sportSelect.val() || seasonSelect.val() || typeSelect.val() || nameField.val())  {
                     // Enable the update button and set the onclick function
                     updateButton.removeClass('disabled');  // Remove 'disabled' class
                     updateButton.attr('onclick', 'updatePost()');  // Set onclick function
@@ -191,6 +191,7 @@
             }
 
             // Bind change event to fields (excluding the name field)
+            nameField.on('input',checkForChanges)
             descriptionField.on('input', checkForChanges);
             sportSelect.on('change', checkForChanges);
             seasonSelect.on('change', checkForChanges);
@@ -217,7 +218,18 @@
 
                 // Run the change check to enable the button if there are any changes
                 checkForChanges();
+
             }
+            $(document).keydown(function (e) {
+                if (e.key === "Enter") {
+                    if ($('#add_league_modal').is(':visible')) {
+                        e.preventDefault();
+                        createPost();
+                    } else if (updateButton.is(':visible') && !updateButton.hasClass('disabled')) {
+                            updatePost();
+                    }
+                }
+            });
 
             // Example of function to populate the form when updating
             function populateFormForUpdate(data) {
