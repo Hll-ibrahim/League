@@ -11,6 +11,7 @@
                     </div>
                     <div class="modal-body form-modal">
                         <form id="league_form">
+                            <input type="hidden" name="operation_mode" id="operation_mode" value="create"><!--operation -->
                             <div class="row w-100 m-0 mb-3">
                                 <div class="col">
                                     <h5 style="color:#3F3F3F">Name</h5>

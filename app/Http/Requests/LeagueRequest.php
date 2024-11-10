@@ -21,12 +21,33 @@ class LeagueRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'string|unique:leagues,name|max:30',
-            'description' => 'max:200',
-            'sport_id' => 'integer|exists:sports,id',
-            'season_id' => 'integer|exists:seasons,id',
-            'league_type_id' => 'integer|exists:league_types,id',
-        ];
+        $processValue = $this->input('process');
+        if($processValue == 3){
+            return [
+                'name' => 'string|max:30',
+                'description' => 'max:200',
+                'sport_id' => 'integer|exists:sports,id',
+                'season_id' => 'integer|exists:seasons,id',
+                'league_type_id' => 'integer|exists:league_types,id',
+            ];
+        }elseif($processValue == 1){
+            return [
+                'name' => 'string|unique:leagues,name|max:30',
+                'description' => 'max:200',
+                'sport_id' => 'integer|exists:sports,id',
+                'season_id' => 'integer|exists:seasons,id',
+                'league_type_id' => 'integer|exists:league_types,id',
+            ];
+        }
+        else{
+            return [
+                'name' => 'string|unique:leagues,name|max:30',
+                'description' => 'max:200',
+                'sport_id' => 'integer|exists:sports,id',
+                'season_id' => 'integer|exists:seasons,id',
+                'league_type_id' => 'integer|exists:league_types,id',
+            ];
+        }
+
     }
 }
