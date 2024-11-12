@@ -79,7 +79,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button id="updateButton" class="btn btn-success" onclick="updatePost()">Update</button>
+                        <button id="updateButton1" class="btn btn-success" onclick="updatePost()">Update</button>
                         <button type="button" class="btn btn-secondary" onclick="closeUpdateModal()">Kapat</button>
                     </div>
                 </div>
@@ -197,6 +197,55 @@
             }
         });
 
+        $(document).ready(function () {
+            var updateButton = $('#updateButton1');
+            var nameField = $('#update_name');
+            var descriptionField = $('#update_description');
+
+            // Disable the button by default when the modal is opened
+            function initializeUpdateButton() {
+                updateButton.addClass('disabled');
+                updateButton.attr('onclick', '');
+            }
+
+            // Function to check if any changes were made to the input fields
+            function checkForChanges() {
+                if (nameField.val() || descriptionField.val()) {
+                    // Enable the update button
+                    updateButton.removeClass('disabled');
+                    updateButton.attr('onclick', 'updatePost()');
+                } else {
+                    // Keep the update button disabled if no changes
+                    updateButton.addClass('disabled');
+                    updateButton.attr('onclick', '');
+                }
+            }
+
+            // Event listeners for input changes
+            nameField.on('input', checkForChanges);
+            descriptionField.on('input', checkForChanges);
+
+            // Call this function when opening the modal
+            function openUpdateModal(id, name, description) {
+                // Set initial values in the modal form
+                $('#update_id').val(id);
+                nameField.val(name);
+                descriptionField.val(description);
+
+                // Initialize button state
+                initializeUpdateButton();
+
+                // Show the modal
+                $('#updateSportModal').modal('show');
+
+                // Focus on the name field once the modal is shown
+                $('#updateSportModal').one('shown.bs.modal', function () {
+                    nameField.focus();
+                });
+            }
+        });
+
+
         function closeModal() {
             $('#add_sport_modal').modal('hide');
             $('body').removeClass('modal-open'); // modal-open sınıfını kaldır
@@ -217,9 +266,10 @@
             $('#update_name').val(name);
             $('#update_description').val(description);
 
+            $('#updateButton1').addClass('disabled');//remove disabled class when data changed
+            $('#updateButton1').attr('onclick','');
             // Modalı aç
             $('#updateSportModal').modal('show');
-
             // Modal açıldığında odaklanma
             $('#updateSportModal').one('shown.bs.modal', function () {
                 $('#update_name').focus();

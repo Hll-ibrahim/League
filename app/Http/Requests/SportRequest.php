@@ -20,10 +20,23 @@ class SportRequest extends BaseRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'string|unique:sports,name|max:30',
-            'description' => 'max:200',
-        ];
+        $processValue = $this->input('process');
+        if($processValue == 3){
+            return [
+                'name' => 'string|max:30',
+                'description' => 'max:200',
+            ];
+        }elseif($processValue == 1){
+            return [
+                'name' => 'string|unique:sports,name|max:30',
+                'description' => 'max:200',
+            ];
+        }else{
+            return [
+                'name' => 'string|unique:sports,name|max:30',
+                'description' => 'max:200',
+            ];
+        }
     }
 
 }
