@@ -154,11 +154,14 @@
 
         $(document).keydown(function(e) {
             if (e.key === "Enter") {
+                e.preventDefault(); // Prevent default action for the Enter key
+
+                // Check if the add modal is visible and call createPost
                 if ($('#add_sport_modal').is(':visible')) {
-                    e.preventDefault();
                     createPost();
-                } else if ($('#updateSportModal').is(':visible')) {
-                    e.preventDefault();
+                }
+                // Check if the update modal is visible and the update button is active
+                else if ($('#updateSportModal').is(':visible') && !$('#updateButton1').hasClass('disabled')) {
                     updatePost();
                 }
             }

@@ -222,11 +222,11 @@
             }
             $(document).keydown(function (e) {
                 if (e.key === "Enter") {
-                    if ($('#add_league_modal').is(':visible')) {
+                    if ($('#add_league_modal').is(':visible') && !$('#updateButton').hasClass('disabled')) {
                         e.preventDefault();
                         createPost();
-                    } else if (updateButton.is(':visible') && !updateButton.hasClass('disabled')) {
-                            updatePost();
+                    }else if ($('#update_league_modal').is(':visible') && !$('#updateButton').hasClass('disabled')) {
+                        updatePost();
                     }
                 }
             });
