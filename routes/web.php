@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LeagueController;
+use App\Http\Controllers\LeaguesTeamsController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SportController;
@@ -31,9 +32,9 @@ Route::prefix('/')->group(function () {
             Route::get('/type/fetch', 'getLeagueTypes')->name('type.fetch');
             Route::get('/detail/{id}', 'detail')->name('detail');
 
-            Route::prefix('team')->controller(TeamController::class)->name('team.')->group(function () {
+            Route::prefix('teams')->controller(LeaguesTeamsController::class)->name('team.')->group(function () {
                 Route::get('/fetch', 'fetch')->name('fetch');
-                Route::get('/', 'index')->name('index');
+                Route::get('/{id}', 'index')->name('index');
             });
         });
 
@@ -50,7 +51,7 @@ Route::prefix('/')->group(function () {
         return view('team.index');
     });
 
-    Route::get('fetch',[TeamController::class,'fetch'])->name('fetch');
+    Route::get('fetch',[LeaguesTeamsController::class,'fetch'])->name('fetch');
     Route::get('detail/{id}',[TeamController::class,'detail'])->name('detail');
 
     Route::post('register',[UserController::class,'register'])->name('register');

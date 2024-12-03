@@ -24,9 +24,8 @@ class LeagueController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return view('league.index');
+    public function index($league_id){
+        return view('team.index',compact('league_id'));
     }
 
     public function fetch(Request $request){

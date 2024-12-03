@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Contracts\LeaguesTeamsServiceInterface;
+use App\Services\Contracts\TeamServiceInterface;
+use App\Services\LeaguesTeamsService;
 use App\Services\TeamService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class TeamController extends Controller
 {
-    protected $teamService;
-    public function __construct(TeamService $teamService){
+    protected $teamService,$leaguesTeamsService;
+    public function __construct(TeamServiceInterface $teamService){
         $this->teamService = $teamService;
     }
 

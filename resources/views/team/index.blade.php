@@ -49,6 +49,7 @@
             scrollY: true,
             ajax: {
                 url:'{!! route('fetch') !!}',
+                data: {league_id: {{$league_id}}
             },
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},

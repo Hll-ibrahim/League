@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\League;
+use App\Models\LeaguesTeams;
 use App\Models\LeagueType;
 use App\Models\Season;
 use App\Models\Sport;
@@ -50,10 +51,16 @@ class LeagueSeeder extends Seeder
 
         $teams = ['Galatasaray','Real Madrid','Bayern Munich', 'Manchester City','Liverpool'];
         foreach ($teams as $team) {
-            Team::create([
+            $team_id = Team::create([
                 'name' => $team,
+            ]);
+
+            LeaguesTeams::create([
                 'league_id' => $league->id,
+                'team_id' => $team_id->id,
             ]);
         }
+
+
     }
 }

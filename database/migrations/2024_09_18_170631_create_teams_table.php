@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('logo')->nullable();
             $table->date('founded')->nullable();
-            $table->foreignId('league_id')->constrained();
             $table->foreignId('city_id')->nullable()->constrained();
             $table->timestamps();
         });
