@@ -11,6 +11,8 @@ class LeagueTeam extends Model
 {
     use HasFactory;
 
+    protected $table = 'leagues_teams';
+
     protected $fillable = ['team_id', 'league_id','win','lose','draw','scored_goals','goals_for'];
 
     public function league(): BelongsTo{
