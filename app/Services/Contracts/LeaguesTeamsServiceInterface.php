@@ -12,4 +12,6 @@ interface LeaguesTeamsServiceInterface{
     function getTeamName($leagueTeam);
 
     function addTeamToLeague(array $leagueTeam);
+
+    function removeTeamFromLeague(int $leagueTeam_id);
 }

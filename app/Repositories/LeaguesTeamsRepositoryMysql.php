@@ -13,4 +13,8 @@ class LeaguesTeamsRepositoryMysql implements LeaguesTeamsRepositoryInterface{
     public function addTeam(array $team){
         return LeaguesTeams::create($team);
     }
+
+    public function removeTeam(int $teamId){
+        return LeaguesTeams::destroy($teamId);
+    }
 }

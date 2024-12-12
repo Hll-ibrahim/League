@@ -40,7 +40,14 @@ class LeaguesTeamsController extends Controller
             })
             ->addColumn('detail',function($team){
                 return '<a href="'.route('detail',$team->id).'" class="btn btn-info btn-xs">Detail</a>';
-            })->addIndexColumn()->rawColumns(['detail'])->make();
+            })
+            ->addColumn('delete',function($team){
+                return '<button onclick="deleteLeague(' . $team->id . ')" class="btn btn-danger btn-xs">Remove</button>';
+
+                //return '<a href="'.route('sport.league.team.delete',$team->id).'" class="btn btn-danger btn-xs">Remove</a>';
+            })
+            ->addIndexColumn()->rawColumns(['detail','delete'])
+            ->make();
     }
 
     public function detail($id){
@@ -49,5 +56,9 @@ class LeaguesTeamsController extends Controller
 
     public function fetchAvailable(Request $request){
         return $this->leagueService->getTeamsFromLeagueSport($request->league_id);
+    }
+
+    public function remove(Request $request){
+        return $this->leaguesTeamsService->removeTeamFromLeague($request->league_team_id);
     }
 }

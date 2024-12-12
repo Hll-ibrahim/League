@@ -53,6 +53,7 @@
                 <th>Lose</th>
                 <th>Point</th>
                 <th>Detail</th>
+                <th>Remove</th>
             </tr>
             </thead>
 
@@ -65,6 +66,7 @@
                 <th>Lose</th>
                 <th>Point</th>
                 <th>Detail</th>
+                <th>Remove</th>
             </tr>
             </tfoot>
         </table>
@@ -98,6 +100,7 @@
                 {data: 'lose',orderable: false},
                 {data: 'point',orderable: false},
                 {data: 'detail',orderable: false,searchable: false},
+                {data: 'delete',orderable: false,searchable: false},
             ],
             success: function () {
             }
@@ -265,44 +268,6 @@
             });
         }
 
-        // Populate the seasons dropdown
-        function populateSeasonsDropdown(seasons) {
-            let seasonSelect = $('#season_id');
-            seasonSelect.empty();
-            seasonSelect.append('<option value="">Select Season</option>');
-
-            $.each(seasons, function (index, season) {
-                seasonSelect.append(`<option value="${season.id}">${season.name}</option>`);
-            });
-        }
-
-        function fetchLeagueTypes() {
-            $.ajax({
-                url: '{{ route('sport.league.type.fetch') }}', // AJAX çağrısı yapılacak URL
-                type: 'GET',
-                dataType: 'json',
-                data: {
-                    type: '2',
-                    process: '2.03'
-                },
-                success: function(response) {
-                    populateLeagueTypesDropdown(response); // Başarılı yanıt geldiğinde dropdown'u doldur
-                },
-                error: function(xhr) {
-                    console.error('Error fetching league types:', xhr.responseText); // Hata durumunu yönet
-                }
-            });
-        }
-        function populateLeagueTypesDropdown(leagueTypes) {
-            let leagueTypeSelect = $('#type_id');
-            leagueTypeSelect.empty();
-            leagueTypeSelect.append('<option value="">Select League Type</option>');
-
-            $.each(leagueTypes, function (index, leagueType) {
-                leagueTypeSelect.append(`<option value="${leagueType.id}">${leagueType.name}</option>`);
-            });
-        }
-
         function createPost() {
             const formData = new FormData($('#league_form')[0]);
 
@@ -346,24 +311,18 @@
             }).then((result) => {
                 if (result.isConfirmed) {
 
-                    const formData = new FormData();
-                    formData.append('id', id);
-                    formData.append('type', type);
-                    formData.append('process', process);
-                    formData.append('_method', 'DELETE');  // Laravel'e DELETE isteği gibi işlem yapması için ekleniyor
-
                     $.ajax({
-                        url: '{{ route('sport.league.delete') }}',
-                        type: 'POST',  // DELETE yerine POST kullanıyoruz
+                        url: '{{ route('sport.league.team.delete') }}',
+                        type: 'DELETE',  // DELETE yerine POST kullanıyoruz
                         headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
-                        processData: false,
-                        contentType: false,
-                        data: formData,
+                        data: {
+                            'league_team_id': id,
+                        },
                         success: () => {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Successfully',
-                                text: 'Sport Deleted Successfully',
+                                text: 'Team Removed Successfully',
                                 showConfirmButton: true,
                             });
                             dataTable.ajax.reload();

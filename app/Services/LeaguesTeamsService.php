@@ -37,4 +37,8 @@ class LeaguesTeamsService implements LeaguesTeamsServiceInterface{
         return $this->leaguesTeamsRepository->addTeam($leagueTeam);
     }
 
+    public function removeTeamFromLeague($leagueTeam_id){
+        return $this->leaguesTeamsRepository->removeTeam($leagueTeam_id);
+    }
+
 }

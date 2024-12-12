@@ -36,6 +36,7 @@ Route::prefix('/')->group(function () {
                 Route::get('/fetch', 'fetch')->name('fetch');
                 Route::get('/fetch_available', 'fetchAvailable')->name('fetch_available');
                 Route::post('/add', 'add')->name('add');
+                Route::delete('/delete', 'remove')->name('delete');
                 Route::get('/{id}', 'index')->name('index');
             });
         });

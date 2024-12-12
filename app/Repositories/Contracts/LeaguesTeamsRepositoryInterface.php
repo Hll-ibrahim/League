@@ -6,4 +6,6 @@ interface LeaguesTeamsRepositoryInterface {
     function getTeamsFromLeague(int $league);
 
     function addTeam(array $team);
+
+    function removeTeam(int $teamId);
 }
