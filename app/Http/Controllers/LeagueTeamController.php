@@ -8,7 +8,7 @@ use App\Services\Contracts\LeaguesTeamsServiceInterface;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-class LeaguesTeamsController extends Controller
+class LeagueTeamController extends Controller
 {
     protected $leaguesTeamsService, $leagueService;
     public function __construct(LeaguesTeamsServiceInterface $leaguesTeamsService, LeagueServiceInterface $leagueService){

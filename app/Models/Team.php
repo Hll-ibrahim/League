@@ -11,7 +11,7 @@ class Team extends Model
     use HasFactory;
 
     public function leagues() : HasMany{
-        return $this->hasMany(LeaguesTeams::class);
+        return $this->hasMany(LeagueTeam::class);
     }
 
     public function events(){

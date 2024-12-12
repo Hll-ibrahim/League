@@ -19,6 +19,6 @@ class League extends Model
     }
 
     public function teams(): HasMany{
-        return $this->hasMany(LeaguesTeams::class);
+        return $this->hasMany(LeagueTeam::class);
     }
 }

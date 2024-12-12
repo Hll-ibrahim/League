@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\League;
-use App\Models\LeaguesTeams;
+use App\Models\LeagueTeam;
 use App\Models\LeagueType;
 use App\Models\Season;
 use App\Models\Sport;
@@ -56,7 +56,7 @@ class LeagueSeeder extends Seeder
                 'sport_id' => $league->sport_id,
             ]);
 
-            LeaguesTeams::create([
+            LeagueTeam::create([
                 'league_id' => $league->id,
                 'team_id' => $team_id->id,
             ]);
