@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class BaseRequest extends FormRequest
+abstract class BaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -46,5 +46,10 @@ class BaseRequest extends FormRequest
                 'error' => ['You are not authorized to perform this action.']
             ]
         ], 403));
+    }
+
+    protected function roleCheck($role):bool {
+        $user = auth()->user();
+        return $user and $user->hasRole($role);
     }
 }
