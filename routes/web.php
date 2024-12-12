@@ -32,8 +32,10 @@ Route::prefix('/')->group(function () {
             Route::get('/type/fetch', 'getLeagueTypes')->name('type.fetch');
             Route::get('/detail/{id}', 'detail')->name('detail');
 
-            Route::prefix('teams')->controller(LeaguesTeamsController::class)->name('team.')->group(function () {
+            Route::prefix('team')->controller(LeaguesTeamsController::class)->name('team.')->group(function () {
                 Route::get('/fetch', 'fetch')->name('fetch');
+                Route::get('/fetch_available', 'fetchAvailable')->name('fetch_available');
+                Route::post('/add', 'add')->name('add');
                 Route::get('/{id}', 'index')->name('index');
             });
         });
