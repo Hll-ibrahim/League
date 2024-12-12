@@ -14,4 +14,5 @@ interface LeagueRepositoryInterface
     public function getSeasons();
     public function update(League $league, $data);
     public function delete($id);
+    public function getTeamsFromSport(int $sport_id,int $league_id);
 }

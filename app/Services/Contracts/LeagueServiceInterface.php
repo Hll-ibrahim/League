@@ -13,4 +13,5 @@ interface LeagueServiceInterface
     public function all();
     public function delete($id);
     public function update($data);
+    public function getTeamsFromLeagueSport(int $league_id);
 }

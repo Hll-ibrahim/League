@@ -33,4 +33,8 @@ class LeaguesTeamsService implements LeaguesTeamsServiceInterface{
         return $team->name;
     }
 
+    public function addTeamToLeague($leagueTeam){
+        return $this->leaguesTeamsRepository->addTeam($leagueTeam);
+    }
+
 }

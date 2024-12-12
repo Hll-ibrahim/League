@@ -6,6 +6,7 @@ use App\Models\League;
 use App\Models\LeagueType;
 use App\Models\Season;
 use App\Models\Sport;
+use App\Models\Team;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 
 class LeagueRepository implements LeagueRepositoryInterface {
@@ -39,4 +40,13 @@ class LeagueRepository implements LeagueRepositoryInterface {
     public function delete($id){
         return League::destroy($id);
     }
+    public function getTeamsFromSport(int $sport_id, int $league_id){
+        return Team::where('sport_id', $sport_id)
+            ->whereNotIn('id', function ($query) use ($league_id) {
+                $query->select('team_id')
+                    ->from('leagues_teams')
+                    ->where('league_id', $league_id);
+            })
+            ->get();    }
+
 }

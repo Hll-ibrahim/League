@@ -10,4 +10,6 @@ interface LeaguesTeamsServiceInterface{
     function getPointConvert($leagueTeam, $type);
 
     function getTeamName($leagueTeam);
+
+    function addTeamToLeague(array $leagueTeam);
 }

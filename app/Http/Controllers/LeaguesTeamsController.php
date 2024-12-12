@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LeaguesTeamsRequest;
+use App\Services\Contracts\LeagueServiceInterface;
 use App\Services\Contracts\LeaguesTeamsServiceInterface;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class LeaguesTeamsController extends Controller
 {
-    protected $leaguesTeamsService;
-    public function __construct(LeaguesTeamsServiceInterface $leaguesTeamsService){
+    protected $leaguesTeamsService, $leagueService;
+    public function __construct(LeaguesTeamsServiceInterface $leaguesTeamsService, LeagueServiceInterface $leagueService){
         $this->leaguesTeamsService = $leaguesTeamsService;
+        $this->leagueService = $leagueService;
+
+    }
+
+    public function add(LeaguesTeamsRequest $request){
+        return $this->leaguesTeamsService->addTeamToLeague($request->all());
     }
 
     public function index($league_id){
@@ -37,5 +45,9 @@ class LeaguesTeamsController extends Controller
 
     public function detail($id){
         dd($id);
+    }
+
+    public function fetchAvailable(Request $request){
+        return $this->leagueService->getTeamsFromLeagueSport($request->league_id);
     }
 }

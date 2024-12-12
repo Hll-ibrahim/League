@@ -4,4 +4,6 @@ namespace App\Repositories\Contracts;
 
 interface LeaguesTeamsRepositoryInterface {
     function getTeamsFromLeague(int $league);
+
+    function addTeam(array $team);
 }

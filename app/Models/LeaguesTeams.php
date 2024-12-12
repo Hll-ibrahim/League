@@ -11,6 +11,8 @@ class LeaguesTeams extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['team_id', 'league_id','win','lose','draw','scored_goals','goals_for'];
+
     public function league(): BelongsTo{
         return $this->belongsTo(League::class);
     }
