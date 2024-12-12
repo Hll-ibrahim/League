@@ -3,10 +3,12 @@
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LeagueTeamController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SeasonController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamPlayerController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AddTypeAndProcess;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,11 @@ Route::prefix('/')->group(function () {
                 Route::post('/add', 'add')->name('add');
                 Route::delete('/delete', 'remove')->name('delete');
                 Route::get('/{id}', 'index')->name('index');
+                Route::get('/detail/{id}', 'detail')->name('detail');
+
+                Route::prefix('player')->name('player.')->controller(TeamPlayerController::class)->group(function () {
+                    Route::get('/fetch', 'fetch')->name('fetch');
+                });
             });
         });
 
