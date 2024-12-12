@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->date('founded')->nullable();
             $table->foreignId('city_id')->nullable()->constrained();
+            $table->foreignId('sport_id')->constrained();
             $table->timestamps();
         });
     }

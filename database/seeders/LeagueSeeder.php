@@ -53,6 +53,7 @@ class LeagueSeeder extends Seeder
         foreach ($teams as $team) {
             $team_id = Team::create([
                 'name' => $team,
+                'sport_id' => $league->sport_id,
             ]);
 
             LeaguesTeams::create([
@@ -60,6 +61,9 @@ class LeagueSeeder extends Seeder
                 'team_id' => $team_id->id,
             ]);
         }
+
+        Team::create(['name'=>'Fenerbahçe','sport_id' => Sport::where('name', 'basketball')->first()->id]);
+        Team::create(['name'=>'Beşiktaş','sport_id' => Sport::where('name', 'football')->first()->id]);
 
 
     }
