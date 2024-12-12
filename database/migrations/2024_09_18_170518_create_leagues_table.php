@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignId('season_id')->constrained()->onDelete('cascade');
             $table->foreignId('sport_id')->constrained('sports')->onDelete('cascade');
             $table->foreignId('league_type_id')->constrained('league_types')->onDelete('cascade');
             $table->float('winPoint')->default(3);
