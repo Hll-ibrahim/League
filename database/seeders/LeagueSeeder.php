@@ -78,6 +78,8 @@ class LeagueSeeder extends Seeder
 
         $players_names = ['Halil İbrahim','Melih','Ekin','Sabri','Sneijder','Kerem'];
         $team = Team::where('name','Galatasaray')->first();
+        $season_league = SeasonLeague::where('league_id', $league->id)->where('season_id',$season->id)->first();
+       $league_team = LeagueTeam::where('team_id',$team->id)->where('season_league_id',$season_league->id)->first();
         $nationality = Nationality::create(['name'=>'Türk']);
         foreach ($players_names as $name) {
             $player = Player::create([
@@ -89,7 +91,7 @@ class LeagueSeeder extends Seeder
             ]);
 
             TeamPlayer::create([
-                'team_id' => $team->id,
+                'league_team_id' => $league_team->id,
                 'player_id' => $player->id,
             ]);
         }

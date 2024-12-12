@@ -19,6 +19,7 @@ class TeamPlayerController extends Controller
     public function fetch(Request $request){
         $players = $this->teamPlayerService->getPlayersFromTeam($request->team_id);
 
+
         return DataTables::of($players)
             ->addColumn('name',function($player){
                 return $this->teamPlayerService->getPlayerFullName($player->id);

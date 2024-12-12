@@ -11,12 +11,12 @@ class LeagueTeam extends Model
 {
     use HasFactory;
 
-    protected $table = 'leagues_teams';
+    protected $table = 'league_team';
 
     protected $fillable = ['team_id', 'league_id','win','lose','draw','scored_goals','goals_for'];
 
-    public function league(): BelongsTo{
-        return $this->belongsTo(League::class);
+    public function season_league(): BelongsTo{
+        return $this->belongsTo(SeasonLeague::class);
     }
 
     public function team(): BelongsTo{

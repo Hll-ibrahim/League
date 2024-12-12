@@ -15,4 +15,8 @@ class TeamPlayerRepositoryMysql implements TeamPlayerRepositoryInterface{
         return TeamPlayer::findOrFail($playerId);
     }
 
+    public function playedGamesInSeason(int $playerId, int $seasonLeagueId){
+
+    }
+
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('season_league_id')->constrained('season_leagues');
+            $table->foreignId('season_league_id')->constrained('season_league');
             $table->foreignId('home_team_id')->constrained('teams');
             $table->foreignId('away_team_id')->constrained('teams');
             $table->foreignId('referee_id')->constrained('users');

@@ -21,7 +21,7 @@ class Game extends Model
         return $this->belongsTo(Team::class, 'away_team_id','id');
     }
 
-    public function league(){
-        return $this->belongsTo(League::class);
+    public function season_league(){
+        return $this->belongsTo(SeasonLeague::class);
     }
 }

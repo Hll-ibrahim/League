@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('season_leagues', function (Blueprint $table) {
+        Schema::create('season_league', function (Blueprint $table) {
             $table->id();
             $table->foreignId('league_id')->constrained('leagues');
             $table->foreignId('season_id')->constrained('seasons');
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('season_leagues');
+        Schema::dropIfExists('season_league');
     }
 };

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SeasonLeague extends Model
 {
     use HasFactory;
+
+    protected $table = 'season_league';
 }
