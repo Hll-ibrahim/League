@@ -14,26 +14,6 @@ class SportService implements SportServiceInterface {
         $this->sportRepository = $sportRepository;
     }
 
-    public function processControl($request)
-    {
-        switch ($request['process']) {
-            case '1'://C
-                return $this->add($request);
-            case '2'://R
-                return $this->all();// get all
-            case '2.01'://R
-                return $this->get($request->id);// get by Id
-            case '2.02':
-                return $this->getSportName($request['id']);
-            case '3'://U
-                return $this->update($request);
-            case '4'://D
-                return $this->delete($request['id']);
-            default:
-                throw new \Exception("Invalid request type");
-        }
-    }
-
     public function add($data){
         return $this->sportRepository->createSport($data);
     }

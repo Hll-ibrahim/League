@@ -23,13 +23,9 @@ class SportController extends Controller
         return view('sport.index');
     }
 
-    public function fetch(Request $request){
-        $request->merge([
-            'type' => 3, // Örnek type değeri
-            'process' => 2 // Örnek process değeri
-        ]);
+    public function fetch(){
 
-        $sports = $this->requestService->handleRequest($request);
+        $sports = $this->sportService->all();
         return DataTables::of($sports)
             ->addColumn('detail',function($sport){
                 return '<a href="'.route('sport.detail',$sport->id).'" class="btn btn-info btn-xs">Detail</a>';
@@ -47,13 +43,7 @@ class SportController extends Controller
 
     public function detail($id){
         $sport_id=$id;
-        $request=new Request();
-        $request->merge([
-            'id'=>$id,
-            'type' => 3,
-            'process' => 2.02 // Örnek process değeri
-        ]);
-        $sport_name = $this->requestService->handleRequest($request);
+        $sport_name = $this->sportService->getSportName($id);
         return view('sport.detail',compact('sport_id','sport_name'));
     }
 
@@ -63,7 +53,7 @@ class SportController extends Controller
     }
 
     public function delete(SportRequest $request){
-        $this->requestService->handleRequest($request);
+        $this->sportService->delete($request['id']);
         return response()->json(['success'=>'Data deleted successfully.']);
     }
 
@@ -73,7 +63,7 @@ class SportController extends Controller
     }
 
     public function update(SportRequest $request){
-        $this->requestService->handleRequest($request);
+        $this->sportService->update($request);
         return response()->json(['success'=>'Data updated successfully.']);
     }
 }

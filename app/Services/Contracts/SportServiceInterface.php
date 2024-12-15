@@ -4,7 +4,6 @@ namespace App\Services\Contracts;
 
 interface SportServiceInterface
 {
-    public function processControl($request);
     public function add($data);
     public function get($id);
     public function all();

@@ -302,11 +302,7 @@
         }
 
         function createPost() {
-            const type = 3; // Sport
-            const process = 1; // Create
             const formData = new FormData(document.getElementById('sport_form'));
-            formData.append('type', type);
-            formData.append('process', process);
 
             $.ajax({
                 url: '{{route('sport.create')}}',
@@ -342,8 +338,6 @@
         }
 
         function deleteSport(id) {
-            const type = 3; // Sport
-            const process = 4; // Delete
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -357,8 +351,6 @@
                 if (result.isConfirmed) {
                     const formData = new FormData();
                     formData.append('id', id);
-                    formData.append('type', type);
-                    formData.append('process', process);
                     formData.append('_method', 'DELETE');
 
                     $.ajax({
@@ -413,14 +405,10 @@
         }
 
         function updatePost() {
-            const type = 3; // Sport
-            const process = 3; // update
             const formData = new FormData(document.getElementById('update_sport_form'));
             const id = $('#update_id').val();
 
             formData.append('id', id);
-            formData.append('type', type);
-            formData.append('process', process);
 
             $.ajax({
                 url: '{{ route('sport.update') }}',
