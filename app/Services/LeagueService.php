@@ -15,30 +15,6 @@ class LeagueService implements LeagueServiceInterface {
         $this->leagueRepository = $leagueRepository;
     }
 
-    public function processControl($request)
-    {
-        switch ($request['process']) {
-            case '1'://C
-                return $this->add($request);
-            case '2'://R
-                return $this->all();// get all
-            case '2.01'://R
-                return $this->getLeagueBySportId($request['sport_id']);// get leagues by sport id
-            case '2.02'://R
-                return $this->getSeasons();
-            case '2.03'://R
-                return $this->getLeagueTypes();
-            case '2.04'://R
-                return $this->getLeagueNameById($request->get('id'));
-            case '3'://U
-                return $this->update($request);
-            case '4'://D
-                return $this->delete($request['id']);
-            default:
-                throw new \Exception("Invalid request type");
-        }
-    }
-
     public function add($data){
         return $this->leagueRepository->createLeague($data);
     }

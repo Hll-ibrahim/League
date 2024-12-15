@@ -324,10 +324,6 @@
                 url: '{{ route('sport.league.type.fetch') }}', // AJAX çağrısı yapılacak URL
                 type: 'GET',
                 dataType: 'json',
-                data: {
-                    type: '2',
-                    process: '2.03'
-                },
                 success: function(response) {
                     populateLeagueTypesDropdown(response); // Başarılı yanıt geldiğinde dropdown'u doldur
                 },
@@ -347,12 +343,7 @@
         }
 
         function createPost() {
-            const type = 2; // League
-            const process = 1; // Create
             const formData = new FormData($('#league_form')[0]);
-
-            formData.append('type', type);
-            formData.append('process', process);
 
             $.ajax({
                 url: '{{ route('sport.league.create') }}',
@@ -380,14 +371,10 @@
         }
 
         function updatePost() {
-            const type = 2; // league
-            const process = 3; // update
             const formData = new FormData(document.getElementById('league_form'));
             const id = $('#update_id').val();
 
             formData.append('id', id);
-            formData.append('type', type);
-            formData.append('process', process);
 
             $.ajax({
                 url: '{{ route('sport.league.update') }}',
@@ -421,8 +408,6 @@
         }
 
         function deleteLeague(id) {
-            const type = 2; // Sport
-            const process = 4; // Delete
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -437,8 +422,6 @@
 
                     const formData = new FormData();
                     formData.append('id', id);
-                    formData.append('type', type);
-                    formData.append('process', process);
                     formData.append('_method', 'DELETE');  // Laravel'e DELETE isteği gibi işlem yapması için ekleniyor
 
                     $.ajax({

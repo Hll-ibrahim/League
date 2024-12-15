@@ -7,6 +7,7 @@ use App\Http\Requests\SportRequest;
 use App\Models\League;
 use App\Services\Contracts\LeagueServiceInterface;
 use App\Services\Contracts\RequestServiceInterface;
+use App\Services\Contracts\SeasonServiceInterface;
 use App\Services\Contracts\SportServiceInterface;
 use App\Services\LeagueService;
 use Illuminate\Http\Request;
@@ -16,9 +17,14 @@ class LeagueController extends Controller
 {
     protected $leagueService;
     protected $requestService;
-    public function __construct(LeagueServiceInterface $leagueService , RequestServiceInterface $requestService) {
+
+    protected $sportService;
+    protected $seasonService;
+    public function __construct(LeagueServiceInterface $leagueService , RequestServiceInterface $requestService , SeasonServiceInterface $seasonService , SportServiceInterface $sportService) {
         $this->leagueService = $leagueService;
         $this->requestService = $requestService;
+        $this->seasonService = $seasonService;
+        $this->sportService = $sportService;
     }
 
     /**
@@ -29,25 +35,12 @@ class LeagueController extends Controller
     }
 
     public function fetch(Request $request){
-        $request->merge([
-            'type' => 2, // Örnek type değeri
-            'process' => 2.01 // Örnek process değeri
-        ]);
-        $leagues = $this->requestService->handleRequest($request);
-        /*
-        if ($leagues->isEmpty()) {
-            return response()->json(['error' => 'No leagues found'], 404);
-        }
-        */
+        $leagues = $this->leagueService->getLeagueBySportId($request['sport_id']);
         return DataTables::of($leagues)
             ->editColumn('season_id', function ($league) {
                 $request=new Request();
-                $request->merge([
-                    'id' => $league->season_id,
-                    'type' => 5,
-                    'process' => 2.01
-                ]);
-                $seasonName = $this->requestService->handleRequest($request);
+
+                $seasonName = $this->seasonService->getSeasonNameById($request->get('id'));
                 if ($seasonName) {
                     return $seasonName; // Return the season name if found
                 } else {
@@ -58,10 +51,8 @@ class LeagueController extends Controller
                 $request=new Request();
                 $request->merge([
                     'id' => $league->league_type_id,
-                    'type' => 2,
-                    'process' => 2.04
                 ]);
-                $leagueTypeName = $this->requestService->handleRequest($request);
+                $leagueTypeName = $this->leagueService->getLeagueNameById($request->get('id'));
                 if ($leagueTypeName) {
                     return $leagueTypeName; // Return the season name if found
                 } else {
@@ -95,10 +86,8 @@ class LeagueController extends Controller
 
         $request->merge([
             'id' => $id, // Aldığınız ID değeri
-            'type' => 3, // Örnek type değeri
-            'process' => 2.01 // Örnek process değeri
         ]);
-        $league = $this->requestService->handleRequest($request);
+        $league = $this->sportService->get($request->id);
         return view('league.detail',compact('league'));
     }
 
@@ -108,22 +97,23 @@ class LeagueController extends Controller
     }
 
     public function delete(LeagueRequest $request){
-        $this->requestService->handleRequest($request);
+        $this->leagueService->delete($request['id']);
         return response()->json(['success'=>'Data deleted successfully.']);
     }
 
-    public function get(Request $request){
+    public function get(Request $request){// ??
+        dd($request->all());
         $league = $this->leagueService->get($request->sport_id);
         return response()->json($league);
     }
 
     public function update(LeagueRequest $request){
-        $this->requestService->handleRequest($request);
+        $this->leagueService->update($request);
         return response()->json(['success'=>'Data updated successfully.']);
     }
 
     public function getSeasons(Request $request){
-        $seasons = $this->requestService->handleRequest($request);
+        $seasons = $this->leagueService->getSeasons();
 
         if ($seasons) {
             return response()->json($seasons); // JSON formatında döndür
@@ -132,8 +122,8 @@ class LeagueController extends Controller
         return response()->json(['error' => 'No seasons found'], 404);
     }
 
-    public function getLeagueTypes(Request $request){
-        $leagueTypes = $this->requestService->handleRequest($request);
+    public function getLeagueTypes(){
+        $leagueTypes = $this->leagueService->getLeagueTypes();
 
         if ($leagueTypes) {
             return response()->json($leagueTypes); // JSON formatında döndür

@@ -4,7 +4,6 @@ namespace App\Services\Contracts;
 
 interface LeagueServiceInterface
 {
-    public function processControl($request);
     public function add($data);
     public function getLeagueBySportId($id);
     public function getLeagueTypes();
