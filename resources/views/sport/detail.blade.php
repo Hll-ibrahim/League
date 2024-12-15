@@ -299,10 +299,6 @@
                 url: '{{ route('sport.season.fetch') }}', // AJAX çağrısı yapılacak URL
                 type: 'GET',
                 dataType: 'json',
-                data: {
-                    type: '5', // Örnek veri gönderimi
-                    process: '2'
-                },
                 success: function(response) {
                     populateSeasonsDropdown(response); // Başarılı yanıt geldiğinde dropdown'u doldur
                 },

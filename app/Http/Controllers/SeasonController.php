@@ -11,13 +11,13 @@ class SeasonController extends Controller
 {
     protected $seasonService;
     protected $requestService;
-    public function __construct(SeasonServiceInterface $leagueService , RequestServiceInterface $requestService) {
-        $this->seasonService = $leagueService;
+    public function __construct(SeasonServiceInterface $seasonService , RequestServiceInterface $requestService) {
+        $this->seasonService = $seasonService;
         $this->requestService = $requestService;
     }
 
     public function getSeasons(Request $request){
-        $seasons = $this->requestService->handleRequest($request);
+        $seasons = $this->seasonService->all();
 
         if ($seasons) {
             return response()->json($seasons); // JSON formatında döndür
@@ -27,6 +27,6 @@ class SeasonController extends Controller
     }
 
     public function getSeasonNameById(Request $request){
-        $season = $this->requestService->handleRequest($request);
+        $season = $this->seasonService->getSeasonNameById($request->get('id'));
     }
 }
