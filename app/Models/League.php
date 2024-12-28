@@ -13,12 +13,30 @@ class League extends Model
 
     protected $fillable = ['name','description','sport_id', 'season_id','league_type_id']; // Add the fields you want to be mass-assignable
 
-    public function season()
+    public function sport()
     {
-        return $this->belongsTo(Season::class);
+        return $this->belongsTo(Sport::class);
     }
 
-    public function teams(): HasMany{
-        return $this->hasMany(LeagueTeam::class);
+    public function leagueType()
+    {
+        return $this->belongsTo(LeagueType::class);
+    }
+
+    public function seasonLeagues()
+    {
+        return $this->hasMany(SeasonLeague::class);
+    }
+
+    public function teams()
+    {
+        return $this->hasManyThrough(
+            Team::class,
+            LeagueTeam::class,
+            'season_league_id', // Foreign key on the league_team table
+            'id',               // Foreign key on the teams table
+            'id',               // Local key on the leagues table
+            'team_id'           // Local key on the league_team table
+        );
     }
 }

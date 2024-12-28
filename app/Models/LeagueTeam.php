@@ -15,11 +15,13 @@ class LeagueTeam extends Model
 
     protected $fillable = ['team_id', 'league_id','win','lose','draw','scored_goals','goals_for'];
 
-    public function season_league(): BelongsTo{
-        return $this->belongsTo(SeasonLeague::class);
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 
-    public function team(): BelongsTo{
-        return $this->belongsTo(Team::class);
+    public function seasonLeague()
+    {
+        return $this->belongsTo(SeasonLeague::class, 'season_league_id');
     }
 }

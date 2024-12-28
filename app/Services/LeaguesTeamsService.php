@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\LeagueTeam;
+use App\Models\Team;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
 use App\Services\Contracts\LeaguesTeamsServiceInterface;
 
@@ -23,9 +25,8 @@ class LeaguesTeamsService implements LeaguesTeamsServiceInterface{
     }
 
     public function getPointConvert($leagueTeam, $type){
-        $league = $leagueTeam->league;
-        $point = $league->$type;
-        return $point;
+        $league = $leagueTeam->seasonLeague->league ;
+        return $league->$type;
     }
 
     public function getTeamName($leagueTeam){
@@ -39,6 +40,11 @@ class LeaguesTeamsService implements LeaguesTeamsServiceInterface{
 
     public function removeTeamFromLeague($leagueTeam_id){
         return $this->leaguesTeamsRepository->removeTeam($leagueTeam_id);
+    }
+
+    public function getLeagueTeamsFromLeague(int $season_league_id)
+    {
+        return LeagueTeam::where('season_league_id', $season_league_id)->get();
     }
 
 }

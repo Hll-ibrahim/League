@@ -3,7 +3,7 @@
 namespace App\Repositories\Contracts;
 
 interface LeaguesTeamsRepositoryInterface {
-    function getTeamsFromLeague(int $league);
+    function getTeamsFromLeague(int $season_league_id);
 
     function addTeam(array $team);
 

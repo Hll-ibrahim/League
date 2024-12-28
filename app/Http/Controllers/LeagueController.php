@@ -88,7 +88,8 @@ class LeagueController extends Controller
             'id' => $id, // Aldığınız ID değeri
         ]);
         $league = $this->sportService->get($request->id);
-        return view('league.detail',compact('league'));
+        $seasons = $this->seasonService->all();
+        return view('league.detail',compact('league','seasons'));
     }
 
     public function create(LeagueRequest $request){

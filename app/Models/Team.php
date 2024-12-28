@@ -10,8 +10,9 @@ class Team extends Model
 {
     use HasFactory;
 
-    public function leagues() : HasMany{
-        return $this->hasMany(LeagueTeam::class);
+    public function leagues()
+    {
+        return $this->belongsToMany(League::class, 'league_team', 'team_id', 'season_league_id');
     }
 
     public function events(){

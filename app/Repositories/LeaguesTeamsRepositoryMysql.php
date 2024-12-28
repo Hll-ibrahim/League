@@ -6,8 +6,8 @@ use App\Models\LeagueTeam;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
 
 class LeaguesTeamsRepositoryMysql implements LeaguesTeamsRepositoryInterface{
-    public function getTeamsFromLeague(int $league){
-        return LeagueTeam::where('league_id',$league)->get();
+    public function getTeamsFromLeague(int $season_league_id){
+        return LeagueTeam::where('season_league_id',$season_league_id)->get();
     }
 
     public function addTeam(array $team){

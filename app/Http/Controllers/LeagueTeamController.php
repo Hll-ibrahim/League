@@ -26,7 +26,19 @@ class LeagueTeamController extends Controller
     }
 
     public function fetch(Request $request){
-        $teams = $this->leaguesTeamsService->getTeamsFromLeague($request->league_id);
+
+        $league_id = $request->get('league_id');
+        $season_id = $request->get('season_id');
+
+
+        if(isset($league_id) and $league_id != ''){
+            if(isset($season_id) and $season_id != ''){
+                $teams = $this->leaguesTeamsService->getLeagueTeamsFromLeague($season_id);
+            }
+            else{
+                $teams = $this->leaguesTeamsService->getTeamsFromLeague($league_id);
+            }
+        }
 
         return DataTables::of($teams)
             ->addColumn('name',function($team){

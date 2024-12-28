@@ -1,6 +1,13 @@
 
 @extends('layouts.index')
 @section('content')
+    <select id="season_filter" class="form-control">
+        <option value="">Select Season</option>
+        @foreach($seasons as $season)
+            <option value="{{ $season->id }}">{{ $season->name }}</option>
+        @endforeach
+    </select>
+
     <div class="modal fade" id="add_league_team_modal" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -87,8 +94,9 @@
             scrollY: true,
             ajax: {
                 url:'{!! route('fetch') !!}',
-                data: {
-                    'league_id':'{{$league->id}}',
+                data: function (d) {
+                    d.league_id = '{{ $league->id }}'; // Lig ID'si
+                    d.season_id = $('#season_filter').val(); // Sezon ID'si
                 }
             },
             columns: [
@@ -359,6 +367,9 @@
                 $('#updateButton').addClass('d-none');
             }
         }
+        $('#season_filter').change(function () {
+            dataTable.draw();
+        });
     </script>
 @endsection
 
