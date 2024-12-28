@@ -1,6 +1,7 @@
 
 @extends('layouts.index')
 @section('content')
+
     <div class="modal fade" id="add_team_player_modal" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -47,7 +48,6 @@
         <tr>
             <th>#</th>
             <th>Player Name</th>
-            <th>Age</th>
             <th>Played</th>
             <th>Goals</th>
             <th>Assist</th>
@@ -58,7 +58,6 @@
         <tr>
             <th>#</th>
             <th>Player Name</th>
-            <th>Age</th>
             <th>Played</th>
             <th>Goals</th>
             <th>Assist</th>
@@ -89,10 +88,9 @@
             columns: [
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'name'},
-                {data: 'games',orderable: false},
-                {data: 'play',orderable: false},
-                {data: 'goal',orderable: false},
-                {data: 'assist',orderable: false},
+                {data: 'played',orderable: false},
+                {data: 'goals',orderable: false},
+                {data: 'assists',orderable: false},
             ],
             success: function () {
             }

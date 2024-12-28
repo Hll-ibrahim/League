@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Player extends Model
 {
     use HasFactory;
+    public function teamPlayers()
+    {
+        return $this->hasMany(TeamPlayer::class, 'player_id');
+    }
 }

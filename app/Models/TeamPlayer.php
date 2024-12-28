@@ -13,14 +13,15 @@ class TeamPlayer extends Model
 
     protected $table = 'team_player';
 
-    public function team(): BelongsTo{
-        return $this->belongsTo(Team::class);
+    public function league_team(): BelongsTo{
+        return $this->belongsTo(LeagueTeam::class);
     }
     public function player(): BelongsTo{
         return $this->belongsTo(Player::class);
     }
 
-    public function player_statistics(): HasMany{
-        return $this->hasMany(PlayerStatistic::class);
+    public function playerStatistics()
+    {
+        return $this->hasMany(PlayerStatistic::class, 'team_player_id');
     }
 }

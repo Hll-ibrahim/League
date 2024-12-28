@@ -23,8 +23,23 @@ class TeamPlayerService implements TeamPlayerServiceInterface{
 
     public function getPlayedGames(int $player_id){
         $team_player = $this->teamPlayerRepository->getPlayerById($player_id);
-        dd($team_player);
-        return $this->teamPlayerRepository->playedGamesInSeason($team_player->player_id,$team_player->season_league_id);
+        $league_team = $team_player->league_team;
+        if(isset($team_player) and isset($league_team)){
+            return $this->teamPlayerRepository->playedGamesInSeason($team_player->player_id,$league_team->season_league_id);
+        }
+        return false;
     }
+
+    public function getLeagueTeam(int $league_team_id){
+        return $this->teamPlayerRepository->getLeagueTeam($league_team_id);
+    }
+
+    public function getGoalsInSeason(int $player_id){
+        return $this->teamPlayerRepository->getGoalsInSeason($player_id);
+    }
+    public function getAssistsInSeason(int $player_id){
+        return $this->teamPlayerRepository->getAssistsInSeason($player_id);
+    }
+
 
 }

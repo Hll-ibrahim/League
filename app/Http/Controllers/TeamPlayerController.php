@@ -17,7 +17,11 @@ class TeamPlayerController extends Controller
         return view('team.detail', compact('team_id'));
     }
     public function fetch(Request $request){
-        $players = $this->teamPlayerService->getPlayersFromTeam($request->team_id);
+        $team_id = $request->team_id;
+
+        $league_team = $this->teamPlayerService->getLeagueTeam($team_id);
+
+        $players = $this->teamPlayerService->getPlayersFromTeam($team_id);
 
 
         return DataTables::of($players)
@@ -28,18 +32,17 @@ class TeamPlayerController extends Controller
                 return $this->teamPlayerService->getPlayedGames($player->id);
             })
             ->addColumn('goals',function($player){
-                return $this->leaguesTeamsService->getPoint($team);
+                return $this->teamPlayerService->getGoalsInSeason($player->id);
             })
             ->addColumn('assists',function($player){
-                return $this->leaguesTeamsService->getPoint($team);
+                return 1;
+                return $this->teamPlayerService->getAssistsInSeason($player->id);
             })
             ->addColumn('detail',function($team){
                 return '<a href="'.route('sport.league.team.detail',$team->id).'" class="btn btn-info btn-xs">Detail</a>';
             })
             ->addColumn('delete',function($team){
                 return '<button onclick="deleteLeague(' . $team->id . ')" class="btn btn-danger btn-xs">Remove</button>';
-
-                //return '<a href="'.route('sport.league.team.delete',$team->id).'" class="btn btn-danger btn-xs">Remove</a>';
             })
             ->addIndexColumn()->rawColumns(['detail','delete'])
             ->make();
