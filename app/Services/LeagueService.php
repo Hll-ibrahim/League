@@ -48,5 +48,8 @@ class LeagueService implements LeagueServiceInterface {
         return $this->leagueRepository->getTeamsFromSport($league->sport_id,$league_id);
     }
 
+    public function start(int $league_id){
+
+    }
 
 }

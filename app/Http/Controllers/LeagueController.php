@@ -71,7 +71,7 @@ class LeagueController extends Controller
                     . $leagues->name . '\', \''
                     . $leagues->description . '\', '
                     . $leagues->sport_id . ', '
-                    . $leagues->season_id . ', '
+                    //. $leagues->season_id . ', '
                     . $leagues->league_type_id
                     . ')" class="btn btn-warning btn-xs">Update</button>';
             })
@@ -89,7 +89,9 @@ class LeagueController extends Controller
         ]);
         $league = $this->sportService->get($request->id);
         $seasons = $this->seasonService->all();
-        return view('league.detail',compact('league','seasons'));
+        $sports = $this->sportService->all();
+        $league_types = $this->leagueService->getLeagueTypes();
+        return view('league.detail',compact('league','seasons','sports','league_types'));
     }
 
     public function create(LeagueRequest $request){
@@ -131,5 +133,12 @@ class LeagueController extends Controller
         }
 
         return response()->json(['error' => 'No League Type found'], 404);
+    }
+
+    public function start(Request $request){
+        $league_id = $request->league_id;
+
+        return $this->leagueService->start($league_id);
+
     }
 }

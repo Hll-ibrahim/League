@@ -281,6 +281,7 @@
                 openModal();
             });
         }
+
         function openUpdateModal(id, name, description, sportId, seasonId, leagueTypeId) {
             $('#update_id').val(id);
             $('#name').val(name);
@@ -294,6 +295,17 @@
             openModal();
         }
 
+        function openLeagueModal(id, name, description, sportId, seasonId, leagueTypeId) {
+            $('#update_id').val(id);
+            $('#name').val(name);
+            $('#description').val(description);
+            $('#sport_id').val(sportId || '');
+            $('#season_id').val(seasonId || '');
+            $('#type_id').val(leagueTypeId || '');
+
+            createUpdateButton('update');
+            openModal();
+        }
         function fetchSeasons() {
             $.ajax({
                 url: '{{ route('sport.season.fetch') }}', // AJAX çağrısı yapılacak URL

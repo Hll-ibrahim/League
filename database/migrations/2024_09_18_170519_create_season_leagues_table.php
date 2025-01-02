@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('league_id')->constrained('leagues');
             $table->foreignId('season_id')->constrained('seasons');
+            $table->boolean('status')->default(false)->comment('true->started,false->not started and ended');
             $table->timestamps();
         });
     }

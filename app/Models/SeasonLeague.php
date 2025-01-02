@@ -11,6 +11,8 @@ class SeasonLeague extends Model
 
     protected $table = 'season_league';
 
+    protected $fillable = ['league_id', 'season_id','status'];
+
     public function league()
     {
         return $this->belongsTo(League::class);

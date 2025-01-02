@@ -2,7 +2,6 @@
 @extends('layouts.index')
 @section('content')
     <select id="season_filter" class="form-control">
-        <option value="">Select Season</option>
         @foreach($seasons as $season)
             <option value="{{ $season->id }}">{{ $season->name }}</option>
         @endforeach
@@ -25,9 +24,7 @@
                                 <div class="col">
                                     <div class="inp-group">
                                         <select class="form-control" name="team_id">
-                                                <option value="-1"> Geçerli Takım Bulunamadı</option>
-                                                    <option value="{}}">{}}</option>
-
+                                                <option value="-1">There is no team available</option>
                                         </select>
                                     </div>
                                 </div>
@@ -46,7 +43,92 @@
         </div>
     </div>
 
+    <div class="modal fade" id="add_league_modal" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="myModal">
+                    <div class="modal-header">
+                        <h4 style="color:#3F3F3F">League Information</h4>
+                        <i class="fas fa-times modal-close" onclick="closeModal('add_league_modal')"></i>
+                    </div>
+                    <div class="modal-body form-modal">
+                        <form id="league_form">
+                            <input type="hidden" name="operation_mode" id="operation_mode" value="create"><!--operation -->
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">Name</h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <input type="text" value="{{$league->name}}" name="name" id="name" class="form-control" placeholder="Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">Description</h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <input type="text" value="{{$league->description}}" name="description" id="description" class="form-control" placeholder="Description">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">Sport Name</h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <select name="sport_id" id="sport_id" class="form-control">
+                                            <option value="">Select Sport</option>
+                                            @if(count($sports))
+                                                @foreach($sports as $sport)
+                                                    <option {{$league->sport_id == $sport->id  ? 'selected' : ''}} value="{{ $sport->id }}" selected>{{ $sport->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- League Type -->
+                            <div class="row w-100 m-0 mb-3">
+                                <div class="col">
+                                    <h5 style="color:#3F3F3F">
+                                        League Type
+                                    </h5>
+                                </div>
+                                <div class="col">
+                                    <div class="inp-group">
+                                        <select name="league_type_id" id="type_id" class="form-control">
+                                            <option value="">Select League Type</option>
+                                            @foreach($league_types as $league_type)
+                                                <option {{$league->league_type_id == $league_type->id  ? 'selected' : ''}} value="{{ $league_type->id }}" selected>{{ $league_type->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="update_id" name="id">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="createButton" class="btn btn-success" onclick="createPost()">Add</button>
+                        <button id="updateButton" class="btn btn-success d-none" onclick="updatePost()">Update</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('add_league_modal')">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <button class="btn btn-primary mb-4" onclick="create()">Add</button>
+
+        <button class="btn btn-success mb-4" onclick="start()">Start League</button>
+
+        <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
 
         <table id="team_table" class="display nowrap dataTable cell-border"
                style="width:100%">
@@ -200,7 +282,10 @@
             resetForm();  // Reset the form on modal open
         });
 
-        function closeModal() {
+        function closeModal(id=null) {
+            if(id){
+                $('#'+id).modal('hide');
+            }
             $('#add_league_team_modal').modal('hide');
             $('body').css('padding-right', '');
             clearForm();
@@ -234,6 +319,7 @@
                 openModal();
             });
         }
+
         function openUpdateModal(id, name, description, sportId, seasonId, leagueTypeId) {
             $('#update_id').val(id);
             $('#name').val(name);
@@ -259,14 +345,13 @@
                     let select = $('select[name="team_id"]');
                     select.empty();
 
-                    // Eğer gelen takımlar varsa ekle
+
                     if (response.length > 0) {
                         response.forEach(function(team) {
                             select.append(`<option value="${team.id}">${team.name}</option>`);
                         });
                     } else {
-                        // Takım yoksa geçerli mesajı ekle
-                        select.append('<option value="-1">Geçerli Takım Bulunamadı</option>');
+                        select.append('<option value="-1">There is no team available</option>');
                     }
                     //populateSeasonsDropdown(response); // Başarılı yanıt geldiğinde dropdown'u doldur
                 },
@@ -367,9 +452,44 @@
                 $('#updateButton').addClass('d-none');
             }
         }
+
         $('#season_filter').change(function () {
             dataTable.draw();
         });
+
+        function start(){
+            var league_id = {{$league->id}};
+
+            $.ajax({
+                url: '{{ route('sport.league.start') }}',
+                type: 'POST',
+                headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+                processData: false,
+                contentType: false,
+                data: {'league_id':league_id},
+                success: () => {
+                    Swal.fire('Success', 'League started successfully!', 'success');
+                    closeModal();
+                    dataTable.ajax.reload();
+                },
+                error: (xhr,status,error) => {
+                    console.log(xhr,status,error)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        html: errorMap(xhr.responseJSON.errors),
+                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
+                        showConfirmButton: true,
+                    });
+                }
+            });
+
+        }
+
+        function detail(){
+            $('#add_league_modal').modal('show');
+
+        }
     </script>
 @endsection
 
