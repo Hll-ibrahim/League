@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\LeagueTeamController;
@@ -46,6 +47,11 @@ Route::prefix('/')->group(function () {
                 Route::prefix('player')->name('player.')->controller(TeamPlayerController::class)->group(function () {
                     Route::get('/fetch', 'fetch')->name('fetch');
                 });
+            });
+
+            Route::prefix('game')->name('game.')->controller(GameController::class)->group(function () {
+                Route::get('/fetch', 'fetch')->name('fetch');
+                Route::get('detail/{id}', 'detail')->name('detail');
             });
         });
 

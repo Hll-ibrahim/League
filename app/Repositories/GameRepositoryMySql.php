@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Game;
+use App\Models\SeasonLeague;
 use App\Models\User;
 use App\Repositories\Contracts\GameRepositoryInterface;
 use App\Services\Contracts\GameServiceInterface;
@@ -45,5 +46,15 @@ class GameRepositoryMySql implements GameRepositoryInterface {
                 break;
         }
         return $game;
+    }
+
+    public function getGamesFromSeasonLeague(int $season_id, int $league_id){
+       $season_league = SeasonLeague::where('season_id',$season_id)->where('league_id',$league_id)->first();
+       if(isset($season_league)){
+           $games = $season_league->games;
+       }else{
+           $games = [];
+       }
+       return $games;
     }
 }

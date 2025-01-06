@@ -7,6 +7,7 @@ use App\Services\Contracts\GameServiceInterface;
 use App\Services\GameService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 use function PHPUnit\Framework\matches;
 
 class GameController extends Controller
@@ -45,5 +46,36 @@ class GameController extends Controller
                 break;
         }
         return response()->json(['success' => true,'match' => $match,'scoring_team' => $scoring_team]);
+    }
+
+    public function fetch(Request $request){
+        $league_id = $request->league_id;
+        $season_id = $request->season_id;
+        if(isset($league_id) and isset($season_id)){
+            $games = $this->gameService->getGamesFromSeasonLeague($season_id,$league_id);
+        }
+
+
+
+        return DataTables::of($games)
+            ->editColumn('home_team_id', function ($game) {
+                return $game->home_team->name;
+            })
+            ->editColumn('away_team_id', function ($game) {
+                return $game->away_team->name;
+            })
+            ->addColumn('detail', function ($leagues) {
+                return '<a href="' . route('sport.league.game.detail', $leagues->id) . '" class="btn btn-info btn-xs">Detail</a>';
+            })
+            ->addIndexColumn()
+            ->rawColumns(['detail'])->make(true);
+    }
+
+    public function detail($id){
+        $match = $this->gameService->getGame($id);
+        if(!$match){
+            return response()->json(['success' => false,'error'=>'Match not found'],404);
+        }
+        return view();
     }
 }

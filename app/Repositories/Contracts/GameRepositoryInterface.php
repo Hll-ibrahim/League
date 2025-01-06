@@ -9,4 +9,6 @@ interface GameRepositoryInterface{
     function getGames(User $referee);
 
     function getGamesWithNames(Game $game);
+    function getGamesFromSeasonLeague(int $season_id, int $league_id);
+
 }

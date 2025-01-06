@@ -11,4 +11,6 @@ interface GameServiceInterface{
     function processControl(Request $request);
 
     function getGame(int $id);
+
+    function getGamesFromSeasonLeague(int $season_id,int $league_id);
 }

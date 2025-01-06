@@ -56,4 +56,8 @@ class GameService implements GameServiceInterface {
     public function addAwayScore($game,$goal){
         return $this->gameRepository->setScore($game,$goal,'away');
     }
+    public function getGamesFromSeasonLeague(int $season_id,int $league_id){
+        return $this->gameRepository->getGamesFromSeasonLeague($season_id,$league_id);
+    }
+
 }

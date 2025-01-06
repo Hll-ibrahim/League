@@ -126,11 +126,12 @@
 
     <button class="btn btn-primary mb-4" onclick="create()">Add</button>
 
-        <button class="btn btn-success mb-4" onclick="start()">Start League</button>
+    <button class="btn btn-success mb-4" onclick="start()">Start League</button>
 
-        <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
+    <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
 
-        <table id="team_table" class="display nowrap dataTable cell-border"
+    <div class="my-5">
+        <table id="team_table" class=" display nowrap dataTable cell-border"
                style="width:100%">
             <thead>
             <tr>
@@ -159,6 +160,38 @@
             </tr>
             </tfoot>
         </table>
+
+    </div>
+
+    <div class="my-5">
+        <table id="game_table" class=" display nowrap dataTable cell-border"
+               style="width:100%">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Home Team</th>
+                <th>Away Team</th>
+                <th>Home Score</th>
+                <th>Away Score</th>
+                <th>Detail</th>
+            </tr>
+            </thead>
+
+            <tfoot>
+            <tr>
+                <th>#</th>
+                <th>Home Team</th>
+                <th>Away Team</th>
+                <th>Home Score</th>
+                <th>Away Score</th>
+                <th>Detail</th>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+
+
 @endsection
 @section('script')
     <script>
@@ -191,6 +224,37 @@
                 {data: 'point',orderable: false},
                 {data: 'detail',orderable: false,searchable: false},
                 {data: 'delete',orderable: false,searchable: false},
+            ],
+            success: function () {
+            }
+        });
+
+        dataTable2 = $('#game_table').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
+            },
+            order: [
+                [0, 'ASC']
+            ],
+
+            processing: true,
+            serverSide: true,
+            scrollX: true,
+            scrollY: true,
+            ajax: {
+                url:'{!! route('sport.league.game.fetch') !!}',
+                data: function (d) {
+                    d.league_id = '{{ $league->id }}'; // Lig ID'si
+                    d.season_id = $('#season_filter').val(); // Sezon ID'si
+                }
+            },
+            columns: [
+                {data: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'home_team_id'},
+                {data: 'away_team_id'},
+                {data: 'home_score'},
+                {data: 'away_score'},
+                {data: 'detail',orderable: false,searchable: false},
             ],
             success: function () {
             }
@@ -455,6 +519,7 @@
 
         $('#season_filter').change(function () {
             dataTable.draw();
+            dataTable2.draw();
         });
 
         function start(){
