@@ -72,10 +72,17 @@ class GameController extends Controller
     }
 
     public function detail($id){
-        $match = $this->gameService->getGame($id);
-        if(!$match){
+        $game = $this->gameService->getGame($id);
+        if(!$game){
             return response()->json(['success' => false,'error'=>'Match not found'],404);
         }
-        return view();
+        $events = $game->events;
+        $home_team = $game->home_team;
+        $away_team = $game->away_team;
+        $season_league = $game->season_league;
+        $league = $season_league->league;
+        $season = $season_league->season;
+
+        return view('game.detail',compact('game','events','home_team','away_team','league','season'));
     }
 }
