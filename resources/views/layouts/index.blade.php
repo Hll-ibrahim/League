@@ -32,7 +32,13 @@
                                 <li><a href="#">German</a></li>
                             </ul>
                         </li>
-                        <li class="nav-account__item nav-account__item--logout"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-login.html">Logout</a></li>
+                        <li class="nav-account__item nav-account__item--logout">
+                        @if(Auth::user())
+                                <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-login.html">Logout</a>
+                        @else
+                                <a href="{{route('login')}}">Login</a>
+                        @endif
+                        </li>
                     </ul>
                     <!-- Account Navigation / End -->
                 </div>
