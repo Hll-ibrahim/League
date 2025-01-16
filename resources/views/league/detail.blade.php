@@ -126,7 +126,7 @@
 
     <button class="btn btn-primary mb-4" onclick="create()">Add</button>
 
-    <button class="btn btn-success mb-4" onclick="start()">Start League</button>
+    <button class="btn btn-success mb-4" id="league_start_button" onclick="start()">Start League</button>
 
     <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('home_score')->default(0);
             $table->integer('away_score')->default(0);
             $table->dateTime('date');
+            $table->enum('status', ['waiting', 'started','ended'])->default('waiting');
             $table->timestamps();
         });
     }
