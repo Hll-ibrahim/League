@@ -34,7 +34,10 @@
                         </li>
                         <li class="nav-account__item nav-account__item--logout">
                         @if(Auth::user())
-                                <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-login.html">Logout</a>
+                                <form method="post" class="nav-account__item nav-account__item--logout" action="{{route('logout')}}">
+                                    @csrf
+                                    <button class="btn btn-primary " type="submit">Logout</button>
+                                </form>
                         @else
                                 <a href="{{route('login')}}">Login</a>
                         @endif
