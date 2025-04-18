@@ -272,11 +272,12 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_team-overview.html">The Team</a>
+                            <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_team-overview.html">
+                                Leagues</a>
                                 <ul class="main-nav__sub">
                                     <li><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_team-overview.html">Team</a>
                                         <ul class="main-nav__sub-2">
-                                            <li><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_team-overview.html">Overview</a></li>
+                                            <li><a href="{{route('league.types.index')}}">League Types</a></li>
                                             <li><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_team-roster.html">Roster</a>
                                                 <ul class="main-nav__sub-2">
                                                     <li><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_team-roster.html">Roster - 1</a></li>

@@ -11,12 +11,17 @@ use App\Http\Controllers\SportController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamPlayerController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LeagueTypeController;
 use App\Http\Middleware\AddTypeAndProcess;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function () {
 
     Route::get('/', [HomepageController::class, 'index'])->name('league.index');
+
+    Route::prefix('league/types')->controller(LeagueTypeController::class)->group(function(){
+        Route::get('/','index')->name('league.types.index');
+    });
 
     Route::prefix('sport')->name('sport.')->controller(SportController::class)->group(function () {
         Route::get('/', 'index')->name('index');
