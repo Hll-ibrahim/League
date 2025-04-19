@@ -237,7 +237,7 @@
 						<!-- Main Navigation -->
 						<nav class="main-nav clearfix">
 							<ul class="main-nav__list">
-								<li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html">Home</a></li>
+								<li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html">Home1</a></li>
 								<li class=""><a href="#">Features</a>
 									<div class="main-nav__megamenu clearfix">
 										<ul class="col-lg-2 col-md-3 col-12 main-nav__ul">
@@ -572,7 +572,7 @@
 					<div class="col-md-10 offset-md-1">
 						<h1 class="page-heading__title">News <span class="highlight">V1</span></h1>
 						<ol class="page-heading__breadcrumb breadcrumb">
-							<li class="breadcrumb-item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html">Home</a></li>
+							<li class="breadcrumb-item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html">Home2</a></li>
 							<li class="breadcrumb-item active" aria-current="page">News V1</li>
 						</ol>
 					</div>
@@ -1457,7 +1457,7 @@
 							</div>
 							<div class="col-md-8">
 								<ul class="footer-nav footer-nav--right footer-nav--condensed footer-nav--sm">
-									<li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html">Home</a></li>
+									<li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html">Home3</a></li>
 									<li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_features-shortcodes.html">Features</a></li>
 									<li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_team-standings.html">Statistics</a></li>
 									<li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_team-overview.html">The Team</a></li>

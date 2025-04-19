@@ -76,7 +76,7 @@ class GameController extends Controller
         if(!$game){
             return response()->json(['success' => false,'error'=>'Match not found'],404);
         }
-        $events = $game->events;
+        $events = $game->events()->with(['playerStatistic.TeamPlayer.player'])->get();
         $home_team = $game->home_team;
         $away_team = $game->away_team;
         $season_league = $game->season_league;

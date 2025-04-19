@@ -7,163 +7,9 @@
 @endsection
 
 @section('base')
-    <header class="header header--layout-1">
+    <header class="header ">
 
-        <!-- Header Top Bar -->
-        <div class="header__top-bar clearfix">
-            <div class="container">
-                <div class="header__top-bar-inner">
-                    <!-- Account Navigation -->
-                    <ul class="nav-account">
-                        <li class="nav-account__item"><a href="#" data-toggle="modal" data-target="#modal-login-register-tabs">Your Account</a></li>
-                        <li class="nav-account__item nav-account__item--wishlist"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-wishlist.html">Wishlist <span class="highlight">8</span></a></li>
-                        <li class="nav-account__item"><a href="#">Currency: <span class="highlight">USD</span></a>
-                            <ul class="main-nav__sub">
-                                <li><a href="#">USD</a></li>
-                                <li><a href="#">EUR</a></li>
-                                <li><a href="#">GBP</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-account__item"><a href="#">Language: <span class="highlight">EN</span></a>
-                            <ul class="main-nav__sub">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">Spanish</a></li>
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">German</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-account__item nav-account__item--logout">
-                        @if(Auth::user())
-                                <form method="post" class="nav-account__item nav-account__item--logout" action="{{route('logout')}}">
-                                    @csrf
-                                    <button class="btn btn-primary " type="submit">Logout</button>
-                                </form>
-                        @else
-                                <a href="{{route('login')}}">Login</a>
-                        @endif
-                        </li>
-                    </ul>
-                    <!-- Account Navigation / End -->
-                </div>
-            </div>
-        </div>
-        <!-- Header Top Bar / End -->
-
-        <!-- Header Secondary -->
-        <div class="header__secondary">
-            <div class="container">
-                <!-- Header Search Form -->
-                <div class="header-search-form">
-                    <form action="#" id="mobile-search-form" class="search-form">
-                        <input type="text" class="form-control header-mobile__search-control" value="" placeholder="Enter your search here...">
-                        <button type="submit" class="header-mobile__search-submit"><i class="fas fa-search"></i></button>
-                    </form>
-                </div>
-                <!-- Header Search Form / End -->
-                <ul class="info-block info-block--header">
-                    <li class="info-block__item info-block__item--contact-primary">
-
-                        <h6 class="info-block__heading">Join Our Team!</h6>
-                        <a class="info-block__link" href="mailto:tryouts@alchemists.com">tryouts@alchemists.com</a>
-                    </li>
-                    <li class="info-block__item info-block__item--contact-secondary">
-
-                        <h6 class="info-block__heading">Contact Us</h6>
-                        <a class="info-block__link" href="mailto:info@alchemists.com">info@alchemists.com</a>
-                    </li>
-                    <li class="info-block__item info-block__item--shopping-cart js-info-block__item--onhover">
-                        <a href="#" class="info-block__link-wrapper">
-                            <div class="df-icon-stack df-icon-stack--bag">
-
-                            </div>
-                            <h6 class="info-block__heading">Your Bag (8 items)</h6>
-                            <span class="info-block__cart-sum">$256,30</span>
-                        </a>
-
-                        <!-- Dropdown Shopping Cart -->
-                        <ul class="header-cart">
-
-                            <li class="header-cart__item">
-                                <figure class="header-cart__product-thumb">
-                                    <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">
-                                    </a>
-                                </figure>
-                                <div class="header-cart__inner">
-                                    <span class="header-cart__product-cat">Sneakers</span>
-                                    <h5 class="header-cart__product-name"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">Sundown Sneaker</a></h5>
-                                    <div class="header-cart__product-ratings">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star empty"></i>
-                                    </div>
-                                    <div class="header-cart__product-sum">
-                                        <span class="header-cart__product-price">$28.00</span> x <span class="header-cart__product-count">2</span>
-                                    </div>
-                                    <div class="fas fa-times header-cart__close"></div>
-                                </div>
-                            </li>
-                            <li class="header-cart__item">
-                                <figure class="header-cart__product-thumb">
-                                    <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">
-                                    </a>
-                                </figure>
-                                <div class="header-cart__inner">
-                                    <span class="header-cart__product-cat">Sneakers</span>
-                                    <h5 class="header-cart__product-name"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">Atlantik Sneaker</a></h5>
-                                    <div class="header-cart__product-ratings">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <div class="header-cart__product-sum">
-                                        <span class="header-cart__product-price">$30.00</span> x <span class="header-cart__product-count">4</span>
-                                    </div>
-                                    <div class="fas fa-times header-cart__close"></div>
-                                </div>
-                            </li>
-                            <li class="header-cart__item">
-                                <figure class="header-cart__product-thumb">
-                                    <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">
-                                    </a>
-                                </figure>
-                                <div class="header-cart__inner">
-                                    <span class="header-cart__product-cat">Sneakers</span>
-                                    <h5 class="header-cart__product-name"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">Aquarium Sneaker</a></h5>
-                                    <div class="header-cart__product-ratings">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star empty"></i>
-                                        <i class="fas fa-star empty"></i>
-                                    </div>
-                                    <div class="header-cart__product-sum">
-                                        <span class="header-cart__product-price">$28.00</span> x <span class="header-cart__product-count">1</span>
-                                    </div>
-                                    <div class="fas fa-times header-cart__close"></div>
-                                </div>
-                            </li>
-
-                            <li class="header-cart__item header-cart__item--subtotal">
-                                <span class="header-cart__subtotal">Cart Subtotal</span>
-                                <span class="header-cart__subtotal-sum">$282.00</span>
-                            </li>
-                            <li class="header-cart__item header-cart__item--action">
-                                <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-cart.html" class="btn btn-default btn-block">Go to Cart</a>
-                                <a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-checkout.html" class="btn btn-primary-inverse btn-block">Checkout</a>
-                            </li>
-                        </ul>
-                        <!-- Dropdown Shopping Cart / End -->
-
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- Header Secondary / End -->
-
+       
         <!-- Header Primary -->
         <div class="header__primary">
             <div class="container">
@@ -176,7 +22,7 @@
                     <!-- Main Navigation -->
                     <nav class="main-nav clearfix">
                         <ul class="main-nav__list">
-                            <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html">Home</a></li>
+                            <li class=""><a href="{{route('sport.index')}}">Sports</a></li>
                             <li class=""><a href="#">Features</a>
                                 <div class="main-nav__megamenu clearfix">
                                     <ul class="col-lg-2 col-md-3 col-12 main-nav__ul">
@@ -349,14 +195,16 @@
 
                         <!-- Social Links -->
                         <ul class="social-links social-links--inline social-links--main-nav">
-                            <li class="social-links__item">
-                                <a href="#" class="social-links__link" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fab fa-facebook"></i></a>
-                            </li>
-                            <li class="social-links__item">
-                                <a href="#" class="social-links__link" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fab fa-twitter"></i></a>
-                            </li>
-                            <li class="social-links__item">
-                                <a href="#" class="social-links__link" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            
+                            <li>
+                                @if(Auth::user())
+                                    <form method="post" class="nav-account__item nav-account__item--logout" action="{{route('logout')}}">
+                                        @csrf
+                                        <button class="btn btn-primary " type="submit">Logout</button>
+                                    </form>
+                                @else
+                                        <a href="{{route('login')}}">Login</a>
+                                @endif
                             </li>
                         </ul>
                         <!-- Social Links / End -->
@@ -372,8 +220,8 @@
             </div>
         </div>
         <!-- Header Primary / End -->
-
     </header>
+    
     <aside class="pushy-panel pushy-panel--dark">
         <div class="pushy-panel__inner">
             <header class="pushy-panel__header">
@@ -492,72 +340,6 @@
     </aside>
     <!-- Pushy Panel - Dark / End -->
 
-    <!-- Page Heading
-    ================================================== -->
-    <div class="page-heading">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <h1 class="page-heading__title">News <span class="highlight">V1</span></h1>
-                    <ol class="page-heading__breadcrumb breadcrumb">
-                        <li class="breadcrumb-item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">News V1</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Page Heading / End -->
-
-
-    <!-- Post Filter -->
-    <div class="post-filter">
-        <div class="container">
-            <form action="#" class="post-filter__form clearfix">
-                <div class="post-filter__select">
-                    <label class="post-filter__label">Category</label>
-                    <select class="cs-select cs-skin-border">
-                        <option value="" disabled selected>All Articles</option>
-                        <option value="all">All Articles</option>
-                        <option value="team">The Team</option>
-                        <option value="playoffs">Playoffs</option>
-                        <option value="injuries">Injuries</option>
-                    </select>
-                </div>
-                <div class="post-filter__select">
-                    <label class="post-filter__label">Filter By</label>
-                    <select class="cs-select cs-skin-border">
-                        <option value="" disabled selected>Article Date</option>
-                        <option value="date">Article Date</option>
-                        <option value="id">Article ID</option>
-                        <option value="comments">Last Comments</option>
-                        <option value="random">Random</option>
-                    </select>
-                </div>
-                <div class="post-filter__select">
-                    <label class="post-filter__label">Order</label>
-                    <select class="cs-select cs-skin-border">
-                        <option value="" disabled selected>Ascending</option>
-                        <option value="ascending">Ascending</option>
-                        <option value="descending">Descending</option>
-                    </select>
-                </div>
-                <div class="post-filter__select">
-                    <label class="post-filter__label">Author</label>
-                    <select class="cs-select cs-skin-border">
-                        <option value="" disabled selected>All Authors</option>
-                        <option value="all">All Authors</option>
-                        <option value="author1">James Spiegel</option>
-                        <option value="author2">Jessica Hoops</option>
-                        <option value="author3">Mark Johnson</option>
-                    </select>
-                </div>
-                <div class="post-filter__submit">
-                    <button type="submit" class="btn btn-default btn-lg btn-block">Filter News</button>
-                </div>
-            </form>
-        </div>
-    </div>
     <div class="site-content">
         <div class="container">
             @yield('content')
@@ -789,7 +571,7 @@
                         </div>
                         <div class="col-md-8">
                             <ul class="footer-nav footer-nav--right footer-nav--sm">
-                                <li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/_football_index.html">Home</a></li>
+                                <li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/_football_index.html">Home2</a></li>
                                 <li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/_football_features-shortcodes.html">Features</a></li>
                                 <li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/_football_team-standings.html">Statistics</a></li>
                                 <li class="footer-nav__item"><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/football/build/_football_team-overview.html">The Team</a></li>

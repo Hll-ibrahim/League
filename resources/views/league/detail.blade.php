@@ -196,9 +196,6 @@
 @section('script')
     <script>
         dataTable = $('#team_table').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
-            },
             order: [
                 [0, 'ASC']
             ],
@@ -230,9 +227,6 @@
         });
 
         dataTable2 = $('#game_table').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
-            },
             order: [
                 [0, 'ASC']
             ],
@@ -261,43 +255,36 @@
         });
 
         $(document).ready(function () {
-            // Select elements
+            // Elementlerin seçimi
             var updateButton = $('#updateButton');
-            var nameField = $('#name');  // Name field (do not consider for enabling update button)
+            var nameField = $('#name'); 
             var descriptionField = $('#description');
             var sportSelect = $('#sport_id');
             var seasonSelect = $('#season_id');
             var typeSelect = $('#type_id');
 
-            // Disable the update button by default
-            updateButton.addClass('disabled');  // Disable the button
-            updateButton.attr('onclick', '');  // Remove onclick functionality
+            // Butonların görünürlüğünün güncellenmesi
+            updateButton.addClass('disabled'); 
+            updateButton.attr('onclick', '');  
 
-            // Function to detect changes and enable/disable the update button
             function checkForChanges() {
-                // Check if any of the fields other than name have been modified
                 if (descriptionField.val() || sportSelect.val() || seasonSelect.val() || typeSelect.val() || nameField.val())  {
-                    // Enable the update button and set the onclick function
-                    updateButton.removeClass('disabled');  // Remove 'disabled' class
-                    updateButton.attr('onclick', 'updatePost()');  // Set onclick function
+                    updateButton.removeClass('disabled');  
+                    updateButton.attr('onclick', 'updatePost()');  
                 } else {
-                    // If no changes, keep the update button disabled
-                    updateButton.addClass('disabled');  // Add 'disabled' class
-                    updateButton.attr('onclick', '');  // Remove onclick function
+                    updateButton.addClass('disabled');  
+                    updateButton.attr('onclick', '');  
                 }
             }
 
-            // Bind change event to fields (excluding the name field)
             nameField.on('input',checkForChanges)
             descriptionField.on('input', checkForChanges);
             sportSelect.on('change', checkForChanges);
             seasonSelect.on('change', checkForChanges);
             typeSelect.on('change', checkForChanges);
 
-            // You may want to run the checkForChanges function to initialize the state
             checkForChanges();
 
-            // Initialize the form with the current data when updating (e.g., if you're editing a league)
             function populateForm(data) {
                 nameField.val(data.name);
                 descriptionField.val(data.description);

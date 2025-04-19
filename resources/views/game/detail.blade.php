@@ -133,8 +133,8 @@
                                 <div class="game-timeline__event game-timeline__event--{{$event->minute}}" minute="{{$event->minute}}">
                                     <div class="game-timeline__team-1">
                                         <div class="game-timeline__event-info">
-                                            <div class="game-timeline__event-name">F. Stevens</div>
-                                            <div class="game-timeline__event-desc">Alchemists 1-0</div>
+                                            <div class="game-timeline__event-name">{{$event->playerStatistic->TeamPlayer->player->first_name}}</div>
+                                            <div class="game-timeline__event-desc">{{$event->playerStatistic->TeamPlayer->leagueTeam->team->name}}</div>
                                         </div>
                                         <i class="icon-svg icon-soccer-ball"></i>
                                     </div>
@@ -1440,9 +1440,6 @@
             eventsPosition();
             const game_id = '{{ $game->id }}';
             dataTable = $('#event_table').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
-                },
                 order: [
                     [0, 'ASC']
                 ],

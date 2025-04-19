@@ -68,9 +68,6 @@
 @section('script')
     <script>
         dataTable = $('#player_table').DataTable({
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Turkish.json'
-            },
             order: [
                 [0, 'ASC']
             ],
