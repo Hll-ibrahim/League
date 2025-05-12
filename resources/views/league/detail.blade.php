@@ -124,12 +124,14 @@
     </div>
 
 
-    <button class="btn btn-primary mb-4" onclick="create()">Add</button>
+    @if(auth()->user() && auth()->user()->hasRole('admin'))
+        <button class="btn btn-primary mb-4" onclick="create()">Add</button>
 
-    <button class="btn btn-success mb-4" id="league_start_button" onclick="start()">Start League</button>
+        <button class="btn btn-success mb-4" id="league_start_button" onclick="start()">Start League</button>
 
-    <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
+        <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
 
+    @endif
     <div class="my-5">
         <table id="team_table" class=" display nowrap dataTable cell-border"
                style="width:100%">
@@ -142,8 +144,7 @@
                 <th>Draw</th>
                 <th>Lose</th>
                 <th>Point</th>
-                <th>Detail</th>
-                <th>Remove</th>
+                <th>Process</th>
             </tr>
             </thead>
 
@@ -155,8 +156,7 @@
                 <th>Draw</th>
                 <th>Lose</th>
                 <th>Point</th>
-                <th>Detail</th>
-                <th>Remove</th>
+                <th>Process</th>
             </tr>
             </tfoot>
         </table>
@@ -219,8 +219,7 @@
                 {data: 'draw',orderable: false},
                 {data: 'lose',orderable: false},
                 {data: 'point',orderable: false},
-                {data: 'detail',orderable: false,searchable: false},
-                {data: 'delete',orderable: false,searchable: false},
+                {data: 'process',orderable: false,searchable: false},
             ],
             success: function () {
             }
@@ -257,23 +256,23 @@
         $(document).ready(function () {
             // Elementlerin seçimi
             var updateButton = $('#updateButton');
-            var nameField = $('#name'); 
+            var nameField = $('#name');
             var descriptionField = $('#description');
             var sportSelect = $('#sport_id');
             var seasonSelect = $('#season_id');
             var typeSelect = $('#type_id');
 
             // Butonların görünürlüğünün güncellenmesi
-            updateButton.addClass('disabled'); 
-            updateButton.attr('onclick', '');  
+            updateButton.addClass('disabled');
+            updateButton.attr('onclick', '');
 
             function checkForChanges() {
                 if (descriptionField.val() || sportSelect.val() || seasonSelect.val() || typeSelect.val() || nameField.val())  {
-                    updateButton.removeClass('disabled');  
-                    updateButton.attr('onclick', 'updatePost()');  
+                    updateButton.removeClass('disabled');
+                    updateButton.attr('onclick', 'updatePost()');
                 } else {
-                    updateButton.addClass('disabled');  
-                    updateButton.attr('onclick', '');  
+                    updateButton.addClass('disabled');
+                    updateButton.attr('onclick', '');
                 }
             }
 

@@ -13,13 +13,11 @@ use Yajra\DataTables\DataTables;
 class LeagueController extends Controller
 {
     protected $leagueService;
-    protected $requestService;
 
     protected $sportService;
     protected $seasonService;
-    public function __construct(LeagueService $leagueService , RequestService $requestService , SeasonService $seasonService , SportService $sportService) {
+    public function __construct(LeagueService $leagueService , SeasonService $seasonService , SportService $sportService) {
         $this->leagueService = $leagueService;
-        $this->requestService = $requestService;
         $this->seasonService = $seasonService;
         $this->sportService = $sportService;
     }

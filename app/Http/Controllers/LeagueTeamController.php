@@ -50,15 +50,14 @@ class LeagueTeamController extends Controller
             ->addColumn('point',function($team){
                 return $this->leaguesTeamsService->getPoint($team);
             })
-            ->addColumn('detail',function($team){
-                return '<a href="'.route('sport.league.team.detail',$team->id).'" class="btn btn-info btn-xs">Detail</a>';
+            ->addColumn('process',function($team){
+                $detail = '<a href="'.route('sport.league.team.detail',$team->id).'" class="btn btn-info btn-xs">Detail</a>';
+                if(auth()->user() && auth()->user()->hasRole('admin')){
+                    $detail .= '<button onclick="deleteLeague(' . $team->id . ')" class="btn btn-danger btn-xs">Remove</button>';
+                }
+                return $detail;
             })
-            ->addColumn('delete',function($team){
-                return '<button onclick="deleteLeague(' . $team->id . ')" class="btn btn-danger btn-xs">Remove</button>';
-
-                //return '<a href="'.route('sport.league.team.delete',$team->id).'" class="btn btn-danger btn-xs">Remove</a>';
-            })
-            ->addIndexColumn()->rawColumns(['detail','delete'])
+            ->addIndexColumn()->rawColumns(['process'])
             ->make();
     }
 

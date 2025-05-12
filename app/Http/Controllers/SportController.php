@@ -23,17 +23,17 @@ class SportController extends Controller
 
         $sports = $this->sportService->all();
         return DataTables::of($sports)
-            ->addColumn('detail',function($sport){
-                return '<a href="'.route('sport.detail',$sport->id).'" class="btn btn-info btn-xs">Detail</a>';
-            })
-            ->addColumn('delete',function($sport){
-                return '<button onclick="deleteSport('.$sport->id.')" class="btn btn-danger btn-xs">Delete</button>';
-            })
-            ->addColumn('update',function($sport){
-                return '<button onclick="openUpdateModal('.$sport->id.', \''.$sport->name.'\', \''.$sport->description.'\')" class="btn btn-warning btn-xs">Update</button>';
+            ->addColumn('process',function($sport){
+                $detail =  '<a href="'.route('sport.detail',$sport->id).'" class="btn btn-info btn-xs">Detail</a>';
+
+                if(auth()->user() && auth()->user()->hasRole('admin')){
+                    $detail .= '<button onclick="openUpdateModal('.$sport->id.', \''.$sport->name.'\', \''.$sport->description.'\')" class="btn btn-warning btn-xs">Update</button>';
+                    $detail .= '<button onclick="deleteSport('.$sport->id.')" class="btn btn-danger btn-xs">Delete</button>';
+                }
+                return $detail;
             })
             ->addIndexColumn()
-            ->rawColumns(['detail','delete','update'])
+            ->rawColumns(['process'])
             ->make();
     }
 
