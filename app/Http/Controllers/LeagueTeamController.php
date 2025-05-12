@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LeaguesTeamsRequest;
 use App\Services\Contracts\LeagueServiceInterface;
 use App\Services\Contracts\LeaguesTeamsServiceInterface;
+use App\Services\LeagueService;
+use App\Services\LeaguesTeamsService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class LeagueTeamController extends Controller
 {
     protected $leaguesTeamsService, $leagueService;
-    public function __construct(LeaguesTeamsServiceInterface $leaguesTeamsService, LeagueServiceInterface $leagueService){
+    public function __construct(LeaguesTeamsService $leaguesTeamsService, LeagueService $leagueService){
         $this->leaguesTeamsService = $leaguesTeamsService;
         $this->leagueService = $leagueService;
 

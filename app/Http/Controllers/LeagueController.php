@@ -10,6 +10,9 @@ use App\Services\Contracts\RequestServiceInterface;
 use App\Services\Contracts\SeasonServiceInterface;
 use App\Services\Contracts\SportServiceInterface;
 use App\Services\LeagueService;
+use App\Services\RequestService;
+use App\Services\SeasonService;
+use App\Services\SportService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -20,7 +23,7 @@ class LeagueController extends Controller
 
     protected $sportService;
     protected $seasonService;
-    public function __construct(LeagueServiceInterface $leagueService , RequestServiceInterface $requestService , SeasonServiceInterface $seasonService , SportServiceInterface $sportService) {
+    public function __construct(LeagueService $leagueService , RequestService $requestService , SeasonService $seasonService , SportService $sportService) {
         $this->leagueService = $leagueService;
         $this->requestService = $requestService;
         $this->seasonService = $seasonService;

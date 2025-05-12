@@ -47,6 +47,7 @@ class LeagueRepository implements LeagueRepositoryInterface {
                     ->from('leagues_teams')
                     ->where('league_id', $league_id);
             })
-            ->get();    }
+            ->get();
+    }
 
 }

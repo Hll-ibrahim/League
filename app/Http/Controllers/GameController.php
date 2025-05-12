@@ -13,7 +13,7 @@ use function PHPUnit\Framework\matches;
 class GameController extends Controller
 {
     protected $gameService;
-    public function __construct(GameServiceInterface $gameService){
+    public function __construct(GameService $gameService){
         $this->gameService = $gameService;
     }
 

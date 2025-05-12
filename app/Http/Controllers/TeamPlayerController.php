@@ -10,7 +10,7 @@ use Yajra\DataTables\DataTables;
 class TeamPlayerController extends Controller
 {
     protected $teamPlayerService;
-    public function __construct(TeamPlayerServiceInterface $teamPlayerService){
+    public function __construct(TeamPlayerService $teamPlayerService){
         $this->teamPlayerService = $teamPlayerService;
     }
     public function index(int $team_id){

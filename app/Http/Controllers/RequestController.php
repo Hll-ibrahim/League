@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Contracts\RequestServiceInterface;
+use App\Services\RequestService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -10,7 +11,7 @@ class RequestController extends Controller
 {
     protected $requestService;
 
-    public function __construct(RequestServiceInterface $requestService)
+    public function __construct(RequestService $requestService)
     {
         $this->requestService = $requestService;
     }

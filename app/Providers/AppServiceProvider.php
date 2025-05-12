@@ -46,26 +46,16 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         // RequestService ve interface'i arasında bağ kurma
-        $this->app->singleton(RequestServiceInterface::class, function($app) {
+        $this->app->singleton(RequestService::class, function($app) {
             return new RequestService(
-                $app->make(TeamServiceInterface::class),
-                $app->make(LeagueServiceInterface::class),
-                $app->make(SportServiceInterface::class),
-                $app->make(SeasonServiceInterface::class),
-                $app->make(GameServiceInterface::class)
+                $app->make(TeamService::class),
+                $app->make(LeagueService::class),
+                $app->make(SportService::class),
+                $app->make(SeasonService::class),
+                $app->make(GameService::class)
             );
         });
 
-        // Servis ve interface bağlamaları
-        $this->app->bind(RequestServiceInterface::class, RequestService::class);
-        $this->app->bind(TeamServiceInterface::class, TeamService::class);
-        $this->app->bind(LeagueServiceInterface::class, LeagueService::class);
-        $this->app->bind(SportServiceInterface::class, SportService::class);
-        $this->app->bind(UserServiceInterface::class, UserService::class);
-        $this->app->bind(SeasonServiceInterface::class, SeasonService::class);
-        $this->app->bind(GameServiceInterface::class, GameService::class);
-        $this->app->bind(LeaguesTeamsServiceInterface::class, LeaguesTeamsService::class);
-        $this->app->bind(TeamPlayerServiceInterface::class, TeamPlayerService::class);
 
 
         // Repository ve interface bağlamaları

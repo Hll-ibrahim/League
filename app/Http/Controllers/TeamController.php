@@ -12,7 +12,7 @@ use Yajra\DataTables\DataTables;
 class TeamController extends Controller
 {
     protected $teamService,$leaguesTeamsService;
-    public function __construct(TeamServiceInterface $teamService){
+    public function __construct(TeamService $teamService){
         $this->teamService = $teamService;
     }
 
