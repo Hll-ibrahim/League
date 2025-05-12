@@ -53,7 +53,7 @@ class LeagueTeamController extends Controller
             ->addColumn('process',function($team){
                 $detail = '<a href="'.route('sport.league.team.detail',$team->id).'" class="btn btn-info btn-xs">Detail</a>';
                 if(auth()->user() && auth()->user()->hasRole('admin')){
-                    $detail .= '<button onclick="deleteLeague(' . $team->id . ')" class="btn btn-danger btn-xs">Remove</button>';
+                    $detail .= '<button onclick="deleteLeague(' . $team->id . ')" class="btn btn-danger btn-xs mx-1">Remove</button>';
                 }
                 return $detail;
             })

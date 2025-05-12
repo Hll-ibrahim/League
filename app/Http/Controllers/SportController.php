@@ -24,11 +24,11 @@ class SportController extends Controller
         $sports = $this->sportService->all();
         return DataTables::of($sports)
             ->addColumn('process',function($sport){
-                $detail =  '<a href="'.route('sport.detail',$sport->id).'" class="btn btn-info btn-xs">Detail</a>';
+                $detail =  '<a href="'.route('sport.detail',$sport->id).'" class="btn btn-info btn-xs mx-1">Detail</a>';
 
                 if(auth()->user() && auth()->user()->hasRole('admin')){
-                    $detail .= '<button onclick="openUpdateModal('.$sport->id.', \''.$sport->name.'\', \''.$sport->description.'\')" class="btn btn-warning btn-xs">Update</button>';
-                    $detail .= '<button onclick="deleteSport('.$sport->id.')" class="btn btn-danger btn-xs">Delete</button>';
+                    $detail .= '<button onclick="openUpdateModal('.$sport->id.', \''.$sport->name.'\', \''.$sport->description.'\')" class="btn btn-warning btn-xs mx-1">Update</button>';
+                    $detail .= '<button onclick="deleteSport('.$sport->id.')" class="btn btn-danger btn-xs mx-1">Delete</button>';
                 }
                 return $detail;
             })
