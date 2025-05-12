@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\Contracts\RequestServiceInterface;
+use App\Services\RequestService;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +11,7 @@ class AddTypeAndProcess
 {
     protected $requestService;
 
-    public function __construct(RequestServiceInterface $requestService)
+    public function __construct(RequestService $requestService)
     {
         $this->requestService = $requestService;
     }

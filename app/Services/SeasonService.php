@@ -4,9 +4,8 @@ namespace App\Services;
 
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 use App\Repositories\Contracts\SeasonRepositoryInterface;
-use App\Services\Contracts\SeasonServiceInterface;
 
-class SeasonService implements SeasonServiceInterface
+class SeasonService
 {
     protected $seasonRepository;
 

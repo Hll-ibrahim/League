@@ -6,7 +6,6 @@ use App\Models\Game;
 use App\Models\SeasonLeague;
 use App\Models\User;
 use App\Repositories\Contracts\GameRepositoryInterface;
-use App\Services\Contracts\GameServiceInterface;
 
 class GameRepositoryMySql implements GameRepositoryInterface {
     public function getGames($referee)

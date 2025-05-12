@@ -3,12 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LeagueRequest;
-use App\Http\Requests\SportRequest;
-use App\Models\League;
-use App\Services\Contracts\LeagueServiceInterface;
-use App\Services\Contracts\RequestServiceInterface;
-use App\Services\Contracts\SeasonServiceInterface;
-use App\Services\Contracts\SportServiceInterface;
 use App\Services\LeagueService;
 use App\Services\RequestService;
 use App\Services\SeasonService;

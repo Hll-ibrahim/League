@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
-use Dotenv\Repository\RepositoryInterface;
+use App\Repositories\Contracts\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class BaseRepository implements RepositoryInterface
+abstract class BaseRepository implements BaseRepositoryInterface
 {
     protected $model;
     public function __construct(Model $model){
@@ -29,5 +29,9 @@ abstract class BaseRepository implements RepositoryInterface
     }
     public function delete($id){
         return $this->getById($id)->delete();
+    }
+
+    public function paginate($page){
+        return $this->model->paginate($page);
     }
 }

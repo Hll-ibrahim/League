@@ -18,24 +18,12 @@ use App\Repositories\SportRepository;
 use App\Repositories\TeamPlayerRepositoryMysql;
 use App\Repositories\TeamRepository;
 use App\Repositories\UserRepository;
-use App\Services\Contracts\GameServiceInterface;
-use App\Services\Contracts\LeagueServiceInterface;
-use App\Services\Contracts\LeaguesTeamsServiceInterface;
-use App\Services\Contracts\RequestServiceInterface;
-use App\Services\Contracts\SeasonServiceInterface;
-use App\Services\Contracts\SportServiceInterface;
-use App\Services\Contracts\TeamPlayerServiceInterface;
-use App\Services\Contracts\TeamServiceInterface;
-use App\Services\Contracts\UserServiceInterface;
 use App\Services\GameService;
 use App\Services\LeagueService;
-use App\Services\LeaguesTeamsService;
 use App\Services\RequestService;
 use App\Services\SeasonService;
 use App\Services\SportService;
-use App\Services\TeamPlayerService;
 use App\Services\TeamService;
-use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

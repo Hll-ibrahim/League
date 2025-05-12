@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Contracts\SeasonRepositoryInterface;
-use App\Services\Contracts\SeasonServiceInterface;
-use App\Services\Contracts\RequestServiceInterface;
 use App\Services\RequestService;
 use App\Services\SeasonService;
 use Illuminate\Http\Request;

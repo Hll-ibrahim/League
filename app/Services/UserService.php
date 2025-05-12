@@ -4,9 +4,8 @@ namespace App\Services;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\UserRepository;
-use App\Services\Contracts\UserServiceInterface;
 
-class UserService implements UserServiceInterface{
+class UserService {
 
     protected $userRepository;
 

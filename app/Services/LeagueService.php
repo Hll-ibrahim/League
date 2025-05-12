@@ -5,9 +5,8 @@ namespace App\Services;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 use App\Repositories\Contracts\SportRepositoryInterface;
 use App\Repositories\LeagueRepository;
-use App\Services\Contracts\LeagueServiceInterface;
 
-class LeagueService implements LeagueServiceInterface {
+class LeagueService  {
 
     protected $leagueRepository;
 

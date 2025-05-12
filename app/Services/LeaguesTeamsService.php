@@ -5,9 +5,8 @@ namespace App\Services;
 use App\Models\LeagueTeam;
 use App\Models\Team;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
-use App\Services\Contracts\LeaguesTeamsServiceInterface;
 
-class LeaguesTeamsService implements LeaguesTeamsServiceInterface{
+class LeaguesTeamsService {
     protected $leaguesTeamsRepository;
     public function __construct(LeaguesTeamsRepositoryInterface $leaguesTeamsRepository){
         $this->leaguesTeamsRepository = $leaguesTeamsRepository;

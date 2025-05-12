@@ -3,9 +3,8 @@
 
 namespace App\Services;
 use App\Repositories\Contracts\GameRepositoryInterface;
-use App\Services\Contracts\GameServiceInterface;
 
-class GameService implements GameServiceInterface {
+class GameService {
 
     protected $gameRepository;
 

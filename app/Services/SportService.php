@@ -4,9 +4,8 @@ namespace App\Services;
 
 use App\Repositories\Contracts\SportRepositoryInterface;
 use App\Repositories\SportRepository;
-use App\Services\Contracts\SportServiceInterface;
 
-class SportService implements SportServiceInterface {
+class SportService  {
 
     protected $sportRepository;
 

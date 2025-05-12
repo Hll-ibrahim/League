@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LeaguesTeamsRequest;
-use App\Services\Contracts\LeagueServiceInterface;
-use App\Services\Contracts\LeaguesTeamsServiceInterface;
 use App\Services\LeagueService;
 use App\Services\LeaguesTeamsService;
 use Illuminate\Http\Request;

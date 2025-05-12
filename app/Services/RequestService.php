@@ -2,21 +2,15 @@
 
 namespace App\Services;
 
-use App\Services\Contracts\GameServiceInterface;
-use App\Services\Contracts\LeagueServiceInterface;
-use App\Services\Contracts\RequestServiceInterface;
-use App\Services\Contracts\SeasonServiceInterface;
-use App\Services\Contracts\SportServiceInterface;
-use App\Services\Contracts\TeamServiceInterface;
 
-class RequestService implements RequestServiceInterface
+class RequestService
 {
     protected $teamService;
     protected $leagueService;
     protected $sportService;
     protected $gameService;
     protected $seasonService;
-    public function __construct(SportServiceInterface $sportService, LeagueServiceInterface $leagueService, TeamServiceInterface $teamService, GameServiceInterface $gameService,SeasonServiceInterface $seasonService) {
+    public function __construct(SportService $sportService, LeagueService $leagueService, TeamService $teamService, GameService $gameService,SeasonService $seasonService) {
         $this->teamService = $teamService;
         $this->leagueService = $leagueService;
         $this->sportService = $sportService;

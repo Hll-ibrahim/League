@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SportRequest;
-use App\Models\League;
-use App\Services\Contracts\RequestServiceInterface;
-use App\Services\Contracts\SportServiceInterface;
 use App\Services\RequestService;
 use App\Services\SportService;
 use Illuminate\Http\Request;
@@ -14,10 +11,8 @@ use Yajra\DataTables\DataTables;
 class SportController extends Controller
 {
     protected $sportService;
-    protected $requestService;
-    public function __construct(SportService $sportService , RequestService $requestService) {
+    public function __construct(SportService $sportService) {
         $this->sportService = $sportService;
-        $this->requestService = $requestService;
     }
 
     public function index(){

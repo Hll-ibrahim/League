@@ -3,9 +3,8 @@
 namespace App\Services;
 
 use App\Repositories\TeamRepository;
-use App\Services\Contracts\TeamServiceInterface;
 
-class TeamService implements TeamServiceInterface {
+class TeamService {
 
     protected $teamRepository;
 

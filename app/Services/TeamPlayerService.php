@@ -3,9 +3,8 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\TeamPlayerRepositoryInterface;
-use App\Services\Contracts\TeamPlayerServiceInterface;
 
-class TeamPlayerService implements TeamPlayerServiceInterface{
+class TeamPlayerService {
 
     protected $teamPlayerRepository;
     public function __construct(TeamPlayerRepositoryInterface $teamPlayerRepository){

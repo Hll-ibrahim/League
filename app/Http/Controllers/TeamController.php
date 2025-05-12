@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Contracts\LeaguesTeamsServiceInterface;
-use App\Services\Contracts\TeamServiceInterface;
-use App\Services\LeaguesTeamsService;
 use App\Services\TeamService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
