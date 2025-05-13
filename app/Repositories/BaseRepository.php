@@ -34,4 +34,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function paginate($page){
         return $this->model->paginate($page);
     }
+
+    public function query(){
+        return $this->model->query();
+    }
 }

@@ -20,7 +20,7 @@ class SportController extends Controller
 
     public function fetch(){
 
-        $sports = $this->sportService->all();
+        $sports = $this->sportService->getAll();
         return DataTables::of($sports)
             ->addColumn('process',function($sport){
                 $detail =  '<a href="'.route('sport.detail',$sport->id).'" class="btn btn-info btn-xs mx-1">Detail</a>';
@@ -43,7 +43,7 @@ class SportController extends Controller
     }
 
     public function create(SportRequest $request){
-        $this->sportService->add($request->all());
+        $this->sportService->create($request->all());
         return response()->json(['success'=>'Data added successfully.']);
     }
 
@@ -53,7 +53,7 @@ class SportController extends Controller
     }
 
     public function get(Request $request){
-        $sport = $this->sportService->get($request->sport_id);
+        $sport = $this->sportService->getById($request->sport_id);
         return response()->json($sport);
     }
 

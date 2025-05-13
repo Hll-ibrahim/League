@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Contracts;
 
-interface TeamPlayerRepositoryInterface {
+interface TeamPlayerRepositoryInterface extends BaseRepositoryInterface{
     public function getPlayersFromTeam(int $teamId);
 
     public function getPlayerById(int $playerId);

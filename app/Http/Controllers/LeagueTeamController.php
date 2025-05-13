@@ -18,7 +18,7 @@ class LeagueTeamController extends Controller
     }
 
     public function add(LeaguesTeamsRequest $request){
-        return $this->leaguesTeamsService->addTeamToLeague($request->all());
+        return $this->leaguesTeamsService->create($request->all());
     }
 
     public function index($league_id){
@@ -31,13 +31,9 @@ class LeagueTeamController extends Controller
         $season_id = $request->get('season_id');
 
 
-        if(isset($league_id) and $league_id != ''){
-            if(isset($season_id) and $season_id != ''){
-                $teams = $this->leaguesTeamsService->getLeagueTeamsFromLeague($season_id);
-            }
-            else{
-                $teams = $this->leaguesTeamsService->getTeamsFromLeague($league_id);
-            }
+        if(isset($league_id) and $league_id != '' and isset($season_id) and $season_id != ''){
+            $teams = $this->leaguesTeamsService->getLeagueTeamsBySeasonLeague($league_id,$season_id);
+
         }
 
         return DataTables::of($teams)
@@ -70,6 +66,6 @@ class LeagueTeamController extends Controller
     }
 
     public function remove(Request $request){
-        return $this->leaguesTeamsService->removeTeamFromLeague($request->league_team_id);
+        return $this->leaguesTeamsService->delete($request->league_team_id);
     }
 }

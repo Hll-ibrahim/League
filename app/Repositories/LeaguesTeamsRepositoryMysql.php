@@ -5,16 +5,11 @@ namespace App\Repositories;
 use App\Models\LeagueTeam;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
 
-class LeaguesTeamsRepositoryMysql implements LeaguesTeamsRepositoryInterface{
-    public function getTeamsFromLeague(int $season_league_id){
-        return LeagueTeam::where('season_league_id',$season_league_id)->get();
+class LeaguesTeamsRepositoryMysql extends BaseRepository implements LeaguesTeamsRepositoryInterface{
+    public function __construct(LeagueTeam $leagueTeam){
+        parent::__construct($leagueTeam);
     }
-
-    public function addTeam(array $team){
-        return LeagueTeam::create($team);
-    }
-
-    public function removeTeam(int $teamId){
-        return LeagueTeam::destroy($teamId);
+    public function getBySeasonLeague(int $season_league_id){
+        return $this->model->where('season_league_id',$season_league_id)->get();
     }
 }

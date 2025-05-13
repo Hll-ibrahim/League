@@ -5,16 +5,14 @@ namespace App\Repositories;
 use App\Models\Team;
 use App\Repositories\Contracts\TeamRepositoryInterface;
 
-class TeamRepository implements TeamRepositoryInterface{
+class TeamRepository extends BaseRepository implements TeamRepositoryInterface{
+
+    public function __construct(Team $model){
+        parent::__construct($model);
+    }
+
     public function getTeams(){
-        return Team::all();
+        return $this->model->all();
     }
 
-    public function getTeamById($id){
-        return Team::findOrFail($id);
-    }
-
-    public function queryTeams(){
-        return Team::query();
-    }
 }

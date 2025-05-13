@@ -4,32 +4,22 @@ namespace App\Services;
 
 use App\Repositories\TeamRepository;
 
-class TeamService {
+class TeamService extends BaseService {
 
-    protected $teamRepository;
 
     public function __construct(TeamRepository $teamRepository){
-        $this->teamRepository = $teamRepository;
+         parent::__construct($teamRepository);
     }
 
-    public function all(){
-        return $this->teamRepository->getTeams();
-    }
-
-    public function get($id){}
-
-    public function add($data){}
-
-    public function delete($id){}
 
     public function games_count($team_id){
-        $team = $this->teamRepository->getTeamById($team_id);
+        $team = $this->repository->getById($team_id);
         return $team->home_games->count() + $team->away_games->count();
     }
 
     public function win_count($team_id){
         $count = 0;
-        $team = $this->teamRepository->getTeamById($team_id);
+        $team = $this->repository->getById($team_id);
         $home_games = $team->home_games;
         foreach($home_games as $game){
             if($game->home_score > $game->away_score){
@@ -47,7 +37,7 @@ class TeamService {
 
     public function draw_count($team_id){
         $count = 0;
-        $team = $this->teamRepository->getTeamById($team_id);
+        $team = $this->repository->getById($team_id);
         $home_games = $team->home_games;
         foreach($home_games as $game){
             if($game->home_score == $game->away_score){
@@ -65,7 +55,7 @@ class TeamService {
 
     public function lose_count($team_id){
         $count = 0;
-        $team = $this->teamRepository->getTeamById($team_id);
+        $team = $this->repository->getById($team_id);
         $home_games = $team->home_games;
         foreach($home_games as $game){
             if($game->home_score < $game->away_score){
@@ -82,12 +72,6 @@ class TeamService {
     }
 
     public function get_teams_from_leagues($league_id){
-        return $this->teamRepository->queryTeams()->where('league_id', $league_id)->get();
-    }
-
-
-    public function handleRequest($data): array
-    {
-
+        return $this->repository->query()->where('league_id', $league_id)->get();
     }
 }

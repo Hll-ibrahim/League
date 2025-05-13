@@ -82,8 +82,8 @@ class LeagueController extends Controller
             'id' => $id, // Aldığınız ID değeri
         ]);
         $league = $this->leagueService->getById($request->id);
-        $seasons = $this->seasonService->all();
-        $sports = $this->sportService->all();
+        $seasons = $this->seasonService->getAll();
+        $sports = $this->sportService->getAll();
         $league_types = $this->leagueService->getLeagueTypes();
         return view('league.detail',compact('league','seasons','sports','league_types'));
     }

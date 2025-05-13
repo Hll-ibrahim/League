@@ -18,7 +18,7 @@ class TeamController extends Controller
     }
 
     public function fetch(Request $request){
-        $teams = $this->teamService->all();
+        $teams = $this->teamService->getAll();
 
         if(isset($request->league_id)){
             $teams = $this->teamService->get_teams_from_leagues($request->league_id);

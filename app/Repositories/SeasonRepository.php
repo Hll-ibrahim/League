@@ -5,14 +5,17 @@ namespace App\Repositories;
 use App\Models\Season;
 use App\Repositories\Contracts\SeasonRepositoryInterface;
 
-class SeasonRepository implements SeasonRepositoryInterface
+class SeasonRepository extends BaseRepository implements SeasonRepositoryInterface
 {
+    public function __construct(Season $model){
+        parent::__construct($model);
+    }
     public function getSeasons(){
-        return Season::all();
+        return $this->model->all();
     }
 
     public function getSeasonNameById($id){
-        $season = Season::find($id);
+        $season = $this->model->find($id);
         return $season ? $season->name : null;
     }
 }
