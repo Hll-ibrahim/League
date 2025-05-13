@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LeagueRequest;
 use App\Services\LeagueService;
-use App\Services\RequestService;
 use App\Services\SeasonService;
 use App\Services\SportService;
 use Illuminate\Http\Request;

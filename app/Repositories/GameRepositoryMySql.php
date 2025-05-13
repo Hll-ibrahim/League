@@ -7,14 +7,19 @@ use App\Models\SeasonLeague;
 use App\Models\User;
 use App\Repositories\Contracts\GameRepositoryInterface;
 
-class GameRepositoryMySql implements GameRepositoryInterface {
+class GameRepositoryMySql extends BaseRepository implements GameRepositoryInterface {
+
+    public function __construct(Game $game){
+        parent::__construct($game);
+    }
+
     public function getGames($referee)
     {
         return $referee->refereeGames;
     }
 
     public function getGame($id){
-        return Game::findOrFail($id);
+        return $this->model->findOrFail($id);
     }
 
     public function getGamesWithNames($game)

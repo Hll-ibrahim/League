@@ -312,8 +312,12 @@
                             <form id="register_form" type="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="name">Your Email</label>
+                                    <label for="name">Name</label>
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Email</label>
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="Enter your email...">
                                 </div>
                                 <div class="form-group">
                                     <label for="register-password">Your Password</label>

@@ -5,7 +5,7 @@ namespace App\Repositories\Contracts;
 use App\Models\Game;
 use App\Models\User;
 
-interface GameRepositoryInterface{
+interface GameRepositoryInterface extends BaseRepositoryInterface{
     function getGames(User $referee);
 
     function getGamesWithNames(Game $game);

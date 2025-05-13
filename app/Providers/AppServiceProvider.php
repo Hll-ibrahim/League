@@ -20,7 +20,6 @@ use App\Repositories\TeamRepository;
 use App\Repositories\UserRepository;
 use App\Services\GameService;
 use App\Services\LeagueService;
-use App\Services\RequestService;
 use App\Services\SeasonService;
 use App\Services\SportService;
 use App\Services\TeamService;
@@ -33,19 +32,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // RequestService ve interface'i arasında bağ kurma
-        $this->app->singleton(RequestService::class, function($app) {
-            return new RequestService(
-                $app->make(TeamService::class),
-                $app->make(LeagueService::class),
-                $app->make(SportService::class),
-                $app->make(SeasonService::class),
-                $app->make(GameService::class)
-            );
-        });
-
-
-
         // Repository ve interface bağlamaları
         $this->app->bind(SeasonRepositoryInterface::class, SeasonRepository::class);
         $this->app->bind(TeamRepositoryInterface::class, TeamRepository::class);

@@ -9,17 +9,16 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use function PHPUnit\Framework\matches;
 
-class GameController extends Controller
+class GameController extends BaseController
 {
-    protected $gameService;
     public function __construct(GameService $gameService){
-        $this->gameService = $gameService;
+        parent::__construct($gameService);
     }
 
     public function getMatches(Request $request){
         $user = $request->user();
         if ($user) {
-            return $this->gameService->getGames($user);
+            return $this->service->getGames($user);
         } else {
             return response()->json([
                 'success' => false,
@@ -30,7 +29,7 @@ class GameController extends Controller
 
     public function setScore(Request $request){
 
-        $match = $this->gameService->getGame($request->match_id);
+        $match = $this->service->getGame($request->match_id);
         if(!$match){
             return response()->json(['success' => false,'error'=>'Match not found'],404);
         }
@@ -38,10 +37,10 @@ class GameController extends Controller
         $goal = $request->goals;
         switch ($scoring_team) {
             case 'home_team':
-                $this->gameService->addHomeScore($match,$goal);
+                $this->service->addHomeScore($match,$goal);
                 break;
             case 'away_team':
-                $this->gameService->addAwayScore($match,$goal);
+                $this->service->addAwayScore($match,$goal);
                 break;
         }
         return response()->json(['success' => true,'match' => $match,'scoring_team' => $scoring_team]);
@@ -51,7 +50,7 @@ class GameController extends Controller
         $league_id = $request->league_id;
         $season_id = $request->season_id;
         if(isset($league_id) and isset($season_id)){
-            $games = $this->gameService->getGamesFromSeasonLeague($season_id,$league_id);
+            $games = $this->service->getGamesFromSeasonLeague($season_id,$league_id);
         }
 
 
@@ -71,7 +70,7 @@ class GameController extends Controller
     }
 
     public function detail($id){
-        $game = $this->gameService->getGame($id);
+        $game = $this->service->getGame($id);
         if(!$game){
             return response()->json(['success' => false,'error'=>'Match not found'],404);
         }

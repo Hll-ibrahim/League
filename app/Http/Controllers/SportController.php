@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SportRequest;
-use App\Services\RequestService;
 use App\Services\SportService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
