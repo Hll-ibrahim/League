@@ -9,7 +9,12 @@ use App\Models\Sport;
 use App\Models\Team;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 
-class LeagueRepository implements LeagueRepositoryInterface {
+class LeagueRepository extends BaseRepository implements LeagueRepositoryInterface {
+
+    public function __construct(League $league){
+        parent::__construct($league);
+    }
+
     public function createLeague($data){
         return League::create($data);
     }
@@ -34,9 +39,7 @@ class LeagueRepository implements LeagueRepositoryInterface {
     public function getSeasons(){
         return Season::all();
     }
-    public function update(League $league,$data){
-        return $league->update($data);
-    }
+
     public function delete($id){
         return League::destroy($id);
     }

@@ -82,7 +82,7 @@ class LeagueController extends Controller
         $request->merge([
             'id' => $id, // Aldığınız ID değeri
         ]);
-        $league = $this->sportService->get($request->id);
+        $league = $this->leagueService->getById($request->id);
         $seasons = $this->seasonService->all();
         $sports = $this->sportService->all();
         $league_types = $this->leagueService->getLeagueTypes();
