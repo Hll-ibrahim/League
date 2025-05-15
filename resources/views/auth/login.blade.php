@@ -11,7 +11,7 @@
     <meta name="author" content="Dan Fisher">
     <meta name="keywords" content="sports club news HTML template">
 
-    <!-- Favicons
+    <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('football/images/football/favicons/favicon.ico') }}">
     <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('football/images/football/favicons/favicon-120.png') }}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('football/images/football/favicons/favicon-152.png') }}">
@@ -687,6 +687,20 @@
                 });
             }
         })
+    }
+
+    function errorMap(errors){
+        errors = Object.values(errors)
+
+        string = '<p>'
+        result = errors.map((error)=>{
+            error.map((errorMessage)=>{
+                string += errorMessage
+                string += '<br>'
+            })
+        })
+        string += '</p>'
+        return string
     }
 </script>
 </body>

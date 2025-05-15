@@ -9,7 +9,7 @@
 @section('base')
     <header class="header ">
 
-       
+
         <!-- Header Primary -->
         <div class="header__primary">
             <div class="container">
@@ -179,9 +179,10 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-grid.html">Shop</a>
+                            @if(auth()->user() && auth()->user()->hasRole('admin'))
+                            <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-grid.html">Panel</a>
                                 <ul class="main-nav__sub">
-                                    <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-grid.html">Shop - Grid</a></li>
+                                    <li class=""><a href="{{route('announcement.index')}}">Announcements</a></li>
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-list.html">Shop - List</a></li>
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">Single Product</a></li>
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-cart.html">Shopping Cart</a></li>
@@ -191,11 +192,12 @@
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-account.html">Account</a></li>
                                 </ul>
                             </li>
+                            @endif
                         </ul>
 
                         <!-- Social Links -->
                         <ul class="social-links social-links--inline social-links--main-nav">
-                            
+
                             <li>
                                 @if(Auth::user())
                                     <form method="post" class="nav-account__item nav-account__item--logout" action="{{route('logout')}}">
@@ -221,7 +223,7 @@
         </div>
         <!-- Header Primary / End -->
     </header>
-    
+
     <aside class="pushy-panel pushy-panel--dark">
         <div class="pushy-panel__inner">
             <header class="pushy-panel__header">

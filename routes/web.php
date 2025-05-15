@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LeagueController;
@@ -78,7 +79,11 @@ Route::prefix('/')->group(function () {
 
     Route::post('register',[UserController::class,'register'])->name('register');
 
-    Route::get('hail',[\App\Http\Controllers\GameController::class,'getMatches'])->name('hail');
+    Route::get('hail',[GameController::class,'getMatches'])->name('hail');
+
+    Route::prefix('announcement')->controller(AnnouncementController::class)->group(function () {
+        Route::get('/', 'index')->name('announcement.index');
+    });
 
     Route::middleware([
         'auth:sanctum',
