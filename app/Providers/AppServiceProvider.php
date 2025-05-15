@@ -6,6 +6,7 @@ use App\Models\Sport;
 use App\Repositories\Contracts\GameRepositoryInterface;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
+use App\Repositories\Contracts\RefereeRepositoryInterface;
 use App\Repositories\Contracts\SeasonLeagueRepositoryInterface;
 use App\Repositories\Contracts\SeasonRepositoryInterface;
 use App\Repositories\Contracts\SportRepositoryInterface;
@@ -16,6 +17,7 @@ use App\Repositories\GameRepositoryMysql;
 use App\Repositories\LeagueRepository;
 use App\Repositories\LeagueRepositoryMysql;
 use App\Repositories\LeaguesTeamsRepositoryMysql;
+use App\Repositories\RefereeRepositoryMysql;
 use App\Repositories\SeasonLeagueRepositoryMysql;
 use App\Repositories\SeasonRepositoryMysql;
 use App\Repositories\SportRepositoryMysql;
@@ -47,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GameRepositoryInterface::class, GameRepositoryMysql::class);
         $this->app->bind(LeaguesTeamsRepositoryInterface::class, LeaguesTeamsRepositoryMysql::class);
         $this->app->bind(TeamPlayerRepositoryInterface::class, TeamPlayerRepositoryMysql::class);
+        $this->app->bind(RefereeRepositoryInterface::class, RefereeRepositoryMysql::class);
     }
 
     /**

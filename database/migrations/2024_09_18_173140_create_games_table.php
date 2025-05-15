@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('season_league_id')->constrained('season_league');
             $table->foreignId('home_team_id')->constrained('teams');
             $table->foreignId('away_team_id')->constrained('teams');
-            $table->foreignId('referee_id')->constrained('users');
+            $table->foreignId('referee_id')->constrained('referees');
             $table->integer('home_score')->default(0);
             $table->integer('away_score')->default(0);
             $table->dateTime('date');

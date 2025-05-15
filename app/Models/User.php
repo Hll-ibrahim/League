@@ -65,8 +65,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function refereeGames(){
-        return $this->hasMany(Game::class,'referee_id','id');
-    }
 }

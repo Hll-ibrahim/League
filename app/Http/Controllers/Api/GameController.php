@@ -5,24 +5,28 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\BaseController;
 use App\Services\GameService;
+use App\Services\RefereeService;
 use Illuminate\Http\Request;
 
 class GameController extends BaseController
 {
 
-    public function __construct(GameService $gameService){
+    protected $refereeService;
+    public function __construct(GameService $gameService, RefereeService $refereeService){
         parent::__construct($gameService);
+        $this->refereeService = $refereeService;
     }
 
     public function get_matches(Request $request){
-        $user = $request->user();
-        if ($user) {
-            return $this->service->getGames($user);
+        $referee_id = $request->input('referee_id');
+        if ($referee_id) {
+            $referee = $this->refereeService->getById($referee_id);
+            return $referee->games;
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Kullanıcı doğrulama hatası',
-            ], 401);  // Unauthorized
+                'message' => 'Unable to get referee id',
+            ], 401);
         }    }
 
     public function set_event(Request $request){

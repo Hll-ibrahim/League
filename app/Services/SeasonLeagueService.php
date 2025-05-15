@@ -2,17 +2,21 @@
 
 namespace App\Services;
 
+use App\Models\Referee;
 use App\Models\SeasonLeague;
 use App\Models\User;
 use App\Repositories\BaseRepositoryMysql;
+use App\Repositories\Contracts\RefereeRepositoryInterface;
 use App\Repositories\Contracts\SeasonLeagueRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SeasonLeagueService extends BaseService
 {
-    public function __construct(SeasonLeagueRepositoryInterface $seasonLeagueRepository){
+    protected $refereeRepository;
+    public function __construct(SeasonLeagueRepositoryInterface $seasonLeagueRepository, RefereeRepositoryInterface $refereeRepository){
         parent::__construct($seasonLeagueRepository);
+        $this->refereeRepository = $refereeRepository;
     }
 
 
@@ -72,7 +76,7 @@ class SeasonLeagueService extends BaseService
                     'season_league_id' => $season_league->id,
                     'home_team_id' => $homeTeam,
                     'away_team_id' => $awayTeam,
-                    'referee_id' => User::inRandomOrder()->value('id') ?? 1,
+                    'referee_id' => $this->refereeRepository->in_random_order(),
                     'date' => $matchDate,
                     'status' => 'waiting',
                     'created_at' => now(),
