@@ -615,78 +615,92 @@
 
 <script>
     function loginPost(){
-        var formData = new FormData(document.getElementById('login_form'))
+        var formData = new FormData(document.getElementById('login_form'));
+
+        Swal.fire({
+            title: 'You are logging in...',
+            text: 'Please wait.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+
         $.ajax({
             url: '{{route('login')}}',
             type: 'POST',
-            headers: {'X-CSRF-TOKEN': "{{csrf_token()}} "},
+            headers: {'X-CSRF-TOKEN': "{{csrf_token()}}"},
             processData: false,
             contentType: false,
             data: formData,
             success: () => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Success',
-                    text: 'Successfully logged in',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Log In',
-                }).then((result)=>{
-                    if(result.value){
-                        window.location.href = '/'
+                    title: 'Başarılı',
+                    text: 'Giriş başarılı',
+                    confirmButtonText: 'Ana Sayfaya Git'
+                }).then((result) => {
+                    if (result.value) {
+                        window.location.href = '/';
                     }
-                })
+                });
             },
             error: (xhr, status, error) => {
-                console.error(xhr,status,error);
-
+                console.error(xhr, status, error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    html: errorMap(xhr.responseJSON.errors),  // Hatanın detaylarını gösterir
-                    footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
-                    showConfirmButton: true,
-                    confirmButtonText: "Ok",
+                    title: 'Hata',
+                    html: errorMap(xhr.responseJSON?.errors || 'Bilinmeyen hata'),
+                    footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
+                    confirmButtonText: 'Tamam'
                 });
             }
-        })
+        });
     }
 </script>
 <script>
     function registerPost(){
-        var formData = new FormData(document.getElementById('register_form'))
+        var formData = new FormData(document.getElementById('register_form'));
+
+        Swal.fire({
+            title: 'You are registering...',
+            text: 'Please wait.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+
         $.ajax({
             url: '{{route('register')}}',
             type: 'POST',
-            headers: {'X-CSRF-TOKEN': "{{csrf_token()}} "},
+            headers: {'X-CSRF-TOKEN': "{{csrf_token()}}"},
             processData: false,
             contentType: false,
             data: formData,
             success: () => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Success',
-                    text: 'Successfully registered',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Log In',
-                }).then((result)=>{
-                    if(result.value){
-                        window.location.href = '/login'
+                    title: 'Kayıt başarılı',
+                    text: 'Giriş sayfasına yönlendiriliyorsunuz',
+                    confirmButtonText: 'Giriş Yap'
+                }).then((result) => {
+                    if (result.value) {
+                        window.location.href = '/login';
                     }
-                })
+                });
             },
             error: (xhr, status, error) => {
-                console.error(xhr,status,error);
-
+                console.error(xhr, status, error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    html: errorMap(xhr.responseJSON.errors),  // Hatanın detaylarını gösterir
-                    footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
-                    showConfirmButton: true,
-                    confirmButtonText: "Ok",
+                    title: 'Hata',
+                    html: errorMap(xhr.responseJSON?.errors || 'Bilinmeyen hata'),
+                    footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
+                    confirmButtonText: 'Tamam'
                 });
             }
-        })
+        });
     }
 
     function errorMap(errors){

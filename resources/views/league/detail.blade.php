@@ -127,9 +127,10 @@
     @if(auth()->user() && auth()->user()->hasRole('admin'))
         <button class="btn btn-primary mb-4" onclick="create()">Add</button>
 
-        <button class="btn btn-success mb-4" id="league_start_button" onclick="start()">Start League</button>
-
         <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
+
+        <button class="btn btn-success mb-4 d-none" id="league_start_button" onclick="start()">Start League</button>
+
 
     @endif
     <div class="my-5">
@@ -173,6 +174,7 @@
                 <th>Away Team</th>
                 <th>Home Score</th>
                 <th>Away Score</th>
+                <th>Date</th>
                 <th>Detail</th>
             </tr>
             </thead>
@@ -184,6 +186,7 @@
                 <th>Away Team</th>
                 <th>Home Score</th>
                 <th>Away Score</th>
+                <th>Date</th>
                 <th>Detail</th>
             </tr>
             </tfoot>
@@ -250,6 +253,7 @@
                 {data: 'away_team_id'},
                 {data: 'home_score'},
                 {data: 'away_score'},
+                {data: 'date'},
                 {data: 'detail',orderable: false,searchable: false},
             ],
             success: function () {
@@ -446,8 +450,6 @@
         }
 
         function deleteLeague(id) {
-            const type = 2; // Sport
-            const process = 4; // Delete
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -521,31 +523,38 @@
             var league_id = {{$league->id}};
             var season_id = $('#season_filter').val();
 
+            Swal.fire({
+                title: 'League is starting...',
+                text: 'Please wait.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+
             $.ajax({
                 url: '{{ route('sport.league.start') }}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
                 data: {
-                    'league_id':league_id,
+                    'league_id': league_id,
                     'season_id': season_id
                 },
                 success: () => {
-                    Swal.fire('Success', 'League started successfully!', 'success');
+                    Swal.fire('Başarılı!', 'Lig başarıyla başlatıldı.', 'success');
                     closeModal();
-                    dataTable.ajax.reload();
+                    dataTable2.ajax.reload();
+                    change_season_league()
                 },
-                error: (xhr,status,error) => {
-                    console.log(xhr,status,error)
+                error: (xhr, status, error) => {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        html: errorMap(xhr.responseJSON.errors),
-                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
-                        showConfirmButton: true,
+                        title: 'Hata Oluştu',
+                        html: errorMap(xhr.responseJSON?.errors || 'Bilinmeyen bir hata'),
+                        footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
                     });
                 }
             });
-
         }
 
         function detail(){

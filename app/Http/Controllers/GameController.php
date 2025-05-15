@@ -62,8 +62,11 @@ class GameController extends BaseController
             ->editColumn('away_team_id', function ($game) {
                 return $game->away_team->name;
             })
-            ->addColumn('detail', function ($leagues) {
-                return '<a href="' . route('sport.league.game.detail', $leagues->id) . '" class="btn btn-info btn-xs">Detail</a>';
+            ->addColumn('detail', function ($game) {
+                return '<a href="' . route('sport.league.game.detail', $game->id) . '" class="btn btn-info btn-xs">Detail</a>';
+            })
+            ->addColumn('date', function ($game) {
+                return \Carbon\Carbon::parse($game->date)->translatedFormat('d F Y');
             })
             ->addIndexColumn()
             ->rawColumns(['detail'])->make(true);

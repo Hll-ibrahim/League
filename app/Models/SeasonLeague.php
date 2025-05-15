@@ -18,7 +18,7 @@ class SeasonLeague extends Model
         return $this->belongsTo(League::class);
     }
 
-    public function teams()
+    public function leagueTeams()
     {
         return $this->hasMany(LeagueTeam::class);
     }

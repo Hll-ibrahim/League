@@ -9,6 +9,8 @@ class Game extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['season_league_id', 'home_team_id', 'date', 'status','referee_id','away_team_id'];
+
     public function events(){
         return $this->hasMany(Event::class);
     }

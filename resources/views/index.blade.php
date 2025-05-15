@@ -33,6 +33,7 @@
 
 
 
+                    @if($announcements->count())
                     <!-- Post Pagination -->
                     <nav class="post-pagination" aria-label="Blog navigation">
                         <ul class="pagination pagination--lg justify-content-center">
@@ -65,6 +66,7 @@
 
                     <!-- Post Pagination / End -->
 
+                    @endif
 
                 </div>
                 <!-- Content / End -->
