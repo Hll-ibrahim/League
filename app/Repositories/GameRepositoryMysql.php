@@ -13,28 +13,21 @@ class GameRepositoryMysql extends BaseRepositoryMysql implements GameRepositoryI
         parent::__construct($game);
     }
 
-    public function getGames($referee)
-    {
-        return $referee->refereeGames;
-    }
-
     public function getGame($id){
         return $this->model->findOrFail($id);
     }
 
     public function getGamesWithNames($game)
     {
-        $match = [];
-        array_push($match, [
+        return [
             'id' => $game->id,
             'home_team' => $game->home_team->name,
             'away_team' => $game->away_team->name,
             'home_score' => $game->home_score,
             'away_score' => $game->away_score,
             'date' => $game->date,
-            'league' => $game->league->name
-        ]);
-        return $match;
+            'league' => $game->season_league->league->name
+        ];
     }
 
     public function setScore($game, $score, $team){

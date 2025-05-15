@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Services\GameService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
-use function PHPUnit\Framework\matches;
 
 class GameController extends BaseController
 {

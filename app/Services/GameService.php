@@ -12,7 +12,7 @@ class GameService extends BaseService {
     }
 
     public function getGames($user){
-        $games = $this->repository->getGames($user);
+        $games = $user->refereeGames;
         $matches = [];
         foreach ($games as $game) {
             $match = $this->repository->getGamesWithNames($game);
