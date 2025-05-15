@@ -22,7 +22,19 @@
                     <!-- Main Navigation -->
                     <nav class="main-nav clearfix">
                         <ul class="main-nav__list">
-                            <li class=""><a href="{{route('sport.index')}}">Sports</a></li>
+                            <li class="{{Request::segment(1) == 'sport' ? 'active' : ''}}"><a href="{{route('sport.index')}}">Sports</a>
+                                <ul class="main-nav__sub">
+                                    @foreach($sports as $sport)
+                                        <li><a href="{{route('sport.detail',$sport->id)}}">{{$sport->name}}</a>
+                                            <ul class="main-nav__sub-2">
+                                                @foreach($sport->leagues as $league)
+                                                    <li><a href="{{route('sport.league.detail',$league->id    )}}">{{$league->name}}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
                             <li class=""><a href="#">Features</a>
                                 <div class="main-nav__megamenu clearfix">
                                     <ul class="col-lg-2 col-md-3 col-12 main-nav__ul">
@@ -164,7 +176,7 @@
                                     <li><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_event-tournament.html">Tournament</a></li>
                                 </ul>
                             </li>
-                            <li class="active"><a href="#">News</a>
+                            <li class=""><a href="#">News</a>
                                 <ul class="main-nav__sub">
                                     <li class="active"><a href="_soccer_blog-1.html">News - version 1</a></li>
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_blog-2.html">News - version 2</a></li>

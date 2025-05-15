@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Sport;
 use App\Repositories\Contracts\GameRepositoryInterface;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
@@ -23,6 +24,7 @@ use App\Services\LeagueService;
 use App\Services\SeasonService;
 use App\Services\SportService;
 use App\Services\TeamService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -48,6 +50,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('*', function ($view) {
+            $sportRepository = new SportRepository(new Sport());
+            $sports = $sportRepository->getWithRelation('leagues');
+
+            $view->with([
+                'sports' => $sports,
+            ]);
+        });
+
+
+
     }
 }

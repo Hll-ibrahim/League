@@ -10,4 +10,8 @@ class Sport extends Model
     use HasFactory;
 
     protected $fillable = ['name','description'];
+
+    public function leagues(){
+        return $this->hasMany(League::class);
+    }
 }

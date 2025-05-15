@@ -38,4 +38,8 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function query(){
         return $this->model->query();
     }
+
+    public function getWithRelation(string $relation){
+        return $this->model->with($relation)->get();
+    }
 }
