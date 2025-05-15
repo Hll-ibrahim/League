@@ -7,7 +7,7 @@ use App\Models\SeasonLeague;
 use App\Models\User;
 use App\Repositories\Contracts\GameRepositoryInterface;
 
-class GameRepositoryMySql extends BaseRepository implements GameRepositoryInterface {
+class GameRepositoryMysql extends BaseRepositoryMysql implements GameRepositoryInterface {
 
     public function __construct(Game $game){
         parent::__construct($game);

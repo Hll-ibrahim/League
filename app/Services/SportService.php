@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\SportRepositoryInterface;
-use App\Repositories\SportRepository;
+use App\Repositories\SportRepositoryMysql;
 
 class SportService extends BaseService  {
 

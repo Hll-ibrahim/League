@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\LeagueTeam;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
 
-class LeaguesTeamsRepositoryMysql extends BaseRepository implements LeaguesTeamsRepositoryInterface{
+class LeaguesTeamsRepositoryMysql extends BaseRepositoryMysql implements LeaguesTeamsRepositoryInterface{
     public function __construct(LeagueTeam $leagueTeam){
         parent::__construct($leagueTeam);
     }

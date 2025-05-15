@@ -8,6 +8,7 @@ use App\Http\Controllers\LeagueTeamController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\SeasonLeagueController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamPlayerController;
@@ -65,6 +66,10 @@ Route::prefix('/')->group(function () {
 
         Route::prefix('seasons')->name('season.')->controller(SeasonController::class)->group(function () {
             Route::get('/fetch', 'getSeasons')->name('fetch');
+        });
+
+        Route::prefix('season-league')->controller(SeasonLeagueController::class)->group(function () {
+            Route::get('/get-by-foriegn', 'get_by_foreign')->name('season_league.get_by_foreign');
         });
 
     });

@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Sport;
 use App\Repositories\Contracts\SportRepositoryInterface;
 
-class SportRepository extends BaseRepository implements SportRepositoryInterface {
+class SportRepositoryMysql extends BaseRepositoryMysql implements SportRepositoryInterface {
 
     public function __construct(Sport $model){
         parent::__construct($model);

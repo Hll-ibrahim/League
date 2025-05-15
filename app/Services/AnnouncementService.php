@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Repositories\AnnouncementRepository;
+use App\Repositories\AnnouncementRepositoryMysql;
 
 class AnnouncementService extends BaseService
 {
-    public function __construct(AnnouncementRepository  $announcementService){
+    public function __construct(AnnouncementRepositoryMysql $announcementService){
         parent::__construct($announcementService);
     }
 

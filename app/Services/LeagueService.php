@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\LeagueRepositoryInterface;
+use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
 use App\Repositories\Contracts\SportRepositoryInterface;
 use App\Repositories\LeagueRepository;
 
 class LeagueService extends BaseService {
-
 
     function __construct(LeagueRepositoryInterface $leagueRepository) {
         parent::__construct($leagueRepository);
@@ -38,10 +38,6 @@ class LeagueService extends BaseService {
     public function getTeamsFromLeagueSport(int $league_id){
         $league = $this->repository->getLeagueById($league_id);
         return $this->repository->getTeamsFromSport($league->sport_id,$league_id);
-    }
-
-    public function start(int $league_id){
-
     }
 
 }

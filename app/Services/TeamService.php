@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Repositories\TeamRepository;
+use App\Repositories\TeamRepositoryMysql;
 
 class TeamService extends BaseService {
 
 
-    public function __construct(TeamRepository $teamRepository){
+    public function __construct(TeamRepositoryMysql $teamRepository){
          parent::__construct($teamRepository);
     }
 

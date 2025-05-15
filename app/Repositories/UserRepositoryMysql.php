@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository implements UserRepositoryInterface{
+class UserRepositoryMysql implements UserRepositoryInterface{
     public function add($data){
 
         $user = User::create([

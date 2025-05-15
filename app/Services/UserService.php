@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Repositories\UserRepository;
+use App\Repositories\UserRepositoryMysql;
 
 class UserService {
 

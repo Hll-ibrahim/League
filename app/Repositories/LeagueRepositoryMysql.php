@@ -9,7 +9,7 @@ use App\Models\Sport;
 use App\Models\Team;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 
-class LeagueRepository extends BaseRepository implements LeagueRepositoryInterface {
+class LeagueRepositoryMysql extends BaseRepositoryMysql implements LeagueRepositoryInterface {
 
     public function __construct(League $league){
         parent::__construct($league);

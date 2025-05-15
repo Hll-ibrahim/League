@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Season;
 use App\Repositories\Contracts\SeasonRepositoryInterface;
 
-class SeasonRepository extends BaseRepository implements SeasonRepositoryInterface
+class SeasonRepositoryMysql extends BaseRepositoryMysql implements SeasonRepositoryInterface
 {
     public function __construct(Season $model){
         parent::__construct($model);

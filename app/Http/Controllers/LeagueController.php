@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LeagueRequest;
 use App\Services\LeagueService;
+use App\Services\SeasonLeagueService;
 use App\Services\SeasonService;
 use App\Services\SportService;
 use Illuminate\Http\Request;
@@ -15,10 +16,12 @@ class LeagueController extends Controller
 
     protected $sportService;
     protected $seasonService;
-    public function __construct(LeagueService $leagueService , SeasonService $seasonService , SportService $sportService) {
+    protected $seasonLeagueService;
+    public function __construct(LeagueService $leagueService , SeasonService $seasonService , SportService $sportService, SeasonLeagueService $seasonLeagueService) {
         $this->leagueService = $leagueService;
         $this->seasonService = $seasonService;
         $this->sportService = $sportService;
+        $this->seasonLeagueService = $seasonLeagueService;
     }
 
     /**
@@ -79,7 +82,7 @@ class LeagueController extends Controller
         $request = new Request();
 
         $request->merge([
-            'id' => $id, // Aldığınız ID değeri
+            'id' => $id,
         ]);
         $league = $this->leagueService->getById($request->id);
         $seasons = $this->seasonService->getAll();
@@ -131,8 +134,9 @@ class LeagueController extends Controller
 
     public function start(Request $request){
         $league_id = $request->league_id;
+        $season_id = $request->season_id;
 
-        return $this->leagueService->start($league_id);
+        return $this->seasonLeagueService->start($league_id,$season_id);
 
     }
 }

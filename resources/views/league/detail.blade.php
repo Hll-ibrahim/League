@@ -195,6 +195,9 @@
 @endsection
 @section('script')
     <script>
+
+        var SEASON_LEAGUE
+
         dataTable = $('#team_table').DataTable({
             order: [
                 [0, 'ASC']
@@ -254,6 +257,9 @@
         });
 
         $(document).ready(function () {
+
+            change_season_league()
+
             // Elementlerin seçimi
             var updateButton = $('#updateButton');
             var nameField = $('#name');
@@ -506,18 +512,23 @@
         $('#season_filter').change(function () {
             dataTable.draw();
             dataTable2.draw();
+
+            change_season_league()
+
         });
 
         function start(){
             var league_id = {{$league->id}};
+            var season_id = $('#season_filter').val();
 
             $.ajax({
                 url: '{{ route('sport.league.start') }}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
-                processData: false,
-                contentType: false,
-                data: {'league_id':league_id},
+                data: {
+                    'league_id':league_id,
+                    'season_id': season_id
+                },
                 success: () => {
                     Swal.fire('Success', 'League started successfully!', 'success');
                     closeModal();
@@ -539,7 +550,29 @@
 
         function detail(){
             $('#add_league_modal').modal('show');
+        }
 
+        function change_season_league(){
+            var season_id = $('#season_filter').val()
+            var league_id = {{$league->id}};
+            var league_start_button = $('#league_start_button');
+            $.ajax({
+                url: '{{route('sport.season_league.get_by_foreign')}}',
+                data: {
+                    'league_id':league_id,
+                    'season_id': season_id
+                },
+                success: (response)=>{
+                    SEASON_LEAGUE = response;
+                    console.log(response.status)
+                    if(response.status === 'waiting'){
+                        $(league_start_button).removeClass('d-none');
+                    }
+                    else{
+                        $(league_start_button).addClass('d-none')
+                    }
+                },
+            })
         }
     </script>
 @endsection

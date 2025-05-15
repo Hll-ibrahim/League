@@ -6,7 +6,7 @@ use App\Models\Event;
 use App\Models\TeamPlayer;
 use App\Repositories\Contracts\TeamPlayerRepositoryInterface;
 
-class TeamPlayerRepositoryMysql extends BaseRepository implements TeamPlayerRepositoryInterface{
+class TeamPlayerRepositoryMysql extends BaseRepositoryMysql implements TeamPlayerRepositoryInterface{
 
     public function __construct(TeamPlayer $model){
         parent::__construct($model);

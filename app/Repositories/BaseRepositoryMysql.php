@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Repositories\Contracts\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class BaseRepository implements BaseRepositoryInterface
+abstract class BaseRepositoryMysql implements BaseRepositoryInterface
 {
     protected $model;
     public function __construct(Model $model){
