@@ -636,9 +636,8 @@
             success: () => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Başarılı',
-                    text: 'Giriş başarılı',
-                    confirmButtonText: 'Ana Sayfaya Git'
+                    title: 'Success',
+                    text: 'Logged in successfully',
                 }).then((result) => {
                     if (result.value) {
                         window.location.href = '/';
@@ -649,10 +648,9 @@
                 console.error(xhr, status, error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Hata',
-                    html: errorMap(xhr.responseJSON?.errors || 'Bilinmeyen hata'),
+                    title: 'Error',
+                    html: errorMap(xhr.responseJSON?.errors || 'Unknown Error'),
                     footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
-                    confirmButtonText: 'Tamam'
                 });
             }
         });
@@ -681,23 +679,17 @@
             success: () => {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Kayıt başarılı',
-                    text: 'Giriş sayfasına yönlendiriliyorsunuz',
-                    confirmButtonText: 'Giriş Yap'
-                }).then((result) => {
-                    if (result.value) {
-                        window.location.href = '/login';
-                    }
+                    title: 'Success',
+                    text: 'Registered successfully. Please log in ',
                 });
             },
             error: (xhr, status, error) => {
                 console.error(xhr, status, error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Hata',
-                    html: errorMap(xhr.responseJSON?.errors || 'Bilinmeyen hata'),
+                    title: 'Error',
+                    html: errorMap(xhr.responseJSON?.errors || 'Unknown Error'),
                     footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
-                    confirmButtonText: 'Tamam'
                 });
             }
         });
