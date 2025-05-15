@@ -14,8 +14,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            LeagueSeeder::class,
             PermissionSeeder::class,
+            LeagueSeeder::class,
+
         ]);
     }
 }

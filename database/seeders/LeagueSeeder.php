@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Announcement;
 use App\Models\League;
 use App\Models\LeagueTeam;
 use App\Models\LeagueType;
@@ -96,6 +97,13 @@ class LeagueSeeder extends Seeder
             ]);
         }
 
+        $title = 'Galatasaray is champion';
+        $descriptions = ['Galatasaray Spor Kulübü (Turkish pronunciation: [galataˈsaɾaj spoɾ kuˈlyby], Galatasaray Sports Club), more commonly referred to as simply Galatasaray, is a Turkish professional football club based on the European side of the city of Istanbul. It is the association football branch of the larger Galatasaray Sports Club of the same name, itself a part of the Galatasaray Community Cooperation Committee which includes Galatasaray High School where the football club was founded in October 1905 consisting entirely of student members. The team traditionally play in dark shades of red and yellow at home, with the shirts split down the middle between the two colours.',
+            'Goal night','today is a big day'];
+
+        foreach ($descriptions as $decription) {
+            Announcement::create(['title'=>$title,'description'=>$decription,'user_id'=>1,'team_id'=>1]);
+        }
 
     }
 }

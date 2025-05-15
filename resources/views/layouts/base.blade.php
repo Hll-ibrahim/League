@@ -41,6 +41,35 @@
 
     @yield('links')
 
+    <style>
+        <style>
+            /* "Show _ entries" yazısı */
+        div.dataTables_length label {
+            color: white !important;
+        }
+
+        /* "Search" yazısı */
+        div.dataTables_filter label {
+            color: white !important;
+        }
+
+        /* Arama input alanı */
+        div.dataTables_filter input {
+            color: white;
+            background-color: #333; /* istersen arka plan da koyulaşsın */
+            border: 1px solid #666;
+        }
+
+        /* "Show" select kutusu */
+        div.dataTables_length select {
+            color: white;
+            background-color: #333;
+            border: 1px solid #666;
+        }
+    </style>
+
+    </style>
+
 </head>
 <body data-template="template-football">
 <div class="site-wrapper clearfix">
