@@ -8,11 +8,13 @@ use App\Models\LeagueTeam;
 use App\Models\LeagueType;
 use App\Models\Nationality;
 use App\Models\Player;
+use App\Models\Referee;
 use App\Models\Season;
 use App\Models\SeasonLeague;
 use App\Models\Sport;
 use App\Models\Team;
 use App\Models\TeamPlayer;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -51,6 +53,7 @@ class LeagueSeeder extends Seeder
                 'name' => $league,
                 'sport_id' => $sport->id,
                 'league_type_id' => $league_type->id,
+                'player_count' => 18,
                 ]);
 
             SeasonLeague::create([
@@ -103,6 +106,13 @@ class LeagueSeeder extends Seeder
 
         foreach ($descriptions as $decription) {
             Announcement::create(['title'=>$title,'description'=>$decription,'user_id'=>1,'team_id'=>1]);
+        }
+
+        $user = User::first();
+        $sports = Sport::all();
+
+        foreach($sports as $sport ) {
+            Referee::create(['sport_id'=>$sport->id,'user_id'=>$user->id]);
         }
 
     }
