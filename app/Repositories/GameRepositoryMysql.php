@@ -6,6 +6,7 @@ use App\Models\Game;
 use App\Models\SeasonLeague;
 use App\Models\User;
 use App\Repositories\Contracts\GameRepositoryInterface;
+use Carbon\Carbon;
 
 class GameRepositoryMysql extends BaseRepositoryMysql implements GameRepositoryInterface {
 
@@ -13,20 +14,18 @@ class GameRepositoryMysql extends BaseRepositoryMysql implements GameRepositoryI
         parent::__construct($game);
     }
 
-    public function getGame($id){
-        return $this->model->findOrFail($id);
-    }
+
 
     public function getGamesWithNames($game)
     {
         return [
             'id' => $game->id,
-            'home_team' => $game->home_team->name,
-            'away_team' => $game->away_team->name,
+            'home_team' => $game->homeTeam->name,
+            'away_team' => $game->awayTeam->name,
             'home_score' => $game->home_score,
             'away_score' => $game->away_score,
             'date' => $game->date,
-            'league' => $game->season_league->league->name
+            'league' => $game->seasonLeague->league->name
         ];
     }
 
@@ -53,5 +52,13 @@ class GameRepositoryMysql extends BaseRepositoryMysql implements GameRepositoryI
            $games = [];
        }
        return $games;
+    }
+
+    public function start(int $game_id){
+        $game = $this->getById($game_id);
+        $game->status = 'started';
+        $game->started_at = Carbon::now();
+        $game->save();
+        return $game;
     }
 }

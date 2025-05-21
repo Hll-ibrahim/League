@@ -400,331 +400,449 @@
 
                         </div>
                     </div>
-                    <!-- Game Scoreboard / End -->
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <!-- Widget: Lineup Table -->
-                            <aside class="widget card card--has-table widget--sidebar widget-lineup-table">
-                                <div class="widget__title card__header">
-                                    <h4>Alchemists Lineup</h4>
-                                </div>
-                                <div class="widget__content card__content">
-
-                                    <!-- Lineup Table -->
-                                    <div class="table-responsive">
-                                        <table class="table lineup-table">
-                                            <thead>
-                                            <tr>
-                                                <th class="lineup__num">NBR</th>
-                                                <th class="lineup__pos">POS</th>
-                                                <th class="lineup__name">Player Name</th>
-                                                <th class="lineup__info"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-
-                                            <tr>
-                                                <td class="lineup__num">01</td>
-                                                <td class="lineup__pos">GK</td>
-                                                <td class="lineup__name">Nick Rodgers</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">04</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Mark Ironson</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">03</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Brian Kingster</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-red-card"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">22</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">James Girobilli</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">05</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Thomas Black</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">08</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Christofer Grass</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-soccer-ball"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">02</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Spike Arrowhead</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">26</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Griffin Peterson</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">07</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">James Messinal</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">09</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Franklin Stevens</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-soccer-ball"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">18</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">David Hawkins</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num" colspan="2">Team Coach</td>
-                                                <td class="lineup__name">Robert Frankson</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <th colspan="4" class="lineup__subheader">Substitute Players</th>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="lineup__num">32</td>
-                                                <td class="lineup__pos">GK</td>
-                                                <td class="lineup__name">Taylor Redner</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">27</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Christian Netteron</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">11</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Alex Walterston</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">19</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Kirk Hetfield</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">25</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">James Hammet</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
+                    @if(count($statistics))
+                    <div class="card">
+                        <header class="card__header alc-teams-legend">
+                            <h4 class="alc-teams-legend__title">Match Statistics</h4>
+                            <div class="alc-teams-legend__info">
+                                <div class="alc-teams-legend__teams">
+                                    <div class="alc-teams-legend__team">
+                                        <span class="alc-teams-legend__team-color alc-teams-legend__team-color--color-primary"></span>
+                                        <img src="{{ $statistics['home']['team']->logo }}" class="alc-teams-legend__team-logo" alt="{{ $statistics['home']['team']->name }}">
                                     </div>
-                                    <!-- Lineup Table / End -->
-
-                                </div>
-                            </aside>
-                            <!-- Widget: Lineup Table / End -->
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Widget: Lineup Table Alt -->
-                            <aside class="widget card card--alt-color card--has-table widget--sidebar widget-lineup-table">
-                                <div class="widget__title card__header">
-                                    <h4>Clovers Lineup</h4>
-                                </div>
-                                <div class="widget__content card__content">
-
-                                    <!-- Lineup Table -->
-                                    <div class="table-responsive">
-                                        <table class="table lineup-table">
-                                            <thead>
-                                            <tr>
-                                                <th class="lineup__num">NBR</th>
-                                                <th class="lineup__pos">POS</th>
-                                                <th class="lineup__name">Player Name</th>
-                                                <th class="lineup__info"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            <tr>
-                                                <td class="lineup__num">04</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Danny Stark</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">03</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Martin Pierto</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">07</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Brad Rockers</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">05</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Johnny Griffin</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-yellow-card"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">08</td>
-                                                <td class="lineup__pos">MD</td>
-                                                <td class="lineup__name">Rick Valentine</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-out"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">02</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Alphonse Tucker</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">26</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Wally Christison</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-yellow-card"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">22</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Adam Howlett</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">09</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Michael Neter</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">18</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Chris Balleron</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">20</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">David Hawkins</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num" colspan="2">Team Coach</td>
-                                                <td class="lineup__name">Carter Stevens</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <th colspan="4" class="lineup__subheader">Substitute Players</th>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="lineup__num">32</td>
-                                                <td class="lineup__pos">GK</td>
-                                                <td class="lineup__name">Joe D’Amico</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">27</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Thomas Kent</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">11</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Phillip West</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">19</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Markus Jackson</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-in"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">25</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Nicholas Wayne</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
+                                    <div class="alc-teams-legend__team">
+                                        <span class="alc-teams-legend__team-color alc-teams-legend__team-color--color-4"></span>
+                                        <img src="{{ $statistics['away']['team']->logo }}" class="alc-teams-legend__team-logo" alt="{{ $statistics['away']['team']->name }}">
                                     </div>
-                                    <!-- Lineup Table / End -->
-
                                 </div>
-                            </aside>
-                            <!-- Widget: Lineup Table Alt / End -->
+                                <a href="#" class="btn btn-default btn-outline btn-xs">Full Team Stats</a>
+                            </div>
+                        </header>
+                        <div class="card__content">
+                            <div class="game-result">
+                                <section class="game-result__section">
+                                    <div class="game-result__content mb-0">
+                                        <div class="game-result__stats">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 order-md-2">
+                                                    <div class="game-result__table-stats game-result__table-stats--soccer">
+                                                        <table class="table table-wrap-bordered table-thead-color">
+                                                            <thead>
+                                                            <tr><th colspan="3">Main Statistics</th></tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach ($statistics['main_table'] as $row)
+                                                                <tr>
+                                                                    <td>{{ $row['home'] }}</td>
+                                                                    <td>{{ $row['label'] }}</td>
+                                                                    <td>{{ $row['away'] }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                @foreach (['home', 'away'] as $side)
+                                                    <div class="col-6 col-md-3 {{ $side === 'home' ? 'order-md-1 game-result__stats-team-1' : 'order-md-3 game-result__stats-team-2' }}">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="circular circular--size-70">
+                                                                    <div class="circular__bar" data-percent="{{ $statistics[$side]['shot_accuracy'] }}">
+                                                                        <span class="circular__percents">{{ $statistics[$side]['shot_accuracy'] }}<small>%</small></span>
+                                                                    </div>
+                                                                    <span class="circular__label">Shot Accuracy</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="circular circular--size-70">
+                                                                    <div class="circular__bar" data-percent="{{ $statistics[$side]['pass_accuracy'] }}">
+                                                                        <span class="circular__percents">{{ $statistics[$side]['pass_accuracy'] }}<small>%</small></span>
+                                                                    </div>
+                                                                    <span class="circular__label">Pass Accuracy</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="spacer"></div>
+                                                        @foreach ($statistics[$side]['stats'] as $label => $value)
+                                                            <div class="progress-stats">
+                                                                <div class="progress__label">{{ $label }}</div>
+                                                                <div class="progress">
+                                                                    <div class="progress__bar{{ $side === 'away' ? ' progress__bar--success' : '' }}" style="width: {{ min($value,100) }}%;"></div>
+                                                                </div>
+                                                                <div class="progress__number">{{ $value }}</div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- Ball Possession -->
+                                <section class="game-result__section">
+                                    <header class="game-result__subheader card__subheader">
+                                        <h5 class="game-result__subtitle">Ball Possession</h5>
+                                    </header>
+                                    <div class="game-result__content">
+                                        <div class="spacer-sm"></div>
+                                        <div class="progress-double-wrapper">
+                                            <div class="progress-inner-holder">
+                                                <div class="progress__digit progress__digit--left progress__digit--highlight">{{ $statistics['ball_possession']['home'] }}%</div>
+                                                <div class="progress__double">
+                                                    <div class="progress progress--lg">
+                                                        <div class="progress__bar" style="width: {{ $statistics['ball_possession']['home'] }}%;"></div>
+                                                    </div>
+                                                    <div class="progress progress--lg">
+                                                        <div class="progress__bar progress__bar--success" style="width: {{ $statistics['ball_possession']['away'] }}%;"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="progress__digit progress__digit--right progress__digit--highlight">{{ $statistics['ball_possession']['away'] }}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
                         </div>
                     </div>
+                    @endif
+                    <!-- Game Scoreboard / End -->
+
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <!-- Widget: Lineup Table -->--}}
+{{--                            <aside class="widget card card--has-table widget--sidebar widget-lineup-table">--}}
+{{--                                <div class="widget__title card__header">--}}
+{{--                                    <h4>Alchemists Lineup</h4>--}}
+{{--                                </div>--}}
+{{--                                <div class="widget__content card__content">--}}
+
+{{--                                    <!-- Lineup Table -->--}}
+{{--                                    <div class="table-responsive">--}}
+{{--                                        <table class="table lineup-table">--}}
+{{--                                            <thead>--}}
+{{--                                            <tr>--}}
+{{--                                                <th class="lineup__num">NBR</th>--}}
+{{--                                                <th class="lineup__pos">POS</th>--}}
+{{--                                                <th class="lineup__name">Player Name</th>--}}
+{{--                                                <th class="lineup__info"></th>--}}
+{{--                                            </tr>--}}
+{{--                                            </thead>--}}
+{{--                                            <tbody>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">01</td>--}}
+{{--                                                <td class="lineup__pos">GK</td>--}}
+{{--                                                <td class="lineup__name">Nick Rodgers</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">04</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Mark Ironson</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">03</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Brian Kingster</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg icon-red-card"></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">22</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">James Girobilli</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">05</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Thomas Black</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">08</td>--}}
+{{--                                                <td class="lineup__pos">MF</td>--}}
+{{--                                                <td class="lineup__name">Christofer Grass</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg icon-soccer-ball"></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">02</td>--}}
+{{--                                                <td class="lineup__pos">MF</td>--}}
+{{--                                                <td class="lineup__name">Spike Arrowhead</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">26</td>--}}
+{{--                                                <td class="lineup__pos">MF</td>--}}
+{{--                                                <td class="lineup__name">Griffin Peterson</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">07</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">James Messinal</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">09</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">Franklin Stevens</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg icon-soccer-ball"></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">18</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">David Hawkins</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num" colspan="2">Team Coach</td>--}}
+{{--                                                <td class="lineup__name">Robert Frankson</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <th colspan="4" class="lineup__subheader">Substitute Players</th>--}}
+{{--                                            </tr>--}}
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">32</td>--}}
+{{--                                                <td class="lineup__pos">GK</td>--}}
+{{--                                                <td class="lineup__name">Taylor Redner</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">27</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Christian Netteron</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">11</td>--}}
+{{--                                                <td class="lineup__pos">MF</td>--}}
+{{--                                                <td class="lineup__name">Alex Walterston</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">19</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">Kirk Hetfield</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">25</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">James Hammet</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+{{--                                            </tbody>--}}
+{{--                                        </table>--}}
+{{--                                    </div>--}}
+{{--                                    <!-- Lineup Table / End -->--}}
+
+{{--                                </div>--}}
+{{--                            </aside>--}}
+{{--                            <!-- Widget: Lineup Table / End -->--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <!-- Widget: Lineup Table Alt -->--}}
+{{--                            <aside class="widget card card--alt-color card--has-table widget--sidebar widget-lineup-table">--}}
+{{--                                <div class="widget__title card__header">--}}
+{{--                                    <h4>Clovers Lineup</h4>--}}
+{{--                                </div>--}}
+{{--                                <div class="widget__content card__content">--}}
+
+{{--                                    <!-- Lineup Table -->--}}
+{{--                                    <div class="table-responsive">--}}
+{{--                                        <table class="table lineup-table">--}}
+{{--                                            <thead>--}}
+{{--                                            <tr>--}}
+{{--                                                <th class="lineup__num">NBR</th>--}}
+{{--                                                <th class="lineup__pos">POS</th>--}}
+{{--                                                <th class="lineup__name">Player Name</th>--}}
+{{--                                                <th class="lineup__info"></th>--}}
+{{--                                            </tr>--}}
+{{--                                            </thead>--}}
+{{--                                            <tbody>--}}
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">04</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Danny Stark</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">03</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Martin Pierto</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">07</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Brad Rockers</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">05</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Johnny Griffin</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg icon-yellow-card"></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">08</td>--}}
+{{--                                                <td class="lineup__pos">MD</td>--}}
+{{--                                                <td class="lineup__name">Rick Valentine</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg icon-out"></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">02</td>--}}
+{{--                                                <td class="lineup__pos">MF</td>--}}
+{{--                                                <td class="lineup__name">Alphonse Tucker</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">26</td>--}}
+{{--                                                <td class="lineup__pos">MF</td>--}}
+{{--                                                <td class="lineup__name">Wally Christison</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg icon-yellow-card"></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">22</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">Adam Howlett</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">09</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">Michael Neter</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">18</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">Chris Balleron</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">20</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">David Hawkins</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num" colspan="2">Team Coach</td>--}}
+{{--                                                <td class="lineup__name">Carter Stevens</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+
+{{--                                            <tr>--}}
+{{--                                                <th colspan="4" class="lineup__subheader">Substitute Players</th>--}}
+{{--                                            </tr>--}}
+
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">32</td>--}}
+{{--                                                <td class="lineup__pos">GK</td>--}}
+{{--                                                <td class="lineup__name">Joe D’Amico</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">27</td>--}}
+{{--                                                <td class="lineup__pos">DF</td>--}}
+{{--                                                <td class="lineup__name">Thomas Kent</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">11</td>--}}
+{{--                                                <td class="lineup__pos">MF</td>--}}
+{{--                                                <td class="lineup__name">Phillip West</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">19</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">Markus Jackson</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg icon-in"></i></td>--}}
+{{--                                            </tr>--}}
+{{--                                            <tr>--}}
+{{--                                                <td class="lineup__num">25</td>--}}
+{{--                                                <td class="lineup__pos">FD</td>--}}
+{{--                                                <td class="lineup__name">Nicholas Wayne</td>--}}
+{{--                                                <td class="lineup__info"><i class="icon-svg "></i></td>--}}
+{{--                                            </tr>--}}
+
+{{--                                            </tbody>--}}
+{{--                                        </table>--}}
+{{--                                    </div>--}}
+{{--                                    <!-- Lineup Table / End -->--}}
+
+{{--                                </div>--}}
+{{--                            </aside>--}}
+{{--                            <!-- Widget: Lineup Table Alt / End -->--}}
+{{--                        </div>--}}
+{{--                        @if(count($statistics))--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            @foreach(['Shot', 'Goal', 'Pass', 'Corner', 'Foul', 'Yellow Card', 'Red Card'] as $type)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{ $statistics[$type]->get(0)->total ?? 0 }}</td>--}}
+{{--                                    <td>{{ $type }}</td>--}}
+{{--                                    <td>{{ $statistics[$type]->get(1)->total ?? 0 }}</td>--}}
+{{--                                </tr>--}}
+{{--                            @endforeach--}}
+{{--                        </div>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
 
                     <!-- Post Comments -->
                     <div class="post-comments card card--lg">

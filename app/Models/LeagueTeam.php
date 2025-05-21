@@ -24,4 +24,8 @@ class LeagueTeam extends Model
     {
         return $this->belongsTo(SeasonLeague::class, 'season_league_id');
     }
+
+    public function playerStatistics(){
+        return $this->hasMany(PlayerStatistic::class);
+    }
 }

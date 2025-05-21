@@ -174,6 +174,7 @@
                 <th>Away Team</th>
                 <th>Home Score</th>
                 <th>Away Score</th>
+                <th>Referee</th>
                 <th>Date</th>
                 <th>Detail</th>
             </tr>
@@ -186,6 +187,7 @@
                 <th>Away Team</th>
                 <th>Home Score</th>
                 <th>Away Score</th>
+                <th>Referee</th>
                 <th>Date</th>
                 <th>Detail</th>
             </tr>
@@ -253,6 +255,7 @@
                 {data: 'away_team_id'},
                 {data: 'home_score'},
                 {data: 'away_score'},
+                {data: 'referee_id'},
                 {data: 'date'},
                 {data: 'detail',orderable: false,searchable: false},
             ],
@@ -541,7 +544,7 @@
                     'season_id': season_id
                 },
                 success: () => {
-                    Swal.fire('Başarılı!', 'Lig başarıyla başlatıldı.', 'success');
+                    Swal.fire('Success!', 'League started successfully.', 'success');
                     closeModal();
                     dataTable2.ajax.reload();
                     change_season_league()
@@ -550,7 +553,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Hata Oluştu',
-                        html: errorMap(xhr.responseJSON?.errors || 'Bilinmeyen bir hata'),
+                        html: errorMap(xhr.responseJSON?.errors || 'An unknown error'),
                         footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
                     });
                 }

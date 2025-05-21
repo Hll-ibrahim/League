@@ -16,9 +16,9 @@ class LeaguesTeamsService extends BaseService {
     }
 
     public function getPoint($leagueTeam){
-        $win = $leagueTeam->win * $this->getPointConvert($leagueTeam,'winPoint');
-        $draw = $leagueTeam->draw * $this->getPointConvert($leagueTeam,'drawPoint');
-        $lose = $leagueTeam->lose * $this->getPointConvert($leagueTeam,'losePoint');
+        $win = $leagueTeam->win * $this->getPointConvert($leagueTeam,'win_point');
+        $draw = $leagueTeam->draw * $this->getPointConvert($leagueTeam,'draw_point');
+        $lose = $leagueTeam->lose * $this->getPointConvert($leagueTeam,'lose_point');
         return $win + $draw + $lose;
     }
 

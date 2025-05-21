@@ -18,18 +18,43 @@ class GameController extends BaseController
     }
 
     public function get_matches(Request $request){
-        $referee_id = $request->input('referee_id');
-        if ($referee_id) {
-            $referee = $this->refereeService->getById($referee_id);
-            return $referee->games;
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unable to get referee id',
-            ], 401);
-        }    }
+        $user = $request->user();
+        $referee_ids = $user->referees->pluck('id')->toArray();
+        $all_matches = collect();
+        foreach($referee_ids as $referee_id){
+            $matches = $this->refereeService->getMatches($referee_id);
+            if($matches){
+                $all_matches = $all_matches->merge($this->refereeService->getMatches($referee_id));
+            }
+        }
+        return $all_matches;
+    }
 
     public function set_event(Request $request){
         return response()->json($request);
+    }
+
+    public function start_match(Request $request){
+        $game_id = $request->input('game_id');
+        $referee_ids = $request->user()->referees->pluck('id')->toArray();
+        $game = $this->service->getById($game_id);
+        if ($game && in_array($game_id,$referee_ids )) {
+            // game_id doğruysa ve oyunun hakemi isteği atmışsa
+            $home_team = $game->homeTeam; // league team sınıfının bir nesnesi
+            $away_team = $game->awayTeam;
+            $league = $game->league;
+            $home_team_player_count = $home_team->playerStatistics()->count();
+            $away_team_player_count = $away_team->playerStatistics()->count();
+            if($league->player_count == $home_team_player_count && $away_team_player_count == $home_team_player_count){
+                // lig içerisindeki oyuncu sayısı ile takım için girilen oyuncu sayıları eşit ise
+                 return $this->service->start($game_id);
+            }
+            else {
+                return response()->json([
+                    'error'=>'Player count is not correct'
+                ]);
+            }
+
+        }
     }
 }

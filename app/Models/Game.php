@@ -16,17 +16,23 @@ class Game extends Model
     }
 
     public function homeTeam(){
-        return $this->belongsTo(Team::class, 'home_team_id','id');
+        return $this->belongsTo(LeagueTeam::class, 'home_team_id','id');
     }
 
     public function awayTeam(){
-        return $this->belongsTo(Team::class, 'away_team_id','id');
+        return $this->belongsTo(LeagueTeam::class, 'away_team_id','id');
     }
 
     public function seasonLeague()
     {
         return $this->belongsTo(SeasonLeague::class, 'season_league_id');
     }
+
+    public function league()
+    {
+        return $this->seasonLeague?->league();
+    }
+
 
     public function playerStatistics(){
         return $this->hasMany(PlayerStatistic::class);

@@ -11,4 +11,10 @@ class RefereeService extends BaseService
     {
         parent::__construct($repository);
     }
+
+    public function getMatches(int $referee_id)
+    {
+        $referee = $this->repository->getById($referee_id);
+        return $referee->games;
+    }
 }

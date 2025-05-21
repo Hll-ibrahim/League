@@ -10,4 +10,5 @@ interface GameRepositoryInterface extends BaseRepositoryInterface{
     function getGamesWithNames(Game $game);
     function getGamesFromSeasonLeague(int $season_id, int $league_id);
 
+    function start(int $game_id);
 }

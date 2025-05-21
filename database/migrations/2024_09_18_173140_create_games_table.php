@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->foreignId('season_league_id')->constrained('season_league');
-            $table->foreignId('home_team_id')->constrained('teams');
-            $table->foreignId('away_team_id')->constrained('teams');
+            $table->foreignId('home_team_id')->constrained('league_team');
+            $table->foreignId('away_team_id')->constrained('league_team');
             $table->foreignId('referee_id')->constrained('referees');
             $table->integer('home_score')->default(0);
             $table->integer('away_score')->default(0);
             $table->dateTime('date');
             $table->enum('status', ['waiting', 'started','ended'])->default('waiting');
+            $table->dateTime('started_at')->nullable();
             $table->timestamps();
         });
     }
