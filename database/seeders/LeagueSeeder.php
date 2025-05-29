@@ -13,6 +13,7 @@ use App\Models\Referee;
 use App\Models\Season;
 use App\Models\SeasonLeague;
 use App\Models\Sport;
+use App\Models\Stadium;
 use App\Models\Team;
 use App\Models\TeamPlayer;
 use App\Models\User;
@@ -66,17 +67,25 @@ class LeagueSeeder extends Seeder
 
 
         $teams = ['Galatasaray','Real Madrid','Bayern Munich', 'Manchester City','Liverpool'];
-        foreach ($teams as $team) {
-            $team_id = Team::create([
-                'name' => $team,
+        $stadiums = ['Rams Park','Santiago Bernabau','Park Plaza','Etihad Stadium','Anfield']; // 'Stadion' yerine özgün adlar önerildi
+
+        foreach (array_combine($teams, $stadiums) as $teamName => $stadiumName) {
+            $team = Team::create([
+                'name' => $teamName,
                 'sport_id' => $league->sport_id,
             ]);
 
             LeagueTeam::create([
                 'season_league_id' => $league->id,
-                'team_id' => $team_id->id,
+                'team_id' => $team->id,
+            ]);
+
+            Stadium::create([
+                'team_id' => $team->id,
+                'name' => $stadiumName,
             ]);
         }
+
 
         Team::create(['name'=>'Fenerbahçe','sport_id' => Sport::where('name', 'basketball')->first()->id]);
         Team::create(['name'=>'Beşiktaş','sport_id' => Sport::where('name', 'football')->first()->id]);
@@ -141,6 +150,8 @@ class LeagueSeeder extends Seeder
                 'sport_id'=>$sport->id
             ]);
         }
+
+
 
     }
 }

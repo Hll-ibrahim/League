@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('date');
             $table->enum('status', ['waiting', 'started','ended'])->default('waiting');
             $table->dateTime('started_at')->nullable();
+            $table->foreignId('stadium_id')->constrained('stadiums');
             $table->timestamps();
         });
     }

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_types', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('sport_id')->constrained('sports');
-            $table->string('image')->nullable();
-            $table->boolean('is_important')->default(false);
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('game_id')->constrained();
+            $table->string('title')->nullable();
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_types');
+        Schema::dropIfExists('comments');
     }
 };

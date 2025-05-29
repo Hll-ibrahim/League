@@ -41,4 +41,8 @@ class Game extends Model
     public function referee(){
         return $this->belongsTo(Referee::class);
     }
+
+    public function stadium(){
+        return $this->belongsTo(Stadium::class);
+    }
 }

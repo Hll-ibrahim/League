@@ -26,4 +26,8 @@ class Team extends Model
     public function away_games(){
         return $this->hasMany(Game::class, 'away_team_id');
     }
+
+    public function stadiums(){
+        return $this->hasMany(Stadium::class);
+    }
 }

@@ -2,6 +2,8 @@
 
 
 namespace App\Services;
+use App\Models\Announcement;
+use App\Models\Comment;
 use App\Models\EventType;
 use App\Models\Game;
 use App\Models\PlayerStatistic;
@@ -41,20 +43,27 @@ class GameService extends BaseService {
 
     public function calculateTeamStatistics(Game $game): array
     {
-        $eventTypes = EventType::where('sport_id', $game->seasonLeague->league->sport_id)->pluck('id', 'name');
+        // Event türlerini al (id => name)
+        $eventTypes = EventType::where('sport_id', $game->seasonLeague->league->sport_id)
+            ->pluck('name', 'id');
 
-        $playerStats = PlayerStatistic::with(['events', 'teamPlayer.player'])
+        // Oyuncu istatistiklerini çek
+        $playerStats = PlayerStatistic::with(['events', 'teamPlayer.leagueTeam.team'])
             ->where('game_id', $game->id)
             ->get();
 
-        // Takımları ayır
-        $teams = $playerStats->groupBy('team_id');
+        // Takımları league_team_id üzerinden grupluyoruz
+        $teams = $playerStats->groupBy(function ($stat) {
+            return $stat->teamPlayer->leagueTeam->id;
+        });
 
         $response = [];
-        foreach ($teams as $teamId => $teamPlayerStats) {
-            $team = Team::find($teamId);
 
-            // Varsayılanlar
+        foreach ($teams as $leagueTeamId => $teamPlayerStats) {
+            // Team modeline ulaşmak için
+            $team = $teamPlayerStats->first()->teamPlayer->leagueTeam->team;
+
+            // Varsayılan istatistik şablonu
             $stats = [
                 'shots' => ['total' => 0, 'on_goal' => 0],
                 'corner_kicks' => 0,
@@ -65,9 +74,10 @@ class GameService extends BaseService {
                 'offsides' => 0,
                 'pass_accuracy' => 0,
                 'shot_accuracy' => 0,
-                'ball_possession' => 0, // yüzdelik olarak hesaplanacak
+                'ball_possession' => 0,
             ];
 
+            // Sayaçlar
             $passCount = 0;
             $accuratePassCount = 0;
             $shotCount = 0;
@@ -75,7 +85,7 @@ class GameService extends BaseService {
 
             foreach ($teamPlayerStats as $stat) {
                 foreach ($stat->events as $event) {
-                    $eventName = $eventTypes->search($event->event_type_id);
+                    $eventName = $eventTypes[$event->event_type_id] ?? null;
 
                     switch ($eventName) {
                         case 'pass':
@@ -114,12 +124,11 @@ class GameService extends BaseService {
 
             $stats['shots']['total'] = $shotCount;
             $stats['shots']['on_goal'] = $onGoalShotCount;
-
-            // Yüzdeleri hesapla
             $stats['pass_accuracy'] = $passCount > 0 ? round(($accuratePassCount / $passCount) * 100, 1) : 0;
             $stats['shot_accuracy'] = $shotCount > 0 ? round(($onGoalShotCount / $shotCount) * 100, 1) : 0;
 
             $response[] = [
+                'league_team_id' => $leagueTeamId,
                 'team' => [
                     'id' => $team->id,
                     'name' => $team->name,
@@ -129,8 +138,8 @@ class GameService extends BaseService {
             ];
         }
 
-        // Topla oynama yüzdesi hesapla
-        $team1Pos = rand(50, 70); // örnek veri (gerçek veri yoksa)
+        // Topa sahip olma yüzdesi için (örnek)
+        $team1Pos = rand(50, 70);
         $team2Pos = 100 - $team1Pos;
 
         if (isset($response[0]['statistics'])) {
@@ -140,9 +149,65 @@ class GameService extends BaseService {
             $response[1]['statistics']['ball_possession'] = $team2Pos;
         }
 
+
+        $team1 = $response[0] ?? [];
+        $team2 = $response[1] ?? [];
+
+        $team1Stats = $team1['statistics'] ?? [];
+        $team2Stats = $team2['statistics'] ?? [];
+
         return [
-            'team_1' => $response[0] ?? [],
-            'team_2' => $response[1] ?? [],
+            'home' => [
+                'team' => (object)($team1['team'] ?? ['logo' => '', 'name' => 'Unknown']),
+                'shot_accuracy' => $team1Stats['shot_accuracy'] ?? 0,
+                'pass_accuracy' => $team1Stats['pass_accuracy'] ?? 0,
+                'stats' => [
+                    'Fou' => $team1Stats['fouls'] ?? 0,
+                    'OFF' => $team1Stats['offsides'] ?? 0,
+                    'Sho' => $team1Stats['shots']['total'] ?? 0,
+                ],
+            ],
+            'away' => [
+                'team' => (object)($team2['team'] ?? ['logo' => '', 'name' => 'Unknown']),
+                'shot_accuracy' => $team2Stats['shot_accuracy'] ?? 0,
+                'pass_accuracy' => $team2Stats['pass_accuracy'] ?? 0,
+                'stats' => [
+                    'Fou' => $team2Stats['fouls'] ?? 0,
+                    'OFF' => $team2Stats['offsides'] ?? 0,
+                    'Sho' => $team2Stats['shots']['total'] ?? 0,
+                ],
+            ],
+            'ball_possession' => [
+                'home' => $team1Stats['ball_possession'] ?? 50,
+                'away' => $team2Stats['ball_possession'] ?? 50,
+            ],
+            'main_table' => [
+                [
+                    'label' => 'Shots (on goal)',
+                    'home' => ($team1Stats['shots']['total'] ?? 0) . ' (' . ($team1Stats['shots']['on_goal'] ?? 0) . ')',
+                    'away' => ($team2Stats['shots']['total'] ?? 0) . ' (' . ($team2Stats['shots']['on_goal'] ?? 0) . ')',
+                ],
+                [
+                    'label' => 'Corner Kicks',
+                    'home' => $team1Stats['corner_kicks'] ?? 0,
+                    'away' => $team2Stats['corner_kicks'] ?? 0,
+                ],
+                [
+                    'label' => 'Saves',
+                    'home' => $team1Stats['saves'] ?? 0,
+                    'away' => $team2Stats['saves'] ?? 0,
+                ],
+                [
+                    'label' => 'Yellow Cards',
+                    'home' => $team1Stats['yellow_cards'] ?? 0,
+                    'away' => $team2Stats['yellow_cards'] ?? 0,
+                ],
+                [
+                    'label' => 'Red Cards',
+                    'home' => $team1Stats['red_cards'] ?? 0,
+                    'away' => $team2Stats['red_cards'] ?? 0,
+                ],
+            ],
         ];
     }
 
@@ -174,5 +239,102 @@ class GameService extends BaseService {
         return $this->repository->start($game_id);
     }
 
+    public function getImportantEvents(Game $game)
+    {
+        return $game->events()
+            ->whereRelation('eventType', 'is_important', true)
+            ->with(['playerStatistic.TeamPlayer.player', 'eventType'])
+            ->get();
+    }
+
+    public function getTeamEvents($events, $team)
+    {
+        return $events->filter(function ($event) use ($team) {
+            return $event->playerStatistic->teamPlayer->leagueTeam->id === $team->id;
+        });
+    }
+
+    public function getMatchCount(Game $game, $team_id)
+    {
+        return Game::where(function ($q) use ($team_id) {
+            $q->where('home_team_id', $team_id)
+                ->orWhere('away_team_id', $team_id);
+        })
+            ->where('season_league_id', $game->season_league_id)
+            ->where('date', '<=', $game->date)
+            ->count();
+    }
+
+    public function getNextMatches(Game $game)
+    {
+        $next_matches = collect();
+
+        foreach ([$game->home_team_id, $game->away_team_id] as $team_id) {
+            $next_match = Game::where('season_league_id', $game->season_league_id)
+                ->where('date', '>', $game->date)
+                ->where(function ($query) use ($team_id) {
+                    $query->where('home_team_id', $team_id)
+                        ->orWhere('away_team_id', $team_id);
+                })
+                ->orderBy('date')
+                ->with(['homeTeam.team', 'awayTeam.team'])
+                ->first();
+
+            if ($next_match) {
+                $next_matches->push($next_match);
+            }
+        }
+
+        return $next_matches;
+    }
+
+    public function getTopPlayers()
+    {
+        return PlayerStatistic::with(['teamPlayer.leagueTeam.team', 'teamPlayer.player', 'events.eventType'])
+            ->get()
+            ->map(function ($statistic) {
+                $events = $statistic->events;
+
+                $goals = $events->where('eventType.name', 'goal')->count();
+                $assists = $events->where('eventType.name', 'assist')->count();
+                $shots = $events->where('eventType.name', 'shot')->count();
+                $shots_on_goal = $events->where('eventType.name', 'shot_on_goal')->count();
+
+                $passes = $events->where('eventType.name', 'pass')->count();
+                $accurate_passes = $events->where('eventType.name', 'accurate_pass')->count();
+
+                $shot_accuracy = $shots > 0 ? round(($shots_on_goal / $shots) * 100) : 0;
+                $pass_accuracy = $passes > 0 ? round(($accurate_passes / $passes) * 100) : 0;
+
+                return [
+                    'player' => $statistic->teamPlayer->player,
+                    'team' => $statistic->teamPlayer->team,
+                    'goals' => $goals,
+                    'assists' => $assists,
+                    'shots' => $shots,
+                    'played' => 1,
+                    'shot_accuracy' => $shot_accuracy,
+                    'pass_accuracy' => $pass_accuracy,
+                ];
+            })
+            ->sortByDesc('goals')
+            ->take(5);
+    }
+
+    public function getLatestAnnouncement(array $team_ids)
+    {
+        return Announcement::whereIn('team_id', $team_ids)
+            ->latest()
+            ->with('user')
+            ->first();
+    }
+
+    public function getComments(Game $game)
+    {
+        return Comment::where('game_id', $game->id)
+            ->latest()
+            ->with('user')
+            ->get();
+    }
 
 }

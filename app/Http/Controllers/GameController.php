@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
+use App\Models\Comment;
+use App\Models\Game;
+use App\Models\PlayerStatistic;
 use App\Services\GameService;
+use App\Services\LeaguesTeamsService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class GameController extends BaseController
 {
-    public function __construct(GameService $gameService){
+    protected $leaguesTeamsService;
+    public function __construct(GameService $gameService, LeaguesTeamsService $leaguesTeamsService){
         parent::__construct($gameService);
+        $this->leaguesTeamsService = $leaguesTeamsService;
     }
 
     public function getMatches(Request $request){
@@ -74,83 +81,57 @@ class GameController extends BaseController
 
     public function detail($id){
         $game = $this->service->getById($id);
-        if(!$game){
-            return response()->json(['success' => false,'error'=>'Match not found'],404);
+        if (!$game) {
+            return response()->json(['success' => false, 'error' => 'Match not found'], 404);
         }
-        $events = $game->events()->with(['playerStatistic.TeamPlayer.player'])->get();
+
+        $events = $this->service->getImportantEvents($game);
         $home_team = $game->homeTeam;
         $away_team = $game->awayTeam;
+
+        $home_team_events = $this->service->getTeamEvents($events, $home_team);
+        $away_team_events = $this->service->getTeamEvents($events, $away_team);
+
+        $stadium = $game->stadium;
+        $referee = $game->referee->user;
         $season_league = $game->seasonLeague;
         $league = $season_league->league;
         $season = $season_league->season;
 
+        $statistics = $this->service->calculateTeamStatistics($game);
+        $home_match_count = $this->service->getMatchCount($game, $home_team->id);
+        $away_match_count = $this->service->getMatchCount($game, $away_team->id);
+        $next_matches = $this->service->getNextMatches($game);
 
-        $matchStatsRaw = $this->service->calculateTeamStatistics($game);
+        $league_teams = $this->leaguesTeamsService->getLeagueTeamsBySeasonLeague($league->id, $season->id);
 
-        // Blade’e uygun dizi yapısı
-        $team1 = $matchStatsRaw['team_1'] ?? [];
-        $team2 = $matchStatsRaw['team_2'] ?? [];
+        $standings = $league_teams->map(function ($team) {
+            $games = $team->win + $team->lose + $team->draw;
+            $points = $this->leaguesTeamsService->getPoint($team);
+            return [
+                'team' => $team->team,
+                'win' => $team->win,
+                'lose' => $team->lose,
+                'draw' => $team->draw,
+                'points' => $points,
+                'games' => $games,
+                'school' => $team->team->school ?? '-',
+                'logo' => $team->team->logo ?? 'default.png',
+            ];
+        })->sortByDesc('points')->values();
 
-        $team1Stats = $team1['statistics'] ?? [];
-        $team2Stats = $team2['statistics'] ?? [];
+        $top_players = $this->service->getTopPlayers();
+        $announcement = $this->service->getLatestAnnouncement([$home_team->id, $away_team->id]);
+        $comments = $this->service->getComments($game);
 
-        $statistics = [
-            'home' => [
-                'team' => (object)($team1['team'] ?? ['logo' => '', 'name' => 'Unknown']),
-                'shot_accuracy' => $team1Stats['shot_accuracy'] ?? 0,
-                'pass_accuracy' => $team1Stats['pass_accuracy'] ?? 0,
-                'stats' => [
-                    'Fou' => $team1Stats['fouls'] ?? 0,
-                    'OFF' => $team1Stats['offsides'] ?? 0,
-                    'Sho' => $team1Stats['shots']['total'] ?? 0,
-                ],
-            ],
-            'away' => [
-                'team' => (object)($team2['team'] ?? ['logo' => '', 'name' => 'Unknown']),
-                'shot_accuracy' => $team2Stats['shot_accuracy'] ?? 0,
-                'pass_accuracy' => $team2Stats['pass_accuracy'] ?? 0,
-                'stats' => [
-                    'Fou' => $team2Stats['fouls'] ?? 0,
-                    'OFF' => $team2Stats['offsides'] ?? 0,
-                    'Sho' => $team2Stats['shots']['total'] ?? 0,
-                ],
-            ],
-            'ball_possession' => [
-                'home' => $team1Stats['ball_possession'] ?? 50,
-                'away' => $team2Stats['ball_possession'] ?? 50,
-            ],
-            'main_table' => [
-                [
-                    'label' => 'Shots (on goal)',
-                    'home' => ($team1Stats['shots']['total'] ?? 0) . ' (' . ($team1Stats['shots']['on_goal'] ?? 0) . ')',
-                    'away' => ($team2Stats['shots']['total'] ?? 0) . ' (' . ($team2Stats['shots']['on_goal'] ?? 0) . ')',
-                ],
-                [
-                    'label' => 'Corner Kicks',
-                    'home' => $team1Stats['corner_kicks'] ?? 0,
-                    'away' => $team2Stats['corner_kicks'] ?? 0,
-                ],
-                [
-                    'label' => 'Saves',
-                    'home' => $team1Stats['saves'] ?? 0,
-                    'away' => $team2Stats['saves'] ?? 0,
-                ],
-                [
-                    'label' => 'Yellow Cards',
-                    'home' => $team1Stats['yellow_cards'] ?? 0,
-                    'away' => $team2Stats['yellow_cards'] ?? 0,
-                ],
-                [
-                    'label' => 'Red Cards',
-                    'home' => $team1Stats['red_cards'] ?? 0,
-                    'away' => $team2Stats['red_cards'] ?? 0,
-                ],
-            ],
-        ];
-
-
-
-
-        return view('game.detail', compact('game', 'events', 'home_team', 'away_team', 'league', 'season', 'statistics'));
+        return view('game.detail', compact(
+            'game', 'events', 'home_team', 'away_team',
+            'league', 'season', 'statistics',
+            'home_team_events', 'away_team_events',
+            'stadium', 'referee', 'home_match_count',
+            'away_match_count', 'next_matches',
+            'standings', 'season_league',
+            'top_players', 'announcement', 'comments'
+        ));
     }
 }
