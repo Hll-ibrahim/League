@@ -8,6 +8,7 @@ use App\Models\LeagueTeam;
 use App\Models\LeagueType;
 use App\Models\Nationality;
 use App\Models\Player;
+use App\Models\Position;
 use App\Models\Referee;
 use App\Models\Season;
 use App\Models\SeasonLeague;
@@ -83,7 +84,7 @@ class LeagueSeeder extends Seeder
         $players_names = ['Halil İbrahim','Melih','Ekin','Sabri','Sneijder','Kerem'];
         $team = Team::where('name','Galatasaray')->first();
         $season_league = SeasonLeague::where('league_id', $league->id)->where('season_id',$season->id)->first();
-       $league_team = LeagueTeam::where('team_id',$team->id)->where('season_league_id',$season_league->id)->first();
+        $league_team = LeagueTeam::where('team_id',$team->id)->where('season_league_id',$season_league->id)->first();
         $nationality = Nationality::create(['name'=>'Türk']);
         foreach ($players_names as $name) {
             $player = Player::create([
@@ -96,6 +97,24 @@ class LeagueSeeder extends Seeder
 
             TeamPlayer::create([
                 'league_team_id' => $league_team->id,
+                'player_id' => $player->id,
+            ]);
+        }
+
+        $other_team = Team::where('name','Real Madrid')->first();
+        $other_league_team = LeagueTeam::where('team_id',$other_team->id)->where('season_league_id',$season_league->id)->first();
+        $other_player_names = ['Diyar','Semih','Selim Han','Mertens','Hakan Hoca'];
+        foreach ($other_player_names as $name) {
+            $player = Player::create([
+                'first_name'=>$name,
+                'last_name' => 'Ronaldo',
+                'birth_date' => Carbon::now(),
+                'gender' => 'male',
+                'nationality_id' => $nationality->id,
+            ]);
+
+            TeamPlayer::create([
+                'league_team_id' => $other_league_team->id,
                 'player_id' => $player->id,
             ]);
         }
@@ -113,6 +132,14 @@ class LeagueSeeder extends Seeder
 
         foreach($sports as $sport ) {
             Referee::create(['sport_id'=>$sport->id,'user_id'=>$user->id]);
+        }
+
+        $positions = ['forward','midfielder','defender','goalkeeper'];
+        foreach ($positions as $position){
+            Position::create([
+                'name'=>$position,
+                'sport_id'=>$sport->id
+            ]);
         }
 
     }

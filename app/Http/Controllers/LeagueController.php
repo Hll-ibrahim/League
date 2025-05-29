@@ -102,7 +102,6 @@ class LeagueController extends Controller
     }
 
     public function get(Request $request){// ??
-        dd($request->all());
         $league = $this->leagueService->get($request->sport_id);
         return response()->json($league);
     }

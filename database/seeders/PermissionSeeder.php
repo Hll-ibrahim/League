@@ -19,7 +19,7 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
 
-        $roles = ['superadmin', 'admin', 'user'];
+        $roles = ['superadmin', 'admin', 'user',];
         foreach ($roles as $role) {
             Role::create(['name' => $role]);
         }

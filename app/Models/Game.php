@@ -11,10 +11,6 @@ class Game extends Model
 
     protected $fillable = ['season_league_id', 'home_team_id', 'date', 'status','referee_id','away_team_id'];
 
-    public function events(){
-        return $this->hasMany(Event::class);
-    }
-
     public function homeTeam(){
         return $this->belongsTo(LeagueTeam::class, 'home_team_id','id');
     }
@@ -36,6 +32,10 @@ class Game extends Model
 
     public function playerStatistics(){
         return $this->hasMany(PlayerStatistic::class);
+    }
+
+    public function events(){
+        return $this->hasManyThrough(Event::class, PlayerStatistic::class);
     }
 
     public function referee(){
