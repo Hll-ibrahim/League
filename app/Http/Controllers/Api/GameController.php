@@ -27,7 +27,10 @@ class GameController extends BaseController
                 $all_matches = $all_matches->merge($this->refereeService->getMatches($referee_id));
             }
         }
-        return $all_matches;
+        return response()->json([
+            'success' => true,
+            'matches' => $all_matches
+        ]);
     }
 
     public function set_event(Request $request){

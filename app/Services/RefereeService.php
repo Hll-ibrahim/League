@@ -15,6 +15,6 @@ class RefereeService extends BaseService
     public function getMatches(int $referee_id)
     {
         $referee = $this->repository->getById($referee_id);
-        return $referee->games;
+        return $referee->games()->with(['homeTeam.team','awayTeam.team','seasonLeague.league','seasonLeague.season'])->get();
     }
 }
