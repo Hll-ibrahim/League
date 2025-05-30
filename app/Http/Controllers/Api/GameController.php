@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\BaseController;
 use App\Models\Event;
 use App\Models\EventType;
+use App\Models\PlayerStatistic;
 use App\Services\GameService;
 use App\Services\RefereeService;
 use Illuminate\Http\Request;
@@ -60,6 +61,20 @@ class GameController extends BaseController
             'event_type_id' => $request->event_type_id,
             'minute' => $request->minute,
         ]);
+
+        if($request->event_type_id == 1){ // score
+            $player_statistic = PlayerStatistic::find($request->player_statistic_id);
+            $game = $player_statistic->game;
+            $team_player = $player_statistic->teamPlayer;
+            $league_team = $team_player->leagueTeam;
+            if($game->home_team_id == $league_team->id){
+                $game->home_score++;
+            }
+            else if($game->away_team_id == $league_team->id){
+                $game->away_score++;
+            }
+            $game->save();
+        }
 
         return response()->json(['success' => true, 'event' => $event]);
     }

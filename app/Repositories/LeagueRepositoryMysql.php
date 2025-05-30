@@ -47,7 +47,7 @@ class LeagueRepositoryMysql extends BaseRepositoryMysql implements LeagueReposit
         return Team::where('sport_id', $sport_id)
             ->whereNotIn('id', function ($query) use ($league_id) {
                 $query->select('team_id')
-                    ->from('leagues_teams')
+                    ->from('league_team')
                     ->where('league_id', $league_id);
             })
             ->get();

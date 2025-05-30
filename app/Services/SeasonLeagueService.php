@@ -67,6 +67,9 @@ class SeasonLeagueService extends BaseService
                     $awayTeam = $home;
                 }
 
+                if ($homeTeam->id === $awayTeam->id) {
+                    continue; // Aynı takım eşleşmesini engelle
+                }
                 $matchDate = $weekStartDate->copy()->addDays(rand(0, 6));
 
                 // 2. stadyumu al (yoksa fallback)
