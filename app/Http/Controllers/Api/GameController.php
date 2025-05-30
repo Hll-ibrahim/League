@@ -20,18 +20,30 @@ class GameController extends BaseController
     public function get_matches(Request $request){
         $user = $request->user();
         $referee_ids = $user->referees->pluck('id')->toArray();
+
         $all_matches = collect();
-        foreach($referee_ids as $referee_id){
+
+        foreach ($referee_ids as $referee_id) {
             $matches = $this->refereeService->getMatches($referee_id);
-            if($matches){
-                $all_matches = $all_matches->merge($this->refereeService->getMatches($referee_id));
+            if ($matches) {
+                $all_matches = $all_matches->merge($matches);
             }
         }
-        return response()->json([
-            'success' => true,
-            'matches' => $all_matches
-        ]);
+
+        // Pagination (manuel sayfalama için)
+        $perPage = 5;
+        $page = $request->get('page', 1);
+        $paginated = new \Illuminate\Pagination\LengthAwarePaginator(
+            $all_matches->forPage($page, $perPage)->values(),
+            $all_matches->count(),
+            $perPage,
+            $page,
+            ['path' => url()->current()]
+        );
+
+        return response()->json($paginated);
     }
+
 
     public function set_event(Request $request){
         return response()->json($request);
