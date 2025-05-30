@@ -17,6 +17,7 @@ Route::group([], function () {
 
 Route::controller(GameController::class)->middleware('auth:sanctum')->group( function () {
     Route::get('get-matches','get_matches');
+    Route::get('get-match','get_match');
     Route::post('setScore','setScore')->name('setScore');
     Route::post('set-event','set_event');
     Route::post('start-match','start_match');

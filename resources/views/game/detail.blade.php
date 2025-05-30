@@ -511,7 +511,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <img src="{{ asset($player_stat['team']->logo ?? 'assets/images/default-logo.png') }}" alt="{{ $player_stat['team']->name }}">
+                                            <img src="{{ asset($player_stat['team']->logo ?? 'assets/images/default-logo.png') }}" alt="{{ $player_stat['team']->name ?? 'Unknown Team' }}">
                                         </td>
                                         <td>
                                             <div class="alc-widget-player__table-stat">

@@ -6,9 +6,11 @@ use App\Models\Announcement;
 use App\Models\Comment;
 use App\Models\EventType;
 use App\Models\Game;
+use App\Models\Player;
 use App\Models\PlayerStatistic;
 use App\Models\Team;
 use App\Repositories\Contracts\GameRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class GameService extends BaseService {
 
@@ -336,5 +338,15 @@ class GameService extends BaseService {
             ->with('user')
             ->get();
     }
+
+    public function getPlayersOfGame(Game $game)
+    {
+        return Player::select('players.id', DB::raw("CONCAT(players.first_name, ' ', players.last_name) as name"))
+            ->join('team_player', 'players.id', '=', 'team_player.player_id')
+            ->join('player_statistics', 'team_player.id', '=', 'player_statistics.team_player_id')
+            ->where('player_statistics.game_id', $game->id)
+            ->get();
+    }
+
 
 }
