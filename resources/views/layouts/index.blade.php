@@ -424,37 +424,47 @@
 
                                 <!-- Widget: Popular Posts / End -->
                                 <div class="widget widget--footer widget-popular-posts">
-                                    <h4 class="widget__title">Popular News</h4>
+                                    <h4 class="widget__title">Last Announcements</h4>
                                     <div class="widget__content">
                                         <ul class="posts posts--simple-list posts--simple-list-numbered">
 
-                                            <li class="posts__item posts__item--category-1">
-                                                <div class="posts__inner">
-                                                    <div class="posts__cat">
-                                                        <span class="label posts__cat-label">The Team</span>
+                                            @foreach($lastAnnouncements as $announcement)
+                                                @php
+                                                    $categoryClass = '';
+                                                    if (!empty($announcement->team?->name)) {
+                                                        $categoryClass = 'posts__item--category-1';
+                                                    } elseif (!empty($announcement->league?->name)) {
+                                                        $categoryClass = 'posts__item--category-2';
+                                                    } elseif (!empty($announcement->player?->name)) {
+                                                        $categoryClass = 'posts__item--category-3';
+                                                    }
+                                                @endphp
+
+                                                <li class="posts__item {{ $categoryClass }}">
+                                                    <div class="posts__inner">
+                                                        <div class="posts__cat">
+                                                            @if(!empty($announcement->league?->name))
+                                                                <span class="label posts__cat-label">{{ $announcement->league->name }}</span>
+                                                            @endif
+
+                                                            @if(!empty($announcement->team?->name))
+                                                                <span class="label posts__cat-label">{{ $announcement->team->name }}</span>
+                                                            @endif
+
+                                                            @if(!empty($announcement->player?->name))
+                                                                <span class="label posts__cat-label">{{ $announcement->player->name }}</span>
+                                                            @endif
+                                                        </div>
+                                                        <h6 class="posts__title posts__title--color-hover">
+                                                            <a href="#">{{ $announcement->title }}</a>
+                                                        </h6>
+                                                        <time datetime="{{ $announcement->created_at->toDateString() }}" class="posts__date">
+                                                            {{ $announcement->created_at->format('F jS, Y') }}
+                                                        </time>
                                                     </div>
-                                                    <h6 class="posts__title posts__title--color-hover"><a href="#">Alchemists Stadium will have a max capacity for 500.000 fans</a></h6>
-                                                    <time datetime="2018-09-22" class="posts__date">September 22nd, 2018</time>
-                                                </div>
-                                            </li>
-                                            <li class="posts__item posts__item--category-2">
-                                                <div class="posts__inner">
-                                                    <div class="posts__cat">
-                                                        <span class="label posts__cat-label">Injuries</span>
-                                                    </div>
-                                                    <h6 class="posts__title posts__title--color-hover"><a href="#">Alchemists coach on Jake Summer&#x27;s injury &quot;It looks really bad&quot;</a></h6>
-                                                    <time datetime="2018-09-22" class="posts__date">August 5th, 2018</time>
-                                                </div>
-                                            </li>
-                                            <li class="posts__item posts__item--category-3">
-                                                <div class="posts__inner">
-                                                    <div class="posts__cat">
-                                                        <span class="label posts__cat-label">The League</span>
-                                                    </div>
-                                                    <h6 class="posts__title posts__title--color-hover"><a href="#">The Clovers defense must reinvent itself without Adam Howlett</a></h6>
-                                                    <time datetime="2018-09-22" class="posts__date">September 16th, 2018</time>
-                                                </div>
-                                            </li>
+                                                </li>
+                                            @endforeach
+
 
                                         </ul>
                                     </div>

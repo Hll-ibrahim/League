@@ -348,5 +348,9 @@ class GameService extends BaseService {
             ->get();
     }
 
+    public function lastGames($limit = 5){
+        return $this->repository->lastGames($limit);
+    }
+
 
 }

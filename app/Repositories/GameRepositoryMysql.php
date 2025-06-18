@@ -61,4 +61,12 @@ class GameRepositoryMysql extends BaseRepositoryMysql implements GameRepositoryI
         $game->save();
         return $game;
     }
+
+    function lastGames(int $limit)
+    {
+        return $this->model->with(['homeTeam.leagueTeam.team', 'awayTeam.leagueTeam.team'])
+            ->where('status', 'started')
+            ->orderBy('date', 'desc')
+            ->take(5);
+    }
 }

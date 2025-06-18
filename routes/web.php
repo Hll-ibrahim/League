@@ -88,6 +88,9 @@ Route::prefix('/')->group(function () {
 
     Route::prefix('announcement')->controller(AnnouncementController::class)->group(function () {
         Route::get('/', 'index')->name('announcement.index');
+        Route::get('/announcements/create', 'create')->name('announcement.create')->middleware('auth');
+        Route::post('/announcements/store', 'store')->name('announcement.store');
+
     });
 
     Route::middleware([

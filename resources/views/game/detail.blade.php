@@ -326,6 +326,57 @@
                     </div>
                     <!-- Post Comments / End -->
 
+                        <!-- Event Post -->
+                        @if($announcement)
+                            <div class="posts posts--cards post-list">
+                                <div class="posts__item posts__item--card posts__item--category-1 card">
+                                    <figure class="posts__thumb">
+                                        <div class="posts__cat">
+                                            <span class="label posts__cat-label">Team News</span>
+                                        </div>
+                                        <a href="{{ route('announcement.index') }}">
+                                            <img src="{{ asset('assets/images/soccer/samples/_soccer_post-img1.jpg') }}" alt="Announcement Image">
+                                        </a>
+                                    </figure>
+
+                                    <div class="posts__inner card__content">
+                                        <a href="{{ route('announcement.index') }}" class="posts__cta"></a>
+                                        <time datetime="{{ $announcement->created_at->toDateString() }}" class="posts__date">
+                                            {{ $announcement->created_at->translatedFormat('F jS, Y') }}
+                                        </time>
+                                        <h6 class="posts__title">
+                                            <a href="{{ route('announcement.index', $announcement->id) }}">
+                                                {{ $announcement->title }}
+                                            </a>
+                                        </h6>
+                                        <div class="posts__excerpt">
+                                            {{ Str::limit(strip_tags($announcement->description), 150) }}
+                                        </div>
+                                    </div>
+
+                                    <footer class="posts__footer card__footer">
+                                        <div class="post-author">
+                                            <figure class="post-author__avatar">
+                                                <img src="{{ asset($announcement->user->avatar ?? 'assets/images/default-avatar.jpg') }}" alt="Author Avatar">
+                                            </figure>
+                                            <div class="post-author__info">
+                                                <h4 class="post-author__name">{{ $announcement->user->name }}</h4>
+                                            </div>
+                                        </div>
+                                        <ul class="post__meta meta">
+                                            <li class="meta__item meta__item--views">-</li> {{-- Henüz view sayısı tutulmuyorsa --}}
+                                            <li class="meta__item meta__item--likes">
+                                                <a href="#"><i class="meta-like icon-heart"></i> -</a>
+                                            </li>
+                                            <li class="meta__item meta__item--comments">
+                                                <a href="#">-</a>
+                                            </li>
+                                        </ul>
+                                    </footer>
+                                </div>
+                            </div>
+                        @endif
+                        <!-- Event Post / End -->
 
                 </div>
                 <!-- Content / End -->
@@ -610,58 +661,6 @@
                         </div>
                     </div>
                     <!-- Widget: Event Scheduled / End -->
-
-                    <!-- Event Post -->
-                    @if($announcement)
-                        <div class="posts posts--cards post-list">
-                                <div class="posts__item posts__item--card posts__item--category-1 card">
-                                    <figure class="posts__thumb">
-                                        <div class="posts__cat">
-                                            <span class="label posts__cat-label">Team News</span>
-                                        </div>
-                                        <a href="{{ route('announcement.index') }}">
-                                            <img src="{{ asset('assets/images/soccer/samples/_soccer_post-img1.jpg') }}" alt="Announcement Image">
-                                        </a>
-                                    </figure>
-
-                                    <div class="posts__inner card__content">
-                                        <a href="{{ route('announcement.index') }}" class="posts__cta"></a>
-                                        <time datetime="{{ $announcement->created_at->toDateString() }}" class="posts__date">
-                                            {{ $announcement->created_at->translatedFormat('F jS, Y') }}
-                                        </time>
-                                        <h6 class="posts__title">
-                                            <a href="{{ route('announcement.index', $announcement->id) }}">
-                                                {{ $announcement->title }}
-                                            </a>
-                                        </h6>
-                                        <div class="posts__excerpt">
-                                            {{ Str::limit(strip_tags($announcement->description), 150) }}
-                                        </div>
-                                    </div>
-
-                                    <footer class="posts__footer card__footer">
-                                        <div class="post-author">
-                                            <figure class="post-author__avatar">
-                                                <img src="{{ asset($announcement->user->avatar ?? 'assets/images/default-avatar.jpg') }}" alt="Author Avatar">
-                                            </figure>
-                                            <div class="post-author__info">
-                                                <h4 class="post-author__name">{{ $announcement->user->name }}</h4>
-                                            </div>
-                                        </div>
-                                        <ul class="post__meta meta">
-                                            <li class="meta__item meta__item--views">-</li> {{-- Henüz view sayısı tutulmuyorsa --}}
-                                            <li class="meta__item meta__item--likes">
-                                                <a href="#"><i class="meta-like icon-heart"></i> -</a>
-                                            </li>
-                                            <li class="meta__item meta__item--comments">
-                                                <a href="#">-</a>
-                                            </li>
-                                        </ul>
-                                    </footer>
-                                </div>
-                        </div>
-                    @endif
-                    <!-- Event Post / End -->
 
                 </div>
                 <!-- Sidebar / End -->

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Announcement;
+use App\Models\Game;
 use App\Models\Sport;
+use App\Repositories\AnnouncementRepositoryMysql;
 use App\Repositories\Contracts\GameRepositoryInterface;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
@@ -59,10 +62,17 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $sportRepository = new SportRepositoryMysql(new Sport());
+            $gameRepository = new GameRepositoryMysql(new Game());
+            $announcementRepository = new AnnouncementRepositoryMysql(new Announcement());
+
             $sports = $sportRepository->getWithRelation('leagues');
+            $lastGames = $gameRepository->lastGames(5); // son 5 oyun
+            $lastAnnouncements = $announcementRepository->lastAnnouncements(5); // son 5
 
             $view->with([
                 'sports' => $sports,
+                'lastGames' => $lastGames,
+                'lastAnnouncements' => $lastAnnouncements,
             ]);
         });
 

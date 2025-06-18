@@ -11,4 +11,8 @@ class AnnouncementRepositoryMysql extends BaseRepositoryMysql implements Announc
         parent::__construct($model);
     }
 
+    public function lastAnnouncements(int $limit){
+        return $this->model->orderBy('created_at','desc')->limit($limit)->get();
+    }
+
 }

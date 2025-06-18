@@ -1,6 +1,6 @@
 @extends('layouts.index')
 @section('content')
-    <div class="site-content">
+    <div class="site-content mt-0">
         <div class="container">
 
             <div class="row">
@@ -14,12 +14,33 @@
                     <!-- Search Results -->
                     <ul class="posts posts--simple-list posts--simple-list--search">
 
+                        <a href="{{route('announcement.create')}}"><button class="btn btn-success mb-4">Create</button></a>
                         @foreach($announcements as $announcement)
-                            <li class="posts__item card posts__item--category-2">
+                            @php
+                                $categoryClass = '';
+                                if (!empty($announcement->team?->name)) {
+                                    $categoryClass = 'posts__item--category-1';
+                                } elseif (!empty($announcement->league?->name)) {
+                                    $categoryClass = 'posts__item--category-2';
+                                } elseif (!empty($announcement->player?->name)) {
+                                    $categoryClass = 'posts__item--category-3';
+                                }
+                            @endphp
+
+                            <li class="posts__item card {{ $categoryClass }}">
                                 <div class="posts__inner card__content">
                                     <div class="posts__cat">
-                                        <span class="label posts__cat-label">{{$announcement->team->name}}-</span>
-                                    </div>
+                                        @if(!empty($announcement->league?->name))
+                                            <span class="label posts__cat-label">{{ $announcement->league->name }}</span>
+                                        @endif
+
+                                        @if(!empty($announcement->team?->name))
+                                            <span class="label posts__cat-label">{{ $announcement->team->name }}</span>
+                                        @endif
+
+                                        @if(!empty($announcement->player?->name))
+                                            <span class="label posts__cat-label">{{ $announcement->player->name }}</span>
+                                        @endif                                    </div>
                                     <h6 class="posts__title"><a href="#">{{$announcement->title}}</a></h6>
                                     <time datetime="2017-08-23" class="posts__date">{{$announcement->created_at}}</time>
                                     <div class="posts__excerpt">
