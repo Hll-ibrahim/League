@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
 
             $sports = $sportRepository->getWithRelation('leagues');
             $lastGames = $gameRepository->lastGames(5); // son 5 oyun
-            $lastAnnouncements = $announcementRepository->lastAnnouncements(5); // son 5
+            $lastAnnouncements = $announcementRepository->lastAnnouncements(3); // son 5
 
             $view->with([
                 'sports' => $sports,

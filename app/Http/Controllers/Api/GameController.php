@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\BaseController;
 use App\Models\Event;
 use App\Models\EventType;
+use App\Models\Game;
 use App\Models\PlayerStatistic;
 use App\Services\GameService;
 use App\Services\RefereeService;
@@ -97,13 +98,15 @@ class GameController extends BaseController
                 ->where('game_id', $game_id)
                 ->count();
 
+            return $this->service->start($game_id);
+
             if($league->player_count == $home_team_player_count && $away_team_player_count == $home_team_player_count){
                 // lig içerisindeki oyuncu sayısı ile takım için girilen oyuncu sayıları eşit ise
                  return $this->service->start($game_id);
             }
             else {
                 return response()->json([
-                    'error'=>'Player count is not correct'
+                    'error'=>'Player count is not available'
                 ],400);
             }
         }
@@ -131,6 +134,7 @@ class GameController extends BaseController
                 'stadium' => $game->stadium->name,
                 'referee' => $game->referee->user->name,
                 'date' => $game->date,
+                'started_at' => $game->started_at,
             ],
             'players' => $game->playerStatistics->map(function ($ps) {
                 return [
@@ -141,5 +145,36 @@ class GameController extends BaseController
             'event_types' => EventType::all(['id', 'name']),
         ]);
     }
+
+
+    public function getFilteredMatches(Request $request)
+    {
+        $user = $request->user();
+        $referee_ids = $user->referees->pluck('id')->toArray();
+        $filter = $request->filter;
+        $now = now();
+
+        $matchesQuery = Game::with([
+            'homeTeam.team',
+            'awayTeam.team',
+            'seasonLeague.league',
+            'seasonLeague.season',
+        ])->whereIn('referee_id', $referee_ids);
+
+        if ($filter === 'eligible') {
+            // Bitmemiş olan (yani 'waiting' VEYA 'started') ve tarihi geçmiş olanlar
+            $matchesQuery->whereIn('status', ['waiting', 'started'])
+                ->where('date', '<', $now);
+        } elseif ($filter === 'future') {
+            $matchesQuery->where('date', '>', $now);
+        } elseif ($filter === 'past') {
+            $matchesQuery->where('status', 'ended')
+                ->where('date', '<', $now);
+        }
+
+        return $matchesQuery->orderBy('date')->paginate(5);
+    }
+
+
 
 }

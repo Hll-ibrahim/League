@@ -21,4 +21,6 @@ Route::controller(GameController::class)->middleware('auth:sanctum')->group( fun
     Route::post('setScore','setScore')->name('setScore');
     Route::post('set-event','set_event');
     Route::post('start-match','start_match');
+    Route::get('filtered-matches', 'getFilteredMatches');
+
 });
