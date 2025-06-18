@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\GameController;
 use App\Http\Controllers\UserController;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,8 +15,12 @@ Route::group([], function () {
     Route::post('register',[UserController::class,'register']);
 });
 
-Route::group([], function () {
-    Route::get('getMatches',[\App\Http\Controllers\GameController::class,'getMatches'])->name('referee')->middleware('auth:sanctum');
-    Route::post('setScore',[\App\Http\Controllers\GameController::class,'setScore'])->name('setScore');
+Route::controller(GameController::class)->middleware('auth:sanctum')->group( function () {
+    Route::get('get-matches','get_matches');
+    Route::get('get-match','get_match');
+    Route::post('setScore','setScore')->name('setScore');
+    Route::post('set-event','set_event');
+    Route::post('start-match','start_match');
+    Route::get('filtered-matches', 'getFilteredMatches');
 
 });

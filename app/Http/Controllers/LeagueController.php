@@ -3,28 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LeagueRequest;
-use App\Http\Requests\SportRequest;
-use App\Models\League;
-use App\Services\Contracts\LeagueServiceInterface;
-use App\Services\Contracts\RequestServiceInterface;
-use App\Services\Contracts\SeasonServiceInterface;
-use App\Services\Contracts\SportServiceInterface;
 use App\Services\LeagueService;
+use App\Services\SeasonLeagueService;
+use App\Services\SeasonService;
+use App\Services\SportService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class LeagueController extends Controller
 {
     protected $leagueService;
-    protected $requestService;
 
     protected $sportService;
     protected $seasonService;
-    public function __construct(LeagueServiceInterface $leagueService , RequestServiceInterface $requestService , SeasonServiceInterface $seasonService , SportServiceInterface $sportService) {
+    protected $seasonLeagueService;
+    public function __construct(LeagueService $leagueService , SeasonService $seasonService , SportService $sportService, SeasonLeagueService $seasonLeagueService) {
         $this->leagueService = $leagueService;
-        $this->requestService = $requestService;
         $this->seasonService = $seasonService;
         $this->sportService = $sportService;
+        $this->seasonLeagueService = $seasonLeagueService;
     }
 
     /**
@@ -85,11 +82,11 @@ class LeagueController extends Controller
         $request = new Request();
 
         $request->merge([
-            'id' => $id, // Aldığınız ID değeri
+            'id' => $id,
         ]);
-        $league = $this->sportService->get($request->id);
-        $seasons = $this->seasonService->all();
-        $sports = $this->sportService->all();
+        $league = $this->leagueService->getById($request->id);
+        $seasons = $this->seasonService->getAll();
+        $sports = $this->sportService->getAll();
         $league_types = $this->leagueService->getLeagueTypes();
         return view('league.detail',compact('league','seasons','sports','league_types'));
     }
@@ -105,7 +102,6 @@ class LeagueController extends Controller
     }
 
     public function get(Request $request){// ??
-        dd($request->all());
         $league = $this->leagueService->get($request->sport_id);
         return response()->json($league);
     }
@@ -137,8 +133,9 @@ class LeagueController extends Controller
 
     public function start(Request $request){
         $league_id = $request->league_id;
+        $season_id = $request->season_id;
 
-        return $this->leagueService->start($league_id);
+        return $this->seasonLeagueService->start($league_id,$season_id);
 
     }
 }

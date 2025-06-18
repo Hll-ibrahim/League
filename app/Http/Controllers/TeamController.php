@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Contracts\LeaguesTeamsServiceInterface;
-use App\Services\Contracts\TeamServiceInterface;
-use App\Services\LeaguesTeamsService;
 use App\Services\TeamService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -12,7 +9,7 @@ use Yajra\DataTables\DataTables;
 class TeamController extends Controller
 {
     protected $teamService,$leaguesTeamsService;
-    public function __construct(TeamServiceInterface $teamService){
+    public function __construct(TeamService $teamService){
         $this->teamService = $teamService;
     }
 
@@ -21,7 +18,7 @@ class TeamController extends Controller
     }
 
     public function fetch(Request $request){
-        $teams = $this->teamService->all();
+        $teams = $this->teamService->getAll();
 
         if(isset($request->league_id)){
             $teams = $this->teamService->get_teams_from_leagues($request->league_id);

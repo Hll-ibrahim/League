@@ -9,7 +9,12 @@ use App\Models\Sport;
 use App\Models\Team;
 use App\Repositories\Contracts\LeagueRepositoryInterface;
 
-class LeagueRepository implements LeagueRepositoryInterface {
+class LeagueRepositoryMysql extends BaseRepositoryMysql implements LeagueRepositoryInterface {
+
+    public function __construct(League $league){
+        parent::__construct($league);
+    }
+
     public function createLeague($data){
         return League::create($data);
     }
@@ -34,9 +39,7 @@ class LeagueRepository implements LeagueRepositoryInterface {
     public function getSeasons(){
         return Season::all();
     }
-    public function update(League $league,$data){
-        return $league->update($data);
-    }
+
     public function delete($id){
         return League::destroy($id);
     }
@@ -44,9 +47,10 @@ class LeagueRepository implements LeagueRepositoryInterface {
         return Team::where('sport_id', $sport_id)
             ->whereNotIn('id', function ($query) use ($league_id) {
                 $query->select('team_id')
-                    ->from('leagues_teams')
+                    ->from('league_team')
                     ->where('league_id', $league_id);
             })
-            ->get();    }
+            ->get();
+    }
 
 }

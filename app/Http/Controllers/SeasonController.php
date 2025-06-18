@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Contracts\SeasonRepositoryInterface;
-use App\Services\Contracts\SeasonServiceInterface;
-use App\Services\Contracts\RequestServiceInterface;
+use App\Services\SeasonService;
 use Illuminate\Http\Request;
 
 class SeasonController extends Controller
 {
     protected $seasonService;
-    protected $requestService;
-    public function __construct(SeasonServiceInterface $seasonService , RequestServiceInterface $requestService) {
+    public function __construct(SeasonService $seasonService) {
         $this->seasonService = $seasonService;
-        $this->requestService = $requestService;
     }
 
     public function getSeasons(Request $request){

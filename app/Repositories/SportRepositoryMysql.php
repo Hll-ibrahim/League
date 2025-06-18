@@ -5,29 +5,29 @@ namespace App\Repositories;
 use App\Models\Sport;
 use App\Repositories\Contracts\SportRepositoryInterface;
 
-class SportRepository implements SportRepositoryInterface {
+class SportRepositoryMysql extends BaseRepositoryMysql implements SportRepositoryInterface {
+
+    public function __construct(Sport $model){
+        parent::__construct($model);
+    }
 
     public function createSport($data){
-        return Sport::create($data);
+        return $this->model->create($data);
     }
     public function getSports(){
-        return Sport::all();
+        return $this->model->all();
     }
 
     public function getSportById($id){
-        return Sport::findOrFail($id);
-    }
-
-    public function update(Sport $sport,$data){
-        return $sport->update($data);
+        return $this->model->findOrFail($id);
     }
 
     public function delete($id){
-        return Sport::destroy($id);
+        return $this->model->destroy($id);
     }
 
     public function getSportName($id){
-        $sportName = Sport::findOrFail($id)->name;;
+        $sportName = $this->model->findOrFail($id)->name;;
 
         if ($sportName) {
             return $sportName;

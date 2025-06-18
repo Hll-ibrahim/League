@@ -22,7 +22,7 @@
                                 </div>
                             </div>
                             <div class="alc-event-team__details">
-                                <h4 class="alc-event-team__name">{{$home_team->name}}</h4>
+                                <h4 class="alc-event-team__name">{{$home_team->team->name}}</h4>
                             </div>
                             <figure class="alc-event-team__logo">
                                 <img src="assets/images/soccer/logos/alchemists_n.png" alt="">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                             <div class="alc-event-team__details">
-                                <h4 class="alc-event-team__name">{{$away_team->name}}</h4>
+                                <h4 class="alc-event-team__name">{{$away_team->team->name}}</h4>
                             </div>
                             <figure class="alc-event-team__logo">
                                 <img src="assets/images/samples/logos/lucky_clovers_n.png" alt="">
@@ -66,16 +66,20 @@
                     <div class="col-6">
                         <!-- 1st Team Performances -->
                         <div class="alc-event-header-performances">
-                            <span class="alc-event-header__performance">Franklin Stevens (22’) <i class="icon-svg icon-soccer-ball"></i></span>
-                            <span class="alc-event-header__performance">Brian Kingster (59’) <i class="icon-svg icon-red-card"></i></span>
-                            <span class="alc-event-header__performance">Christofer Grass (68’) (P) <i class="icon-svg icon-soccer-ball"></i></span>
+                            @foreach($home_team_events as $event)
+
+                                <span class="alc-event-header__performance">{{$event->playerStatistic->TeamPlayer->player->first_name}} {{$event->playerStatistic->TeamPlayer->player->last_name}} ({{$event->minute}}’) <i class="icon-svg {{$event->eventType->image}}"></i></span>
+
+                            @endforeach
                         </div>
                         <!-- 1st Team Performances / End -->
                     </div>
                     <div class="col-6">
-                        <!-- 2nd Team Performances -->
+                        @foreach($away_team_events as $event)
 
-                        <!-- 2nd Team Performances / End -->
+                            <span class="alc-event-header__performance">{{$event->playerStatistic->TeamPlayer->player->first_name}} {{$event->playerStatistic->TeamPlayer->player->last_name}} ({{$event->minute}}’) <i class="icon-svg {{$event->eventType->image}}"></i></span>
+
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -136,7 +140,7 @@
                                             <div class="game-timeline__event-name">{{$event->playerStatistic->TeamPlayer->player->first_name}}</div>
                                             <div class="game-timeline__event-desc">{{$event->playerStatistic->TeamPlayer->leagueTeam->team->name}}</div>
                                         </div>
-                                        <i class="icon-svg icon-soccer-ball"></i>
+                                        <i class="icon-svg {{$event->eventType->image}}"></i>
                                     </div>
                                     <div class="game-timeline__time">{{$event->minute}}’</div>
                                 </div>
@@ -164,54 +168,26 @@
                 <!-- Content -->
                 <div class="content col-lg-8">
 
-                    <!-- Video Highlights -->
-                    <div class="card card--no-paddings">
-                        <header class="card__header">
-                            <h4>Video Highlights</h4>
-                        </header>
-                        <div class="card__content">
-                            <div class="alc-embeded-player alc-embeded-player--bg-color-dark " data-id="XE0fU9PCrWE" data-controls="false" data-provider="youtube" data-thumbnail="assets/images/soccer/samples/_soccer_post-img1-xlg.jpg" data-easy-embed>
-                                <div class="alc-embeded-player__overlay">
-                                    <div class="alc-embeded-player__inner">
-                                        <h3 class="alc-embeded-player__title">Check The Alchemists in action in this exclusive clip from last night</h3>
-                                        <time datetime="2017-08-28" class="alc-embeded-player__date">January 27th, 2020</time>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Video Highlights / End -->
 
-                    <!-- Game Scoreboard -->
+                    @if(count($statistics))
                     <div class="card">
                         <header class="card__header alc-teams-legend">
                             <h4 class="alc-teams-legend__title">Match Statistics</h4>
                             <div class="alc-teams-legend__info">
-                                <!-- Teams -->
                                 <div class="alc-teams-legend__teams">
-
-                                    <!-- Team #0 -->
                                     <div class="alc-teams-legend__team">
                                         <span class="alc-teams-legend__team-color alc-teams-legend__team-color--color-primary"></span>
-                                        <img src="assets/images/soccer/logos/alchemists_s_shield.png" class="alc-teams-legend__team-logo" alt="The Alchemists">
+                                        <img src="{{ $statistics['home']['team']->logo }}" class="alc-teams-legend__team-logo" alt="{{ $statistics['home']['team']->name }}">
                                     </div>
-                                    <!-- Team #0 / End -->
-                                    <!-- Team #1 -->
                                     <div class="alc-teams-legend__team">
                                         <span class="alc-teams-legend__team-color alc-teams-legend__team-color--color-4"></span>
-                                        <img src="assets/images/samples/logos/lucky_clovers_shield.png" class="alc-teams-legend__team-logo" alt="Lucky Clovers">
+                                        <img src="{{ $statistics['away']['team']->logo }}" class="alc-teams-legend__team-logo" alt="{{ $statistics['away']['team']->name }}">
                                     </div>
-                                    <!-- Team #1 / End -->
-
                                 </div>
-                                <!-- Teams / End -->
-
-                                <a href="_soccer_event-team-stats.html" class="btn btn-default btn-outline btn-xs">Full Team Stats</a>
+                                <a href="#" class="btn btn-default btn-outline btn-xs">Full Team Stats</a>
                             </div>
                         </header>
                         <div class="card__content">
-
-                            <!-- Game Result -->
                             <div class="game-result">
                                 <section class="game-result__section">
                                     <div class="game-result__content mb-0">
@@ -221,144 +197,53 @@
                                                     <div class="game-result__table-stats game-result__table-stats--soccer">
                                                         <table class="table table-wrap-bordered table-thead-color">
                                                             <thead>
-                                                            <tr>
-                                                                <th colspan="3">Main Statistics</th>
-                                                            </tr>
+                                                            <tr><th colspan="3">Main Statistics</th></tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td>25(14)</td>
-                                                                <td>Shots (on goal)</td>
-                                                                <td>16(6)</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>9</td>
-                                                                <td>Corner Kicks</td>
-                                                                <td>11</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>8</td>
-                                                                <td>Saves</td>
-                                                                <td>5</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>0</td>
-                                                                <td>Yellow Cards</td>
-                                                                <td>2</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Red Cards</td>
-                                                                <td>0</td>
-                                                            </tr>
+                                                            @foreach ($statistics['main_table'] as $row)
+                                                                <tr>
+                                                                    <td>{{ $row['home'] }}</td>
+                                                                    <td>{{ $row['label'] }}</td>
+                                                                    <td>{{ $row['away'] }}</td>
+                                                                </tr>
+                                                            @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-md-3 order-md-1 game-result__stats-team-1">
 
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <div class="circular circular--size-70">
-                                                                <div class="circular__bar" data-percent="84.5">
-                                                                    <span class="circular__percents">84.5<small>%</small></span>
+                                                @foreach (['home', 'away'] as $side)
+                                                    <div class="col-6 col-md-3 {{ $side === 'home' ? 'order-md-1 game-result__stats-team-1' : 'order-md-3 game-result__stats-team-2' }}">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="circular circular--size-70">
+                                                                    <div class="circular__bar" data-percent="{{ $statistics[$side]['shot_accuracy'] }}">
+                                                                        <span class="circular__percents">{{ $statistics[$side]['shot_accuracy'] }}<small>%</small></span>
+                                                                    </div>
+                                                                    <span class="circular__label">Shot Accuracy</span>
                                                                 </div>
-                                                                <span class="circular__label">Shot Accuracy</span>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="circular circular--size-70">
+                                                                    <div class="circular__bar" data-percent="{{ $statistics[$side]['pass_accuracy'] }}">
+                                                                        <span class="circular__percents">{{ $statistics[$side]['pass_accuracy'] }}<small>%</small></span>
+                                                                    </div>
+                                                                    <span class="circular__label">Pass Accuracy</span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-6">
-                                                            <div class="circular circular--size-70">
-                                                                <div class="circular__bar" data-percent="62.3">
-                                                                    <span class="circular__percents">62.3<small>%</small></span>
+                                                        <div class="spacer"></div>
+                                                        @foreach ($statistics[$side]['stats'] as $label => $value)
+                                                            <div class="progress-stats">
+                                                                <div class="progress__label">{{ $label }}</div>
+                                                                <div class="progress">
+                                                                    <div class="progress__bar{{ $side === 'away' ? ' progress__bar--success' : '' }}" style="width: {{ min($value,100) }}%;"></div>
                                                                 </div>
-                                                                <span class="circular__label">Pass Accuracy</span>
+                                                                <div class="progress__number">{{ $value }}</div>
                                                             </div>
-                                                        </div>
+                                                        @endforeach
                                                     </div>
-
-                                                    <div class="spacer"></div>
-
-                                                    <!-- Progress: Sho -->
-                                                    <div class="progress-stats">
-                                                        <div class="progress__label">Sho</div>
-                                                        <div class="progress">
-                                                            <div class="progress__bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%; "></div>
-                                                        </div>
-                                                        <div class="progress__number">25</div>
-                                                    </div>
-                                                    <!-- Progress: Sho / End -->
-                                                    <!-- Progress: Fou -->
-                                                    <div class="progress-stats">
-                                                        <div class="progress__label">Fou</div>
-                                                        <div class="progress">
-                                                            <div class="progress__bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%; "></div>
-                                                        </div>
-                                                        <div class="progress__number">12</div>
-                                                    </div>
-                                                    <!-- Progress: Fou / End -->
-                                                    <!-- Progress: OFF -->
-                                                    <div class="progress-stats">
-                                                        <div class="progress__label">OFF</div>
-                                                        <div class="progress">
-                                                            <div class="progress__bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%; "></div>
-                                                        </div>
-                                                        <div class="progress__number">10</div>
-                                                    </div>
-                                                    <!-- Progress: OFF / End -->
-
-                                                </div>
-                                                <div class="col-6 col-md-3 order-md-3 game-result__stats-team-2">
-
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <div class="circular circular--size-70">
-                                                                <div class="circular__bar" data-percent="84.5" data-bar-color="#9fe900">
-                                                                    <span class="circular__percents">84.5<small>%</small></span>
-                                                                </div>
-                                                                <span class="circular__label">Shot Accuracy</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <div class="circular circular--size-70">
-                                                                <div class="circular__bar" data-percent="62.3" data-bar-color="#9fe900">
-                                                                    <span class="circular__percents">62.3<small>%</small></span>
-                                                                </div>
-                                                                <span class="circular__label">Pass Accuracy</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="spacer"></div>
-
-                                                    <!-- Progress: Sho -->
-                                                    <div class="progress-stats">
-                                                        <div class="progress__label">Sho</div>
-                                                        <div class="progress">
-                                                            <div class="progress__bar progress__bar--success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
-                                                        </div>
-                                                        <div class="progress__number">20</div>
-                                                    </div>
-                                                    <!-- Progress: Sho / End -->
-                                                    <!-- Progress: Fou -->
-                                                    <div class="progress-stats">
-                                                        <div class="progress__label">Fou</div>
-                                                        <div class="progress">
-                                                            <div class="progress__bar progress__bar--success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                                        </div>
-                                                        <div class="progress__number">14</div>
-                                                    </div>
-                                                    <!-- Progress: Fou / End -->
-                                                    <!-- Progress: OFF -->
-                                                    <div class="progress-stats">
-                                                        <div class="progress__label">OFF</div>
-                                                        <div class="progress">
-                                                            <div class="progress__bar progress__bar--success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"></div>
-                                                        </div>
-                                                        <div class="progress__number">12</div>
-                                                    </div>
-                                                    <!-- Progress: OFF / End -->
-
-                                                </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -370,422 +255,50 @@
                                         <h5 class="game-result__subtitle">Ball Possession</h5>
                                     </header>
                                     <div class="game-result__content">
-
                                         <div class="spacer-sm"></div>
-
-                                        <!-- Progress: Ball Possession -->
                                         <div class="progress-double-wrapper">
                                             <div class="progress-inner-holder">
-                                                <div class="progress__digit progress__digit--left progress__digit--highlight">62%</div>
+                                                <div class="progress__digit progress__digit--left progress__digit--highlight">{{ $statistics['ball_possession']['home'] }}%</div>
                                                 <div class="progress__double">
                                                     <div class="progress progress--lg">
-                                                        <div class="progress__bar" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%;"></div>
+                                                        <div class="progress__bar" style="width: {{ $statistics['ball_possession']['home'] }}%;"></div>
                                                     </div>
                                                     <div class="progress progress--lg">
-                                                        <div class="progress__bar progress__bar--success" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100" style="width: 38%;"></div>
+                                                        <div class="progress__bar progress__bar--success" style="width: {{ $statistics['ball_possession']['away'] }}%;"></div>
                                                     </div>
                                                 </div>
-                                                <div class="progress__digit progress__digit--right progress__digit--highlight">38%</div>
+                                                <div class="progress__digit progress__digit--right progress__digit--highlight">{{ $statistics['ball_possession']['away'] }}%</div>
                                             </div>
                                         </div>
-                                        <!-- Progress: Ball Possession / End -->
-
                                     </div>
                                 </section>
-                                <!-- Ball Possession / End -->
-
-
                             </div>
-                            <!-- Game Result / End -->
-
                         </div>
                     </div>
-                    <!-- Game Scoreboard / End -->
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <!-- Widget: Lineup Table -->
-                            <aside class="widget card card--has-table widget--sidebar widget-lineup-table">
-                                <div class="widget__title card__header">
-                                    <h4>Alchemists Lineup</h4>
-                                </div>
-                                <div class="widget__content card__content">
-
-                                    <!-- Lineup Table -->
-                                    <div class="table-responsive">
-                                        <table class="table lineup-table">
-                                            <thead>
-                                            <tr>
-                                                <th class="lineup__num">NBR</th>
-                                                <th class="lineup__pos">POS</th>
-                                                <th class="lineup__name">Player Name</th>
-                                                <th class="lineup__info"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-
-                                            <tr>
-                                                <td class="lineup__num">01</td>
-                                                <td class="lineup__pos">GK</td>
-                                                <td class="lineup__name">Nick Rodgers</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">04</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Mark Ironson</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">03</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Brian Kingster</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-red-card"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">22</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">James Girobilli</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">05</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Thomas Black</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">08</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Christofer Grass</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-soccer-ball"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">02</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Spike Arrowhead</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">26</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Griffin Peterson</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">07</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">James Messinal</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">09</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Franklin Stevens</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-soccer-ball"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">18</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">David Hawkins</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num" colspan="2">Team Coach</td>
-                                                <td class="lineup__name">Robert Frankson</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <th colspan="4" class="lineup__subheader">Substitute Players</th>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="lineup__num">32</td>
-                                                <td class="lineup__pos">GK</td>
-                                                <td class="lineup__name">Taylor Redner</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">27</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Christian Netteron</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">11</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Alex Walterston</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">19</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Kirk Hetfield</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">25</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">James Hammet</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- Lineup Table / End -->
-
-                                </div>
-                            </aside>
-                            <!-- Widget: Lineup Table / End -->
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Widget: Lineup Table Alt -->
-                            <aside class="widget card card--alt-color card--has-table widget--sidebar widget-lineup-table">
-                                <div class="widget__title card__header">
-                                    <h4>Clovers Lineup</h4>
-                                </div>
-                                <div class="widget__content card__content">
-
-                                    <!-- Lineup Table -->
-                                    <div class="table-responsive">
-                                        <table class="table lineup-table">
-                                            <thead>
-                                            <tr>
-                                                <th class="lineup__num">NBR</th>
-                                                <th class="lineup__pos">POS</th>
-                                                <th class="lineup__name">Player Name</th>
-                                                <th class="lineup__info"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            <tr>
-                                                <td class="lineup__num">04</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Danny Stark</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">03</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Martin Pierto</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">07</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Brad Rockers</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">05</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Johnny Griffin</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-yellow-card"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">08</td>
-                                                <td class="lineup__pos">MD</td>
-                                                <td class="lineup__name">Rick Valentine</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-out"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">02</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Alphonse Tucker</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">26</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Wally Christison</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-yellow-card"></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">22</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Adam Howlett</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">09</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Michael Neter</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">18</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Chris Balleron</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num">20</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">David Hawkins</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td class="lineup__num" colspan="2">Team Coach</td>
-                                                <td class="lineup__name">Carter Stevens</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <th colspan="4" class="lineup__subheader">Substitute Players</th>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="lineup__num">32</td>
-                                                <td class="lineup__pos">GK</td>
-                                                <td class="lineup__name">Joe D’Amico</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">27</td>
-                                                <td class="lineup__pos">DF</td>
-                                                <td class="lineup__name">Thomas Kent</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">11</td>
-                                                <td class="lineup__pos">MF</td>
-                                                <td class="lineup__name">Phillip West</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">19</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Markus Jackson</td>
-                                                <td class="lineup__info"><i class="icon-svg icon-in"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="lineup__num">25</td>
-                                                <td class="lineup__pos">FD</td>
-                                                <td class="lineup__name">Nicholas Wayne</td>
-                                                <td class="lineup__info"><i class="icon-svg "></i></td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- Lineup Table / End -->
-
-                                </div>
-                            </aside>
-                            <!-- Widget: Lineup Table Alt / End -->
-                        </div>
-                    </div>
+                    @endif
 
                     <!-- Post Comments -->
                     <div class="post-comments card card--lg">
                         <header class="post-commments__header card__header">
-                            <h4>Comments (18)</h4>
+                            <h4>Comments ({{ $comments->count() }})</h4>
                         </header>
                         <div class="post-comments__content card__content">
 
-                            <ul class="comments">
-                                <li class="comments__item">
-                                    <div class="comments__inner">
-                                        <header class="comment__header">
-                                            <div class="comment__author">
-                                                <figure class="comment__author-avatar">
-                                                    <img src="assets/images/samples/avatar-9.jpg" alt="">
-                                                </figure>
-                                                <div class="comment__author-info">
-                                                    <h5 class="comment__author-name">Jake Casspon</h5>
-                                                    <time class="comment__post-date" datetime="2016-08-23">2 hours ago</time>
-                                                </div>
-                                            </div>
-                                            <div class="comment__reply">
-                                                <a href="#" class="comment__reply-link btn btn-link btn-xs">Reply</a>
-                                            </div>
-                                        </header>
-                                        <div class="comment__body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore etolor dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="comments__item">
-                                    <div class="comments__inner">
-                                        <header class="comment__header">
-                                            <div class="comment__author">
-                                                <figure class="comment__author-avatar">
-                                                    <img src="assets/images/samples/avatar-10.jpg" alt="">
-                                                </figure>
-                                                <div class="comment__author-info">
-                                                    <h5 class="comment__author-name">Jennifer Stevens</h5>
-                                                    <time class="comment__post-date" datetime="2016-08-23">5 hours ago</time>
-                                                </div>
-                                            </div>
-                                            <div class="comment__reply">
-                                                <a href="#" class="comment__reply-link btn btn-link btn-xs">Reply</a>
-                                            </div>
-                                        </header>
-                                        <div class="comment__body">
-                                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.
-                                        </div>
-                                    </div>
-                                    <ul class="comments--children">
+                            @if($comments->isNotEmpty())
+                                <ul class="comments">
+                                    @foreach($comments as $comment)
                                         <li class="comments__item">
                                             <div class="comments__inner">
                                                 <header class="comment__header">
                                                     <div class="comment__author">
                                                         <figure class="comment__author-avatar">
-                                                            <img src="assets/images/samples/avatar-7.jpg" alt="">
+                                                            <img src="{{ asset($comment->user->avatar ?? 'assets/images/default-avatar.jpg') }}" alt="">
                                                         </figure>
                                                         <div class="comment__author-info">
-                                                            <h5 class="comment__author-name">The Speedtester</h5>
-                                                            <time class="comment__post-date" datetime="2016-08-23">3 hours ago</time>
+                                                            <h5 class="comment__author-name">{{ $comment->user->name }}</h5>
+                                                            <time class="comment__post-date" datetime="{{ $comment->created_at->toDateString() }}">
+                                                                {{ $comment->created_at->diffForHumans() }}
+                                                            </time>
                                                         </div>
                                                     </div>
                                                     <div class="comment__reply">
@@ -793,50 +306,77 @@
                                                     </div>
                                                 </header>
                                                 <div class="comment__body">
-                                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+                                                    @if($comment->title)
+                                                        <strong>{{ $comment->title }}</strong><br>
+                                                    @endif
+                                                    {{ $comment->description }}
                                                 </div>
                                             </div>
                                         </li>
-                                    </ul>
-                                </li>
-                                <li class="comments__item">
-                                    <div class="comments__inner">
-                                        <header class="comment__header">
-                                            <div class="comment__author">
-                                                <figure class="comment__author-avatar">
-                                                    <img src="assets/images/samples/avatar-11.jpg" alt="">
-                                                </figure>
-                                                <div class="comment__author-info">
-                                                    <h5 class="comment__author-name">Marina Universe</h5>
-                                                    <time class="comment__post-date" datetime="2016-08-23">5 hours ago</time>
-                                                </div>
-                                            </div>
-                                            <div class="comment__reply">
-                                                <a href="#" class="comment__reply-link btn btn-link btn-xs">Reply</a>
-                                            </div>
-                                        </header>
-                                        <div class="comment__body">
-                                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p class="text-muted">No comments yet. Be the first to share your thoughts.</p>
+                            @endif
 
                             <!-- Comments Pagination -->
-                            <nav aria-label="Comments Pavigation" class="post__comments-pagination" aria-label="Comments navigation">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><span class="page-link">...</span></li>
-                                    <li class="page-item"><a class="page-link" href="#">16</a></li>
-                                </ul>
-                            </nav>
-                            <!-- Comments Pagination / End -->
-
+                            {{-- Eğer pagination kullanıyorsan: --}}
+                            {{-- {!! $comments->links('pagination::bootstrap-4') !!} --}}
                         </div>
                     </div>
                     <!-- Post Comments / End -->
+
+                        <!-- Event Post -->
+                        @if($announcement)
+                            <div class="posts posts--cards post-list">
+                                <div class="posts__item posts__item--card posts__item--category-1 card">
+                                    <figure class="posts__thumb">
+                                        <div class="posts__cat">
+                                            <span class="label posts__cat-label">Team News</span>
+                                        </div>
+                                        <a href="{{ route('announcement.index') }}">
+                                            <img src="{{ asset('assets/images/soccer/samples/_soccer_post-img1.jpg') }}" alt="Announcement Image">
+                                        </a>
+                                    </figure>
+
+                                    <div class="posts__inner card__content">
+                                        <a href="{{ route('announcement.index') }}" class="posts__cta"></a>
+                                        <time datetime="{{ $announcement->created_at->toDateString() }}" class="posts__date">
+                                            {{ $announcement->created_at->translatedFormat('F jS, Y') }}
+                                        </time>
+                                        <h6 class="posts__title">
+                                            <a href="{{ route('announcement.index', $announcement->id) }}">
+                                                {{ $announcement->title }}
+                                            </a>
+                                        </h6>
+                                        <div class="posts__excerpt">
+                                            {{ Str::limit(strip_tags($announcement->description), 150) }}
+                                        </div>
+                                    </div>
+
+                                    <footer class="posts__footer card__footer">
+                                        <div class="post-author">
+                                            <figure class="post-author__avatar">
+                                                <img src="{{ asset($announcement->user->avatar ?? 'assets/images/default-avatar.jpg') }}" alt="Author Avatar">
+                                            </figure>
+                                            <div class="post-author__info">
+                                                <h4 class="post-author__name">{{ $announcement->user->name }}</h4>
+                                            </div>
+                                        </div>
+                                        <ul class="post__meta meta">
+                                            <li class="meta__item meta__item--views">-</li> {{-- Henüz view sayısı tutulmuyorsa --}}
+                                            <li class="meta__item meta__item--likes">
+                                                <a href="#"><i class="meta-like icon-heart"></i> -</a>
+                                            </li>
+                                            <li class="meta__item meta__item--comments">
+                                                <a href="#">-</a>
+                                            </li>
+                                        </ul>
+                                    </footer>
+                                </div>
+                            </div>
+                        @endif
+                        <!-- Event Post / End -->
 
                 </div>
                 <!-- Content / End -->
@@ -850,53 +390,90 @@
                             <h4>Game Information</h4>
                         </div>
                         <div class="widget__content card__content">
+
                             <!-- Google Map -->
-                            <div class="gm-map gm-map--sm alc-event-gmap" data-map-style="default" data-map-address="" data-map-zoom="15" data-map-type-control="false" data-street-view-control="false" data-fullscreen-control="false" data-zoom-control="false"></div>
+                            <div class="gm-map gm-map--sm alc-event-gmap"
+                                 data-map-style="default"
+                                 data-map-address="{{ $stadium->name ?? '' }}"
+                                 data-map-zoom="15"
+                                 data-map-type-control="false"
+                                 data-street-view-control="false"
+                                 data-fullscreen-control="false"
+                                 data-zoom-control="false"></div>
                             <!-- Google Map / End -->
 
                             <ul class="alc-event-info list-unstyled">
 
+                                <!-- STADIUM -->
                                 <li class="alc-event-info__item">
-										<span class="alc-event-info__icon">
-											<i class="icon-svg icon-map-pin"></i>
-										</span>
-                                    <span class="alc-event-info__value">Central Park Stadium (New York, USA)</span>
-                                </li>
-                                <li class="alc-event-info__item">
-										<span class="alc-event-info__icon">
-											<i class="icon-svg icon-trophy-new"></i>
-										</span>
-                                    <span class="alc-event-info__value">West League 2016 - Week 9</span>
-                                </li>
-                                <li class="alc-event-info__item">
-										<span class="alc-event-info__icon">
-											<i class="icon-svg icon-calendar"></i>
-										</span>
-                                    <span class="alc-event-info__value">Saturday, March 24th, 2015 - 4:00pm EST</span>
-                                </li>
-                                <li class="alc-event-info__item">
-										<span class="alc-event-info__icon">
-											<i class="icon-svg icon-whistle"></i>
-										</span>
-                                    <span class="alc-event-info__value">M. Refree, T. Addit &amp; J. Swanson</span>
-                                </li>
-                                <li class="alc-event-info__item">
-										<span class="alc-event-info__icon">
-											<i class="icon-svg icon-person"></i>
-										</span>
-                                    <span class="alc-event-info__value">12.700 Attendance (18.000 Capacity)</span>
+                                    <span class="alc-event-info__icon">
+                                        <i class="icon-svg icon-map-pin"></i>
+                                    </span>
+                                    <span class="alc-event-info__value">
+                                        {{ $stadium->name ?? 'Unknown Stadium' }}
+                                            @if($stadium?->city || $stadium?->country)
+                                                ({{ $stadium->city ?? '' }}{{ $stadium->city && $stadium->country ? ', ' : '' }}{{ $stadium->country ?? '' }})
+                                            @endif
+                                    </span>
                                 </li>
 
-                                <li class="alc-event-info__item alc-event-info__item--desc">
-                                    <span class="alc-event-info__label">Additional Info:</span>
-                                    <span class="alc-event-info__desc">Lorem ipsum dolor sit amet, consectetur dere adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</span>
+                                <!-- LEAGUE & SEASON -->
+                                <li class="alc-event-info__item">
+                                    <span class="alc-event-info__icon">
+                                        <i class="icon-svg icon-trophy-new"></i>
+                                    </span>
+                                    <span class="alc-event-info__value">
+                                        {{ $league->name ?? 'League' }} - {{ $season->name ?? 'Season' }}
+                                    </span>
+                                </li>
+
+                                <!-- DATE -->
+                                <li class="alc-event-info__item">
+                                    <span class="alc-event-info__icon">
+                                        <i class="icon-svg icon-calendar"></i>
+                                    </span>
+                                    <span class="alc-event-info__value">
+                                        {{ \Carbon\Carbon::parse($game->date)->translatedFormat('l, F jS, Y - g:i A') }}
+                                    </span>
+                                </li>
+
+                                <!-- REFEREE -->
+                                <li class="alc-event-info__item">
+                                    <span class="alc-event-info__icon">
+                                        <i class="icon-svg icon-whistle"></i>
+                                    </span>
+                                    <span class="alc-event-info__value">
+                                        {{ $referee->name ?? 'Not Assigned' }}
+                                    </span>
+                                </li>
+
+                                <!-- ATTENDANCE -->
+                                <li class="alc-event-info__item">
+                                    <span class="alc-event-info__icon">
+                                        <i class="icon-svg icon-person"></i>
+                                    </span>
+                                    <span class="alc-event-info__value">
+                                        {{ number_format($game->attendance ?? 0) }} Attendance
+                                        ({{ number_format($stadium->capacity ?? 0) }} Capacity)
+                                    </span>
+                                </li>
+
+                                <!-- MATCH COUNT FOR TEAMS -->
+                                <li class="alc-event-info__item">
+                                    <span class="alc-event-info__icon">
+                                        <i class="icon-svg icon-list-numbered"></i>
+                                    </span>
+                                    <span class="alc-event-info__value">
+                                        {{ $game->homeTeam->team->name }}’s {{ $home_match_count }}. match /
+                                        {{ $game->awayTeam->team->name }}’s {{ $away_match_count }}. match
+                                    </span>
                                 </li>
 
                             </ul>
-
                         </div>
                     </div>
                     <!-- Widget: Team Info / End -->
+
 
                     <!-- Widget: Featured Player -->
                     <aside class="widget card widget--sidebar widget-player widget-player--soccer">
@@ -904,62 +481,60 @@
                             <h4>Players Overview</h4>
                         </div>
 
-                        <div class="widget__content card__content">
-                            <div class="widget-player__ribbon">
-                                <div class="fas fa-star"></div>
-                            </div>
-                            <figure class="widget-player__photo">
-                                <img src="assets/images/soccer/samples/_soccer_widget-featured-player.png" alt="Frank Stevens">
-                            </figure>
-                            <header class="widget-player__header clearfix">
-                                <div class="widget-player__number">07</div>
-                                <h4 class="widget-player__name">
-                                    <span class="widget-player__first-name">Frank</span>
-                                    <span class="widget-player__last-name">Stevens</span>
-                                </h4>
-                            </header>
-                            <div class="widget-player__content">
-                                <div class="widget-player__content-inner">
-                                    <div class="widget-player__stat widget-player__goals">
-                                        <div class="widget-player__stat-number">1</div>
-                                        <h6 class="widget-player__stat-label">Goals</h6>
-                                    </div>
-                                    <div class="widget-player__stat widget-player__shots">
-                                        <div class="widget-player__stat-number">2</div>
-                                        <h6 class="widget-player__stat-label">Shots</h6>
-                                    </div>
-                                    <div class="widget-player__stat widget-player__ast">
-                                        <div class="widget-player__stat-number">1</div>
-                                        <h6 class="widget-player__stat-label">Assists</h6>
-                                    </div>
-                                    <div class="widget-player__stat widget-player__played">
-                                        <div class="widget-player__stat-number">64</div>
-                                        <h6 class="widget-player__stat-label">Played</h6>
-                                    </div>
-                                </div>
+                        @if($top_players->isNotEmpty())
+                            @php $featured = $top_players->first(); @endphp
 
-                                <div class="widget-player__content-alt">
-                                    <!-- Progress: SHOT ACC -->
-                                    <div class="progress-stats">
-                                        <div class="progress__label">SHOT ACC</div>
-                                        <div class="progress">
-                                            <div class="progress__bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 96%;"></div>
+                            <div class="widget__content card__content">
+                                <div class="widget-player__ribbon"><div class="fas fa-star"></div></div>
+                                <figure class="widget-player__photo">
+                                    <img src="{{ asset($featured['player']->image ?? 'assets/images/default-player.png') }}" alt="{{ $featured['player']->full_name }}">
+                                </figure>
+                                <header class="widget-player__header clearfix">
+                                    <div class="widget-player__number">{{ $featured['player']->number ?? '--' }}</div>
+                                    <h4 class="widget-player__name">
+                                        <span class="widget-player__first-name">{{ $featured['player']->first_name }}</span>
+                                        <span class="widget-player__last-name">{{ $featured['player']->last_name }}</span>
+                                    </h4>
+                                </header>
+                                <div class="widget-player__content">
+                                    <div class="widget-player__content-inner">
+                                        <div class="widget-player__stat widget-player__goals">
+                                            <div class="widget-player__stat-number">{{ $featured['goals'] }}</div>
+                                            <h6 class="widget-player__stat-label">Goals</h6>
                                         </div>
-                                        <div class="progress__number">96%</div>
-                                    </div>
-                                    <!-- Progress: SHOT ACC / End -->
-                                    <!-- Progress: PASS ACC -->
-                                    <div class="progress-stats">
-                                        <div class="progress__label">PASS ACC</div>
-                                        <div class="progress">
-                                            <div class="progress__bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 74%;"></div>
+                                        <div class="widget-player__stat widget-player__shots">
+                                            <div class="widget-player__stat-number">{{ $featured['shots'] }}</div>
+                                            <h6 class="widget-player__stat-label">Shots</h6>
                                         </div>
-                                        <div class="progress__number">74%</div>
+                                        <div class="widget-player__stat widget-player__ast">
+                                            <div class="widget-player__stat-number">{{ $featured['assists'] }}</div>
+                                            <h6 class="widget-player__stat-label">Assists</h6>
+                                        </div>
+                                        <div class="widget-player__stat widget-player__played">
+                                            <div class="widget-player__stat-number">{{ $featured['played'] }}</div>
+                                            <h6 class="widget-player__stat-label">Played</h6>
+                                        </div>
                                     </div>
-                                    <!-- Progress: PASS ACC / End -->
+
+                                    <div class="widget-player__content-alt">
+                                        <div class="progress-stats">
+                                            <div class="progress__label">SHOT ACC</div>
+                                            <div class="progress">
+                                                <div class="progress__bar" style="width: {{ $featured['shot_accuracy'] }}%;"></div>
+                                            </div>
+                                            <div class="progress__number">{{ $featured['shot_accuracy'] }}%</div>
+                                        </div>
+                                        <div class="progress-stats">
+                                            <div class="progress__label">PASS ACC</div>
+                                            <div class="progress">
+                                                <div class="progress__bar" style="width: {{ $featured['pass_accuracy'] }}%;"></div>
+                                            </div>
+                                            <div class="progress__number">{{ $featured['pass_accuracy'] }}%</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
 
                         <div class="table-responsive">
                             <table class="table alc-table-stats alc-widget-player__table">
@@ -971,97 +546,52 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="alc-widget-player__table-player">
-                                            <div class="alc-widget-player__table-icon">
-                                                <div class="alc-widget-player__table-icon-wrap">
-                                                    <i class="icon-svg icon-arrow-board"></i>
+                                @foreach($top_players->slice(1) as $player_stat)
+                                    <tr>
+                                        <td>
+                                            <div class="alc-widget-player__table-player">
+                                                <div class="alc-widget-player__table-icon">
+                                                    <div class="alc-widget-player__table-icon-wrap">
+                                                        <i class="icon-svg icon-star"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="alc-widget-player__table-info">
+                                                    <h5 class="alc-widget-player__table-title">{{ $player_stat['player']->full_name }}</h5>
+                                                    <span class="alc-widget-player__table-subtitle">#{{ $player_stat['player']->number }}</span>
                                                 </div>
                                             </div>
-                                            <div class="alc-widget-player__table-info">
-                                                <h5 class="alc-widget-player__table-title">James Messinal</h5>
-                                                <span class="alc-widget-player__table-subtitle">Point Guard</span>
+                                        </td>
+                                        <td>
+                                            <img src="{{ asset($player_stat['team']->logo ?? 'assets/images/default-logo.png') }}" alt="{{ $player_stat['team']->name ?? 'Unknown Team' }}">
+                                        </td>
+                                        <td>
+                                            <div class="alc-widget-player__table-stat">
+                                                <div class="alc-widget-player__table-value">{{ $player_stat['goals'] }}</div>
+                                                <div class="alc-widget-player__table-label">Goals</div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img src="assets/images/soccer/logos/alchemists_s_shield.png" alt="Alchemists">
-                                    </td>
-                                    <td>
-                                        <div class="alc-widget-player__table-stat">
-                                            <div class="alc-widget-player__table-value">89%</div>
-                                            <div class="alc-widget-player__table-label">Pass.Acc</div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="alc-widget-player__table-player">
-                                            <div class="alc-widget-player__table-icon">
-                                                <div class="alc-widget-player__table-icon-wrap">
-                                                    <i class="icon-svg icon-crosshair"></i>
-                                                </div>
-                                            </div>
-                                            <div class="alc-widget-player__table-info">
-                                                <h5 class="alc-widget-player__table-title">Johnny Griffin</h5>
-                                                <span class="alc-widget-player__table-subtitle">Shooting guard</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img src="assets/images/samples/logos/lucky_clovers_shield.png" alt="Lucky Clovers">
-                                    </td>
-                                    <td>
-                                        <div class="alc-widget-player__table-stat">
-                                            <div class="alc-widget-player__table-value">34</div>
-                                            <div class="alc-widget-player__table-label">Shots</div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="alc-widget-player__table-player">
-                                            <div class="alc-widget-player__table-icon">
-                                                <div class="alc-widget-player__table-icon-wrap">
-                                                    <i class="icon-svg icon-smile"></i>
-                                                </div>
-                                            </div>
-                                            <div class="alc-widget-player__table-info">
-                                                <h5 class="alc-widget-player__table-title">Christofer Grass</h5>
-                                                <span class="alc-widget-player__table-subtitle">Center</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img src="assets/images/soccer/logos/alchemists_s_shield.png" alt="Alchemists">
-                                    </td>
-                                    <td>
-                                        <div class="alc-widget-player__table-stat">
-                                            <div class="alc-widget-player__table-value">8</div>
-                                            <div class="alc-widget-player__table-label">BLKS</div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
-
                     </aside>
                     <!-- Widget: Featured Player / End -->
+
 
                     <!-- Widget: Standings -->
                     <aside class="widget card widget--sidebar widget-standings">
                         <div class="widget__title card__header card__header--has-btn">
-                            <h4>West League 2018</h4>
-                            <a href="#" class="btn btn-default btn-outline btn-xs card-header__button">See All Stats</a>
+                            <h4>{{ $league->name }} - {{ $season->name }}</h4>
+                            <a href="{{ route('sport.league.detail', [$season_league->id]) }}"
+                               class="btn btn-default btn-outline btn-xs card-header__button">See All Stats</a>
                         </div>
                         <div class="widget__content card__content">
                             <div class="table-responsive">
                                 <table class="table table-hover table-standings">
                                     <thead>
                                     <tr>
-                                        <th>Team Positions</th>
+                                        <th>Team</th>
                                         <th>W</th>
                                         <th>L</th>
                                         <th>D</th>
@@ -1069,186 +599,31 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-                                    <tr>
-                                        <td>
-                                            <div class="team-meta">
-                                                <figure class="team-meta__logo">
-                                                    <img src="assets/images/samples/logos/pirates_shield.png" alt="">
-                                                </figure>
-                                                <div class="team-meta__info">
-                                                    <h6 class="team-meta__name">L.A Pirates</h6>
-                                                    <span class="team-meta__place">Bebop Institute</span>
+                                    @foreach($standings as $team_stat)
+                                        <tr>
+                                            <td>
+                                                <div class="team-meta">
+                                                    <figure class="team-meta__logo">
+                                                        <img src="{{ asset($team_stat['logo']) }}" alt="">
+                                                    </figure>
+                                                    <div class="team-meta__info">
+                                                        <h6 class="team-meta__name">{{ $team_stat['team']->name }}</h6>
+                                                        <span class="team-meta__place">{{ $team_stat['school'] }}</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>36</td>
-                                        <td>14</td>
-                                        <td>10</td>
-                                        <td>118</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="team-meta">
-                                                <figure class="team-meta__logo">
-                                                    <img src="assets/images/samples/logos/sharks_shield.png" alt="">
-                                                </figure>
-                                                <div class="team-meta__info">
-                                                    <h6 class="team-meta__name">Sharks</h6>
-                                                    <span class="team-meta__place">Marine College</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>32</td>
-                                        <td>20</td>
-                                        <td>8</td>
-                                        <td>104</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="team-meta">
-                                                <figure class="team-meta__logo">
-                                                    <img src="assets/images/samples/logos/alchemists_b_shield.png" alt="">
-                                                </figure>
-                                                <div class="team-meta__info">
-                                                    <h6 class="team-meta__name">The Alchemists</h6>
-                                                    <span class="team-meta__place">Eric Bros School</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>32</td>
-                                        <td>21</td>
-                                        <td>7</td>
-                                        <td>103</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="team-meta">
-                                                <figure class="team-meta__logo">
-                                                    <img src="assets/images/samples/logos/ocean_kings_shield.png" alt="">
-                                                </figure>
-                                                <div class="team-meta__info">
-                                                    <h6 class="team-meta__name">Ocean Kings</h6>
-                                                    <span class="team-meta__place">Bay College</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>30</td>
-                                        <td>20</td>
-                                        <td>10</td>
-                                        <td>100</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="team-meta">
-                                                <figure class="team-meta__logo">
-                                                    <img src="assets/images/samples/logos/red_wings_shield.png" alt="">
-                                                </figure>
-                                                <div class="team-meta__info">
-                                                    <h6 class="team-meta__name">Red Wings</h6>
-                                                    <span class="team-meta__place">Icarus College</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>28</td>
-                                        <td>24</td>
-                                        <td>8</td>
-                                        <td>92</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="team-meta">
-                                                <figure class="team-meta__logo">
-                                                    <img src="assets/images/samples/logos/lucky_clovers_shield.png" alt="">
-                                                </figure>
-                                                <div class="team-meta__info">
-                                                    <h6 class="team-meta__name">Lucky Clovers</h6>
-                                                    <span class="team-meta__place">St. Patrick’s Institute</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>27</td>
-                                        <td>24</td>
-                                        <td>9</td>
-                                        <td>90</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="team-meta">
-                                                <figure class="team-meta__logo">
-                                                    <img src="assets/images/samples/logos/draconians_shield.png" alt="">
-                                                </figure>
-                                                <div class="team-meta__info">
-                                                    <h6 class="team-meta__name">Draconians</h6>
-                                                    <span class="team-meta__place">High Rock College</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>25</td>
-                                        <td>28</td>
-                                        <td>7</td>
-                                        <td>82</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="team-meta">
-                                                <figure class="team-meta__logo">
-                                                    <img src="assets/images/samples/logos/bloody_wave_shield.png" alt="">
-                                                </figure>
-                                                <div class="team-meta__info">
-                                                    <h6 class="team-meta__name">Bloody Wave</h6>
-                                                    <span class="team-meta__place">Atlantic School</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>24</td>
-                                        <td>30</td>
-                                        <td>6</td>
-                                        <td>78</td>
-                                    </tr>
-
+                                            </td>
+                                            <td>{{ $team_stat['win'] }}</td>
+                                            <td>{{ $team_stat['lose'] }}</td>
+                                            <td>{{ $team_stat['draw'] }}</td>
+                                            <td>{{ $team_stat['points'] }}</td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </aside>
                     <!-- Widget: Standings / End -->
-
-                    <!-- Event Post -->
-                    <div class="posts posts--cards post-list">
-                        <div class="posts__item posts__item--card posts__item--category-1 card">
-                            <figure class="posts__thumb">
-                                <div class="posts__cat">
-                                    <span class="label posts__cat-label">The Team</span>
-                                </div>
-                                <a href="_soccer_event-news-recap.html"><img src="assets/images/soccer/samples/_soccer_post-img1.jpg" alt=""></a>
-                            </figure>
-                            <div class="posts__inner card__content">
-                                <a href="#" class="posts__cta"></a>
-                                <time datetime="2016-08-23" class="posts__date">April 26th, 2020</time>
-                                <h6 class="posts__title"><a href="#">Frank Stevens shined in the victory 2-0 against The Lucky Clovers</a></h6>
-                                <div class="posts__excerpt">
-                                    Lorem ipsum dolor sit amet, consectetur adipisi nel elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad mini veniam, quis nostrud en derum sum laborem.
-                                </div>
-                            </div>
-                            <footer class="posts__footer card__footer">
-                                <div class="post-author">
-                                    <figure class="post-author__avatar">
-                                        <img src="assets/images/samples/avatar-2.jpg" alt="Post Author Avatar">
-                                    </figure>
-                                    <div class="post-author__info">
-                                        <h4 class="post-author__name">Jessica Hoops</h4>
-                                    </div>
-                                </div>
-                                <ul class="post__meta meta">
-                                    <li class="meta__item meta__item--views">2369</li>
-                                    <li class="meta__item meta__item--likes"><a href="#"><i class="meta-like icon-heart"></i> 530</a></li>
-                                    <li class="meta__item meta__item--comments"><a href="#">18</a></li>
-                                </ul>
-                            </footer>
-                        </div>
-                    </div>
-                    <!-- Event Post / End -->
 
                     <!-- Widget: Event Scheduled -->
                     <div class="widget card card--no-paddings widget--sidebar widget-event-scheduled">
@@ -1258,62 +633,29 @@
                         <div class="widget__content card__content">
                             <ul class="alc-event-scheduled">
 
-                                <!-- Game #0 -->
-                                <li class="alc-event-scheduled__item">
-                                    <div class="alc-event-scheduled__header justify-content-center">
-                                        <div class="alc-event-scheduled__title">Friday, April 5</div>
-                                    </div>
-                                    <div class="alc-event-scheduled__content">
-                                        <div class="alc-event-scheduled__team">
-                                            <figure class="alc-event-scheduled__img">
-                                                <img src="assets/images/samples/logos/alchemists_buy_tickets_v2.png" alt="Alchemists">
-                                            </figure>
-                                            <div class="alc-event-scheduled__details">
-                                                <h4 class="alc-event-scheduled__team-name">ALC</h4>
-                                                <div class="alc-event-scheduled__team-info">Alchemists</div>
+                                @foreach($next_matches as $match)
+                                    <li class="alc-event-scheduled__item">
+                                        <div class="alc-event-scheduled__header justify-content-center">
+                                            <div class="alc-event-scheduled__title">
+                                                {{ \Carbon\Carbon::parse($match->date)->translatedFormat('l, F j') }}
                                             </div>
                                         </div>
-                                        <div class="alc-event-scheduled__team">
-                                            <figure class="alc-event-scheduled__img">
-                                                <img src="assets/images/samples/logos/pirates-shield-sm.png" alt="L.A. Pirates">
-                                            </figure>
-                                            <div class="alc-event-scheduled__details">
-                                                <h4 class="alc-event-scheduled__team-name">LAP</h4>
-                                                <div class="alc-event-scheduled__team-info">L.A. Pirates</div>
-                                            </div>
+                                        <div class="alc-event-scheduled__content">
+                                            @foreach([$match->homeTeam->team, $match->awayTeam->team] as $team)
+                                                <div class="alc-event-scheduled__team">
+                                                    <figure class="alc-event-scheduled__img">
+                                                        <img src="{{ asset($team->logo ?? 'assets/images/default.png') }}" alt="{{ $team->name }}">
+                                                    </figure>
+                                                    <div class="alc-event-scheduled__details">
+                                                        <h4 class="alc-event-scheduled__team-name">{{ strtoupper(Str::limit($team->name, 3, '')) }}</h4>
+                                                        <div class="alc-event-scheduled__team-info">{{ $team->name }}</div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <div class="alc-event-scheduled__divider">vs</div>
                                         </div>
-                                        <div class="alc-event-scheduled__divider">vs</div>
-                                    </div>
-                                </li>
-                                <!-- Game #0 / End -->
-                                <!-- Game #1 -->
-                                <li class="alc-event-scheduled__item">
-                                    <div class="alc-event-scheduled__header justify-content-center">
-                                        <div class="alc-event-scheduled__title">Saturday, April 6</div>
-                                    </div>
-                                    <div class="alc-event-scheduled__content">
-                                        <div class="alc-event-scheduled__team">
-                                            <figure class="alc-event-scheduled__img">
-                                                <img src="assets/images/samples/logos/lucky_clovers_buy_tickets_v2.png" alt="Lucky Clovers">
-                                            </figure>
-                                            <div class="alc-event-scheduled__details">
-                                                <h4 class="alc-event-scheduled__team-name">CLO</h4>
-                                                <div class="alc-event-scheduled__team-info">Lucky Clovers</div>
-                                            </div>
-                                        </div>
-                                        <div class="alc-event-scheduled__team">
-                                            <figure class="alc-event-scheduled__img">
-                                                <img src="assets/images/samples/logos/sharks-shield-sm.png" alt="Sharks">
-                                            </figure>
-                                            <div class="alc-event-scheduled__details">
-                                                <h4 class="alc-event-scheduled__team-name">SHR</h4>
-                                                <div class="alc-event-scheduled__team-info">Sharks</div>
-                                            </div>
-                                        </div>
-                                        <div class="alc-event-scheduled__divider">vs</div>
-                                    </div>
-                                </li>
-                                <!-- Game #1 / End -->
+                                    </li>
+                                @endforeach
 
                             </ul>
                         </div>

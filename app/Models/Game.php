@@ -9,20 +9,40 @@ class Game extends Model
 {
     use HasFactory;
 
-    public function events(){
-        return $this->hasMany(Event::class);
+    protected $fillable = ['season_league_id', 'home_team_id', 'date', 'status','referee_id','away_team_id'];
+
+    public function homeTeam(){
+        return $this->belongsTo(LeagueTeam::class, 'home_team_id','id');
     }
 
-    public function home_team(){
-        return $this->belongsTo(Team::class, 'home_team_id','id');
+    public function awayTeam(){
+        return $this->belongsTo(LeagueTeam::class, 'away_team_id','id');
     }
 
-    public function away_team(){
-        return $this->belongsTo(Team::class, 'away_team_id','id');
-    }
-
-    public function season_league()
+    public function seasonLeague()
     {
         return $this->belongsTo(SeasonLeague::class, 'season_league_id');
+    }
+
+    public function league()
+    {
+        return $this->seasonLeague?->league();
+    }
+
+
+    public function playerStatistics(){
+        return $this->hasMany(PlayerStatistic::class);
+    }
+
+    public function events(){
+        return $this->hasManyThrough(Event::class, PlayerStatistic::class);
+    }
+
+    public function referee(){
+        return $this->belongsTo(Referee::class);
+    }
+
+    public function stadium(){
+        return $this->belongsTo(Stadium::class);
     }
 }

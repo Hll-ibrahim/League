@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Contracts\TeamPlayerServiceInterface;
 use App\Services\TeamPlayerService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -10,7 +9,7 @@ use Yajra\DataTables\DataTables;
 class TeamPlayerController extends Controller
 {
     protected $teamPlayerService;
-    public function __construct(TeamPlayerServiceInterface $teamPlayerService){
+    public function __construct(TeamPlayerService $teamPlayerService){
         $this->teamPlayerService = $teamPlayerService;
     }
     public function index(int $team_id){
@@ -19,10 +18,7 @@ class TeamPlayerController extends Controller
     public function fetch(Request $request){
         $team_id = $request->team_id;
 
-        $league_team = $this->teamPlayerService->getLeagueTeam($team_id);
-
         $players = $this->teamPlayerService->getPlayersFromTeam($team_id);
-
 
         return DataTables::of($players)
             ->addColumn('name',function($player){
@@ -35,7 +31,6 @@ class TeamPlayerController extends Controller
                 return $this->teamPlayerService->getGoalsInSeason($player->id);
             })
             ->addColumn('assists',function($player){
-                return 1;
                 return $this->teamPlayerService->getAssistsInSeason($player->id);
             })
             ->addColumn('detail',function($team){

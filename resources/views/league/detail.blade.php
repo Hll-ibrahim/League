@@ -124,12 +124,15 @@
     </div>
 
 
-    <button class="btn btn-primary mb-4" onclick="create()">Add</button>
+    @if(auth()->user() && auth()->user()->hasRole('admin'))
+        <button class="btn btn-primary mb-4" onclick="create()">Add</button>
 
-    <button class="btn btn-success mb-4" id="league_start_button" onclick="start()">Start League</button>
+        <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
 
-    <button class="btn btn-warning mb-4" onclick="detail()">League Settings</button>
+        <button class="btn btn-success mb-4 d-none" id="league_start_button" onclick="start()">Start League</button>
 
+
+    @endif
     <div class="my-5">
         <table id="team_table" class=" display nowrap dataTable cell-border"
                style="width:100%">
@@ -142,8 +145,7 @@
                 <th>Draw</th>
                 <th>Lose</th>
                 <th>Point</th>
-                <th>Detail</th>
-                <th>Remove</th>
+                <th>Process</th>
             </tr>
             </thead>
 
@@ -155,8 +157,7 @@
                 <th>Draw</th>
                 <th>Lose</th>
                 <th>Point</th>
-                <th>Detail</th>
-                <th>Remove</th>
+                <th>Process</th>
             </tr>
             </tfoot>
         </table>
@@ -173,6 +174,8 @@
                 <th>Away Team</th>
                 <th>Home Score</th>
                 <th>Away Score</th>
+                <th>Referee</th>
+                <th>Date</th>
                 <th>Detail</th>
             </tr>
             </thead>
@@ -184,6 +187,8 @@
                 <th>Away Team</th>
                 <th>Home Score</th>
                 <th>Away Score</th>
+                <th>Referee</th>
+                <th>Date</th>
                 <th>Detail</th>
             </tr>
             </tfoot>
@@ -195,6 +200,9 @@
 @endsection
 @section('script')
     <script>
+
+        var SEASON_LEAGUE
+
         dataTable = $('#team_table').DataTable({
             order: [
                 [0, 'ASC']
@@ -219,8 +227,7 @@
                 {data: 'draw',orderable: false},
                 {data: 'lose',orderable: false},
                 {data: 'point',orderable: false},
-                {data: 'detail',orderable: false,searchable: false},
-                {data: 'delete',orderable: false,searchable: false},
+                {data: 'process',orderable: false,searchable: false},
             ],
             success: function () {
             }
@@ -248,6 +255,8 @@
                 {data: 'away_team_id'},
                 {data: 'home_score'},
                 {data: 'away_score'},
+                {data: 'referee_id'},
+                {data: 'date'},
                 {data: 'detail',orderable: false,searchable: false},
             ],
             success: function () {
@@ -255,25 +264,28 @@
         });
 
         $(document).ready(function () {
+
+            change_season_league()
+
             // Elementlerin seçimi
             var updateButton = $('#updateButton');
-            var nameField = $('#name'); 
+            var nameField = $('#name');
             var descriptionField = $('#description');
             var sportSelect = $('#sport_id');
             var seasonSelect = $('#season_id');
             var typeSelect = $('#type_id');
 
             // Butonların görünürlüğünün güncellenmesi
-            updateButton.addClass('disabled'); 
-            updateButton.attr('onclick', '');  
+            updateButton.addClass('disabled');
+            updateButton.attr('onclick', '');
 
             function checkForChanges() {
                 if (descriptionField.val() || sportSelect.val() || seasonSelect.val() || typeSelect.val() || nameField.val())  {
-                    updateButton.removeClass('disabled');  
-                    updateButton.attr('onclick', 'updatePost()');  
+                    updateButton.removeClass('disabled');
+                    updateButton.attr('onclick', 'updatePost()');
                 } else {
-                    updateButton.addClass('disabled');  
-                    updateButton.attr('onclick', '');  
+                    updateButton.addClass('disabled');
+                    updateButton.attr('onclick', '');
                 }
             }
 
@@ -441,8 +453,6 @@
         }
 
         function deleteLeague(id) {
-            const type = 2; // Sport
-            const process = 4; // Delete
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -507,40 +517,74 @@
         $('#season_filter').change(function () {
             dataTable.draw();
             dataTable2.draw();
+
+            change_season_league()
+
         });
 
         function start(){
             var league_id = {{$league->id}};
+            var season_id = $('#season_filter').val();
+
+            Swal.fire({
+                title: 'League is starting...',
+                text: 'Please wait.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
 
             $.ajax({
                 url: '{{ route('sport.league.start') }}',
                 type: 'POST',
                 headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
-                processData: false,
-                contentType: false,
-                data: {'league_id':league_id},
-                success: () => {
-                    Swal.fire('Success', 'League started successfully!', 'success');
-                    closeModal();
-                    dataTable.ajax.reload();
+                data: {
+                    'league_id': league_id,
+                    'season_id': season_id
                 },
-                error: (xhr,status,error) => {
-                    console.log(xhr,status,error)
+                success: () => {
+                    Swal.fire('Success!', 'League started successfully.', 'success');
+                    closeModal();
+                    dataTable2.ajax.reload();
+                    change_season_league()
+                },
+                error: (xhr, status, error) => {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        html: errorMap(xhr.responseJSON.errors),
-                        footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
-                        showConfirmButton: true,
+                        title: 'Hata Oluştu',
+                        html: errorMap(xhr.responseJSON?.errors || 'An unknown error'),
+                        footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
                     });
                 }
             });
-
         }
 
         function detail(){
             $('#add_league_modal').modal('show');
+        }
 
+        function change_season_league(){
+            var season_id = $('#season_filter').val()
+            var league_id = {{$league->id}};
+            var league_start_button = $('#league_start_button');
+            $.ajax({
+                url: '{{route('sport.season_league.get_by_foreign')}}',
+                data: {
+                    'league_id':league_id,
+                    'season_id': season_id
+                },
+                success: (response)=>{
+                    SEASON_LEAGUE = response;
+                    console.log(response.status)
+                    if(response.status === 'waiting'){
+                        $(league_start_button).removeClass('d-none');
+                    }
+                    else{
+                        $(league_start_button).addClass('d-none')
+                    }
+                },
+            })
         }
     </script>
 @endsection

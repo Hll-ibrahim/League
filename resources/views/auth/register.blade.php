@@ -19,10 +19,6 @@
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name...">
                                 </div>
                                 <div class="form-group">
-                                    <label for="register-name">Your Email</label>
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email address...">
-                                </div>
-                                <div class="form-group">
                                     <label for="register-password">Your Password</label>
                                     <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password...">
                                 </div>

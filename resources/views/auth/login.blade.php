@@ -11,7 +11,7 @@
     <meta name="author" content="Dan Fisher">
     <meta name="keywords" content="sports club news HTML template">
 
-    <!-- Favicons
+    <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('football/images/football/favicons/favicon.ico') }}">
     <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('football/images/football/favicons/favicon-120.png') }}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('football/images/football/favicons/favicon-152.png') }}">
@@ -312,12 +312,12 @@
                             <form id="register_form" type="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="name">Your Email</label>
+                                    <label for="name">Name</label>
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name...">
                                 </div>
                                 <div class="form-group">
-                                    <label for="register-name">Your Email</label>
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email address...">
+                                    <label for="name">Email</label>
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="Enter your email...">
                                 </div>
                                 <div class="form-group">
                                     <label for="register-password">Your Password</label>
@@ -615,11 +615,21 @@
 
 <script>
     function loginPost(){
-        var formData = new FormData(document.getElementById('login_form'))
+        var formData = new FormData(document.getElementById('login_form'));
+
+        Swal.fire({
+            title: 'You are logging in...',
+            text: 'Please wait.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+
         $.ajax({
             url: '{{route('login')}}',
             type: 'POST',
-            headers: {'X-CSRF-TOKEN': "{{csrf_token()}} "},
+            headers: {'X-CSRF-TOKEN': "{{csrf_token()}}"},
             processData: false,
             contentType: false,
             data: formData,
@@ -627,37 +637,42 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Successfully logged in',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Log In',
-                }).then((result)=>{
-                    if(result.value){
-                        window.location.href = '/login'
+                    text: 'Logged in successfully',
+                }).then((result) => {
+                    if (result.value) {
+                        window.location.href = '/';
                     }
-                })
+                });
             },
             error: (xhr, status, error) => {
-                console.error(xhr,status,error);
-
+                console.error(xhr, status, error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    html: errorMap(xhr.responseJSON.errors),  // Hatanın detaylarını gösterir
-                    footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
-                    showConfirmButton: true,
-                    confirmButtonText: "Ok",
+                    html: errorMap(xhr.responseJSON?.errors || 'Unknown Error'),
+                    footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
                 });
             }
-        })
+        });
     }
 </script>
 <script>
     function registerPost(){
-        var formData = new FormData(document.getElementById('register_form'))
+        var formData = new FormData(document.getElementById('register_form'));
+
+        Swal.fire({
+            title: 'You are registering...',
+            text: 'Please wait.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+
         $.ajax({
             url: '{{route('register')}}',
             type: 'POST',
-            headers: {'X-CSRF-TOKEN': "{{csrf_token()}} "},
+            headers: {'X-CSRF-TOKEN': "{{csrf_token()}}"},
             processData: false,
             contentType: false,
             data: formData,
@@ -665,28 +680,33 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Successfully registered',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Log In',
-                }).then((result)=>{
-                    if(result.value){
-                        window.location.href = '/login'
-                    }
-                })
+                    text: 'Registered successfully. Please log in ',
+                });
             },
             error: (xhr, status, error) => {
-                console.error(xhr,status,error);
-
+                console.error(xhr, status, error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    html: errorMap(xhr.responseJSON.errors),  // Hatanın detaylarını gösterir
-                    footer: `An error occurred: ${xhr.status} - ${xhr.statusText}`,
-                    showConfirmButton: true,
-                    confirmButtonText: "Ok",
+                    html: errorMap(xhr.responseJSON?.errors || 'Unknown Error'),
+                    footer: `HTTP ${xhr.status} - ${xhr.statusText}`,
                 });
             }
+        });
+    }
+
+    function errorMap(errors){
+        errors = Object.values(errors)
+
+        string = '<p>'
+        result = errors.map((error)=>{
+            error.map((errorMessage)=>{
+                string += errorMessage
+                string += '<br>'
+            })
         })
+        string += '</p>'
+        return string
     }
 </script>
 </body>

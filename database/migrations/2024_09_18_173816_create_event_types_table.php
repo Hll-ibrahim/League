@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('event_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('sport_id')->constrained('sports');
+            $table->string('image')->nullable();
+            $table->boolean('is_important')->default(false);
             $table->timestamps();
         });
     }

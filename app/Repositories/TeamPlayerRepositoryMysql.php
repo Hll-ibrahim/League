@@ -6,14 +6,18 @@ use App\Models\Event;
 use App\Models\TeamPlayer;
 use App\Repositories\Contracts\TeamPlayerRepositoryInterface;
 
-class TeamPlayerRepositoryMysql implements TeamPlayerRepositoryInterface{
+class TeamPlayerRepositoryMysql extends BaseRepositoryMysql implements TeamPlayerRepositoryInterface{
+
+    public function __construct(TeamPlayer $model){
+        parent::__construct($model);
+    }
 
     public function getPlayersFromTeam(int $teamId){
-        return TeamPlayer::where('league_team_id', $teamId)->get();
+        return $this->model->where('league_team_id', $teamId)->get();
     }
 
     public function getPlayerById(int $playerId){
-        return TeamPlayer::findOrFail($playerId);
+        return $this->model->findOrFail($playerId);
     }
 
     public function playedGamesInSeason(int $playerId, int $seasonLeagueId){

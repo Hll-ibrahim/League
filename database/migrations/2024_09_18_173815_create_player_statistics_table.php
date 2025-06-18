@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('team_player_id')->constrained('team_player');
             $table->foreignId('game_id')->constrained('games');
-            $table->foreignId('team_id')->constrained('teams');
             $table->foreignId('position_id')->constrained('positions');
-            $table->boolean('id_substitute')->constrained('1=yedek, 0=as');
+            $table->boolean('id_substitute')->comment('1=substitute, 0=as');
             $table->timestamps();
         });
     }

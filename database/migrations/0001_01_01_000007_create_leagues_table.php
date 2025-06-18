@@ -17,9 +17,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->foreignId('sport_id')->constrained('sports')->onDelete('cascade');
             $table->foreignId('league_type_id')->constrained('league_types')->onDelete('cascade');
-            $table->float('winPoint')->default(3);
-            $table->float('losePoint')->default(0);
-            $table->float('drawPoint')->default(1);
+            $table->integer('player_count')->comment('number of players played in a game');
+            $table->float('win_point')->nullable();
+            $table->float('lose_point')->nullable();
+            $table->float('draw_point')->nullable();
             $table->timestamps();
         });
     }

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('event_type_id')->constrained('event_types');
             $table->foreignId('player_statistic_id')->constrained('player_statistics');
-            $table->foreignId('game_id')->constrained('games');
             $table->integer('minute');
             $table->timestamps();
         });

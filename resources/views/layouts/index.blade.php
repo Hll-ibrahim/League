@@ -9,7 +9,7 @@
 @section('base')
     <header class="header ">
 
-       
+
         <!-- Header Primary -->
         <div class="header__primary">
             <div class="container">
@@ -22,7 +22,19 @@
                     <!-- Main Navigation -->
                     <nav class="main-nav clearfix">
                         <ul class="main-nav__list">
-                            <li class=""><a href="{{route('sport.index')}}">Sports</a></li>
+                            <li class="{{Request::segment(1) == 'sport' ? 'active' : ''}}"><a href="{{route('sport.index')}}">Sports</a>
+                                <ul class="main-nav__sub">
+                                    @foreach($sports as $sport)
+                                        <li><a href="{{route('sport.detail',$sport->id)}}">{{$sport->name}}</a>
+                                            <ul class="main-nav__sub-2">
+                                                @foreach($sport->leagues as $league)
+                                                    <li><a href="{{route('sport.league.detail',$league->id    )}}">{{$league->name}}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
                             <li class=""><a href="#">Features</a>
                                 <div class="main-nav__megamenu clearfix">
                                     <ul class="col-lg-2 col-md-3 col-12 main-nav__ul">
@@ -164,7 +176,7 @@
                                     <li><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_event-tournament.html">Tournament</a></li>
                                 </ul>
                             </li>
-                            <li class="active"><a href="#">News</a>
+                            <li class=""><a href="#">News</a>
                                 <ul class="main-nav__sub">
                                     <li class="active"><a href="_soccer_blog-1.html">News - version 1</a></li>
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_blog-2.html">News - version 2</a></li>
@@ -179,9 +191,10 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-grid.html">Shop</a>
+                            @if(auth()->user() && auth()->user()->hasRole('admin'))
+                            <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-grid.html">Panel</a>
                                 <ul class="main-nav__sub">
-                                    <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-grid.html">Shop - Grid</a></li>
+                                    <li class=""><a href="{{route('announcement.index')}}">Announcements</a></li>
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-list.html">Shop - List</a></li>
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-product.html">Single Product</a></li>
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-cart.html">Shopping Cart</a></li>
@@ -191,11 +204,12 @@
                                     <li class=""><a href="../../../../OneDrive/Desktop/Alchemists-HTML-Package/HTML/soccer/build/_soccer_shop-account.html">Account</a></li>
                                 </ul>
                             </li>
+                            @endif
                         </ul>
 
                         <!-- Social Links -->
                         <ul class="social-links social-links--inline social-links--main-nav">
-                            
+
                             <li>
                                 @if(Auth::user())
                                     <form method="post" class="nav-account__item nav-account__item--logout" action="{{route('logout')}}">
@@ -221,7 +235,7 @@
         </div>
         <!-- Header Primary / End -->
     </header>
-    
+
     <aside class="pushy-panel pushy-panel--dark">
         <div class="pushy-panel__inner">
             <header class="pushy-panel__header">
@@ -410,37 +424,47 @@
 
                                 <!-- Widget: Popular Posts / End -->
                                 <div class="widget widget--footer widget-popular-posts">
-                                    <h4 class="widget__title">Popular News</h4>
+                                    <h4 class="widget__title">Last Announcements</h4>
                                     <div class="widget__content">
                                         <ul class="posts posts--simple-list posts--simple-list-numbered">
 
-                                            <li class="posts__item posts__item--category-1">
-                                                <div class="posts__inner">
-                                                    <div class="posts__cat">
-                                                        <span class="label posts__cat-label">The Team</span>
+                                            @foreach($lastAnnouncements as $announcement)
+                                                @php
+                                                    $categoryClass = '';
+                                                    if (!empty($announcement->team?->name)) {
+                                                        $categoryClass = 'posts__item--category-1';
+                                                    } elseif (!empty($announcement->league?->name)) {
+                                                        $categoryClass = 'posts__item--category-2';
+                                                    } elseif (!empty($announcement->player?->name)) {
+                                                        $categoryClass = 'posts__item--category-3';
+                                                    }
+                                                @endphp
+
+                                                <li class="posts__item {{ $categoryClass }}">
+                                                    <div class="posts__inner">
+                                                        <div class="posts__cat">
+                                                            @if(!empty($announcement->league?->name))
+                                                                <span class="label posts__cat-label">{{ $announcement->league->name }}</span>
+                                                            @endif
+
+                                                            @if(!empty($announcement->team?->name))
+                                                                <span class="label posts__cat-label">{{ $announcement->team->name }}</span>
+                                                            @endif
+
+                                                            @if(!empty($announcement->player?->name))
+                                                                <span class="label posts__cat-label">{{ $announcement->player->name }}</span>
+                                                            @endif
+                                                        </div>
+                                                        <h6 class="posts__title posts__title--color-hover">
+                                                            <a href="#">{{ $announcement->title }}</a>
+                                                        </h6>
+                                                        <time datetime="{{ $announcement->created_at->toDateString() }}" class="posts__date">
+                                                            {{ $announcement->created_at->format('F jS, Y') }}
+                                                        </time>
                                                     </div>
-                                                    <h6 class="posts__title posts__title--color-hover"><a href="#">Alchemists Stadium will have a max capacity for 500.000 fans</a></h6>
-                                                    <time datetime="2018-09-22" class="posts__date">September 22nd, 2018</time>
-                                                </div>
-                                            </li>
-                                            <li class="posts__item posts__item--category-2">
-                                                <div class="posts__inner">
-                                                    <div class="posts__cat">
-                                                        <span class="label posts__cat-label">Injuries</span>
-                                                    </div>
-                                                    <h6 class="posts__title posts__title--color-hover"><a href="#">Alchemists coach on Jake Summer&#x27;s injury &quot;It looks really bad&quot;</a></h6>
-                                                    <time datetime="2018-09-22" class="posts__date">August 5th, 2018</time>
-                                                </div>
-                                            </li>
-                                            <li class="posts__item posts__item--category-3">
-                                                <div class="posts__inner">
-                                                    <div class="posts__cat">
-                                                        <span class="label posts__cat-label">The League</span>
-                                                    </div>
-                                                    <h6 class="posts__title posts__title--color-hover"><a href="#">The Clovers defense must reinvent itself without Adam Howlett</a></h6>
-                                                    <time datetime="2018-09-22" class="posts__date">September 16th, 2018</time>
-                                                </div>
-                                            </li>
+                                                </li>
+                                            @endforeach
+
 
                                         </ul>
                                     </div>

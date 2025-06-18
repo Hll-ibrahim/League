@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LeagueController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\LeagueTeamController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SeasonController;
+use App\Http\Controllers\SeasonLeagueController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamPlayerController;
@@ -66,6 +68,10 @@ Route::prefix('/')->group(function () {
             Route::get('/fetch', 'getSeasons')->name('fetch');
         });
 
+        Route::prefix('season-league')->controller(SeasonLeagueController::class)->group(function () {
+            Route::get('/get-by-foriegn', 'get_by_foreign')->name('season_league.get_by_foreign');
+        });
+
     });
 
 
@@ -78,7 +84,14 @@ Route::prefix('/')->group(function () {
 
     Route::post('register',[UserController::class,'register'])->name('register');
 
-    Route::get('hail',[\App\Http\Controllers\GameController::class,'getMatches'])->name('hail');
+    Route::get('hail',[GameController::class,'getMatches'])->name('hail');
+
+    Route::prefix('announcement')->controller(AnnouncementController::class)->group(function () {
+        Route::get('/', 'index')->name('announcement.index');
+        Route::get('/announcements/create', 'create')->name('announcement.create')->middleware('auth');
+        Route::post('/announcements/store', 'store')->name('announcement.store');
+
+    });
 
     Route::middleware([
         'auth:sanctum',

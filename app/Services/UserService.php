@@ -3,10 +3,9 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Repositories\UserRepository;
-use App\Services\Contracts\UserServiceInterface;
+use App\Repositories\UserRepositoryMysql;
 
-class UserService implements UserServiceInterface{
+class UserService {
 
     protected $userRepository;
 

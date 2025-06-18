@@ -88,7 +88,9 @@
     </div>
 
 
-    <button class="btn btn-primary mb-4" onclick="create()">Add</button>
+    @if(auth()->user() && auth()->user()->hasRole('admin'))
+        <button class="btn btn-primary mb-4" onclick="create()">Add</button>
+    @endif
     <table id="sport_table" class="display nowrap dataTable cell-border"
            style="width:100%">
         <thead>
@@ -96,9 +98,7 @@
             <th>#</th>
             <th>Sport Name</th>
             <th>Description</th>
-            <th>Detail</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th>Process</th>
         </tr>
         </thead>
 
@@ -107,9 +107,7 @@
             <th>#</th>
             <th>Sport Name</th>
             <th>Description</th>
-            <th>Detail</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th>Process</th>
         </tr>
         </tfoot>
     </table>
@@ -140,9 +138,7 @@
                 {data: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'name'},
                 {data: 'description', orderable: false},
-                {data: 'detail', orderable: false, searchable: false},
-                {data: 'update', orderable: false, searchable: false},
-                {data: 'delete', orderable: false, searchable: false},
+                {data: 'process', orderable: false, searchable: false},
             ],
             success: function(data) {
                 console.log('Data fetched successfully:', data);

@@ -5,22 +5,20 @@ namespace App\Services;
 use App\Models\LeagueTeam;
 use App\Models\Team;
 use App\Repositories\Contracts\LeaguesTeamsRepositoryInterface;
-use App\Services\Contracts\LeaguesTeamsServiceInterface;
 
-class LeaguesTeamsService implements LeaguesTeamsServiceInterface{
-    protected $leaguesTeamsRepository;
+class LeaguesTeamsService extends BaseService {
     public function __construct(LeaguesTeamsRepositoryInterface $leaguesTeamsRepository){
-        $this->leaguesTeamsRepository = $leaguesTeamsRepository;
+        parent::__construct($leaguesTeamsRepository);
     }
     public function getTeamsFromLeague($leagueId)
     {
-        return $this->leaguesTeamsRepository->getTeamsFromLeague($leagueId);
+        return $this->repository->getTeamsFromLeague($leagueId);
     }
 
     public function getPoint($leagueTeam){
-        $win = $leagueTeam->win * $this->getPointConvert($leagueTeam,'winPoint');
-        $draw = $leagueTeam->draw * $this->getPointConvert($leagueTeam,'drawPoint');
-        $lose = $leagueTeam->lose * $this->getPointConvert($leagueTeam,'losePoint');
+        $win = $leagueTeam->win * $this->getPointConvert($leagueTeam,'win_point');
+        $draw = $leagueTeam->draw * $this->getPointConvert($leagueTeam,'draw_point');
+        $lose = $leagueTeam->lose * $this->getPointConvert($leagueTeam,'lose_point');
         return $win + $draw + $lose;
     }
 
@@ -34,17 +32,11 @@ class LeaguesTeamsService implements LeaguesTeamsServiceInterface{
         return $team->name;
     }
 
-    public function addTeamToLeague($leagueTeam){
-        return $this->leaguesTeamsRepository->addTeam($leagueTeam);
-    }
-
-    public function removeTeamFromLeague($leagueTeam_id){
-        return $this->leaguesTeamsRepository->removeTeam($leagueTeam_id);
-    }
-
-    public function getLeagueTeamsFromLeague(int $season_league_id)
+    public function getLeagueTeamsBySeasonLeague(int $league_season_id)
     {
-        return LeagueTeam::where('season_league_id', $season_league_id)->get();
+        return $this->repository->getBySeasonLeague($league_season_id);
     }
+
+
 
 }

@@ -24,4 +24,18 @@ class LeagueTeam extends Model
     {
         return $this->belongsTo(SeasonLeague::class, 'season_league_id');
     }
+
+    // LeagueTeam.php
+    public function playerStatistics()
+    {
+        return $this->hasManyThrough(
+            PlayerStatistic::class,
+            TeamPlayer::class,
+            'league_team_id',    // foreign key on team_player
+            'team_player_id',    // foreign key on player_statistics
+            'id',                // local key on league_team
+            'id'                 // local key on team_player
+        );
+    }
+
 }
